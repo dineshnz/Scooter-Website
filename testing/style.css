@@ -1,5 +1,5 @@
 :root{
-    --mainBlue: #40AcF1;
+    --mainBlue: #84bae0;
     --transparentBlue: rgba(64,172,241,0.7);
     --mainWhite: #FFFFFF;
     --mainBlack: #292F36;
@@ -22,60 +22,39 @@ body{
     clip-path: polygon(10% 0, 100%0, 90% 100%, 0 100%);
 }
 
-
+.item {
+    display: none;
+    position: relative;
+    .transition(.2s ease-in-out left);
+}
 
 .navbar{
     background: var(--mainBlue)!important;
 }
 
 .navbar-brand img{
-    height: 50px;
+    height: 30px;
+    color: var(--mainBlue);
+    background-color: white;
 }
 
 .nav-link, .navbar-brand {
-    color: var(--mainBlue) !important;
+    color: var(--mainWhite) !important;
     text-transform: uppercase;
 }
 
-nav a:hover{
-    background: var(--mainGrey);
-    color: yellowgreen !important;
+
+
+/*image sizing*/
+img{
+    height: 80vh;
+    background:fixed no-repeat;
 }
 
-/*header section*/
-
-.header{
-    clip-path: polygon(0 0, 100% 0, 100% 95%, 50% 100%, 0 95%);
-    color: var(--mainWhite);
-    overflow: hidden;
+#btn-custom{
+  color: var(--mainBlue)!important;
 }
 
-.height-max{
-    min-height: calc(100vh - 56px);
-    background: url("https://images.unsplash.com/photo-1508325493070-43b68330b329?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60");
-    background-repeat:no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    animation-name: zoom;
-    animation-duration: 20s;
-    animation-delay: 2s;
-    animation-iteration-count: infinite;
-}
-
-@keyframes zoom {
-    0%{
-        transform: scale(1);
-    }
-
-    50%{
-        transform: scale(1.2) translate(-5%)
-    }
-
-    100%{
-        transform:scale(1)
-    }
-}
 
 .title-heading{
     background: rgba(0,0,0,0.4);
@@ -87,12 +66,7 @@ nav a:hover{
 }
 
 
-/**This will enable font size to increase when the website is loaded on bigger screen*/
-@media screen and (min-width: 768px) {
-    .title{
-        font-size: 1.5rem;
-    }
-}
+
 
 
 /*skills*/
@@ -100,7 +74,7 @@ nav a:hover{
 .skills-icon{
     font-size: 3rem;
     color: var(--mainYellow);
-    background: var(--mainGrey);
+    
 }
 
 .skills-icon:hover{
@@ -377,17 +351,20 @@ footer div a{
 
 .footer-bottom{
     background: #191919 none repeat scroll 0 0;
-    padding: 22px;
+    text-align: center;
+
+
 }
 
 footer h6{
     color: var(--mainBlue);
+
 }
 
 
 #button {
     display: inline-block;
-    background-color: #FF9800;
+    background-color: var(--mainBlue);
     width: 50px;
     height: 50px;
     text-align: center;
