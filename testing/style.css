@@ -28,14 +28,9 @@ body{
     .transition(.2s ease-in-out left);
 }
 
-.navbar{
-    background: var(--mainBlue)!important;
-}
-
 .navbar-brand img{
     height: 30px;
-    color: var(--mainBlue);
-    background-color: white;
+ 
 }
 
 .nav-link, .navbar-brand {
@@ -43,12 +38,17 @@ body{
     text-transform: uppercase;
 }
 
+.nav-link:hover{
+	color: var(--mainBlue)!important;
+}
+
 
 
 /*image sizing*/
 img{
-    height: 80vh;
+    height: 93vh;
     background:fixed no-repeat;
+    opacity: 0.8;
 }
 
 #btn-custom{
