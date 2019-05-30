@@ -400,6 +400,26 @@ footer h6{
 }
 
 
+/*  */
+.main{width: 1200px;margin: 0 auto;margin-top: 76px;margin-bottom: 50px;}
+.main li{margin-top: 50px;border-bottom: 1px dashed #CCCCCC;padding-bottom: 30px;}
+.cen{text-align: center;}
+.cen h4{font-size: 40px;}
+.cen p{font-size: 20px;} 
+/*  */
+.list_le{float: left;width: 600px;text-align: right;padding-top: 40px;}
+.list_le h4{font-size: 40px;}
+.list_le p{font-size: 20px;line-height: 40px;}
+.le img{float: right;width: 450px;height: 320px;}
+/*  */
+.rig img{float: left;width: 450px;height: 320px;}
+.list_rig{float: right;width: 600px;text-align: left;padding-top: 40px;}
+.list_rig h4{font-size: 40px;}
+.list_rig p{font-size: 20px;line-height: 40px;}
+.bt{font-family: myfont;text-align: center;font-size: 80px;letter-spacing: 5px;background: url(Images/timg.jpg) no-repeat;height: 300px;width: 100%;background-size: 100%;margin-top: 52px;line-height: 300px;color: #fff;}
+.bt:hover{font-size: 90px;transition:all 1s ease 0s;}
+
+
 
 
 
