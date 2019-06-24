@@ -66,9 +66,6 @@ img{
 }
 
 
-
-
-
 /*skills*/
 
 .skills-icon{
@@ -292,7 +289,7 @@ img{
 
 #footerMessage
 {
-    float:left;
+    padding-left: 5px;
     margin-top: 5px;
 }
 
@@ -321,9 +318,6 @@ img{
     text-transform: uppercase;
     font-weight: 700;
     background: #1DB9EC;
-
-
-
 }
 
 .page-footer{
@@ -397,6 +391,20 @@ footer h6{
 #button.show {
     opacity: 1;
     visibility: visible;
+}
+
+.clear:after {
+	display: block;
+	content: "";
+	clear: both;
+	height: 0;
+	overflow: hidden;
+}
+.clear{
+	zoom: 1;
+}
+ol, ul {
+	list-style: none;
 }
 
 
