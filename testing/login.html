@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
     <style>
         html, body * { box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
 
@@ -44,7 +48,7 @@ body {
 }
 
 .frame-long {
-  height: 615px;
+  height: 800px;
 }
 
 .frame-short {
@@ -53,7 +57,7 @@ body {
   box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
 }
 
-.nav {
+.nav-login {
   width: 100%;
   height: 100px;
   padding-top: 40px;
@@ -126,14 +130,14 @@ li {
 
 .form-signup {
   width: 430px;
-  height: 375px;
+  height: 800px;
 	font-size: 16px;
 	font-weight: 300;
   padding-left: 37px;
   padding-right: 37px;
   padding-top: 55px;
   position: relative;
-  top: -375px;
+  top: -400px;
   left: 400px;
   opacity: 0;
   transition: all .5s ease;
@@ -198,7 +202,8 @@ li {
 .form-styling {
   width: 100%;
   height: 35px;
-	padding-left: 15px;
+    padding-left: 15px;
+    margin-top: 0px;
 	border: none;
 	border-radius: 20px;
   margin-bottom: 20px;
@@ -210,7 +215,7 @@ label {
   text-transform: uppercase;
   font-size: 13px;
   padding-left: 15px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   color: rgba(255,255,255,.7);
   display: block;
 }
@@ -372,15 +377,13 @@ a.btn-signup:hover, a.btn-signin:hover {
 }
 
 .forgot {
-  height: 100px;
+  height: 20px;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   padding-top: 24px;
-  margin-top: -535px;
-  border-top: solid 1px rgba(255,255,255,.3);
-  transition: all 0.5s ease;
+  color: white;
 }
 
 .forgot-left {
@@ -550,21 +553,24 @@ a.btn-goback:hover {
                 </ul>
     
                 <ul class="nav navbar-nav navbar-right">
+                        <a class="nav-link" href="login.html">Login/Signup</a>
+                    <!--
                     <li><a data-toggle="modal" data-target="#at-signup-filling" class ="nav-link" href="#">SignUp <i class="fa fa-user-plus"></i></a></li>
     
                     <li><a data-toggle="modal" data-target="#at-login" class="nav-link" href="#" >Login <i class="fa fa-user"></i></a></li>
-    
+                        --->
                 </ul>
             </div>
         </nav>
     <!--end of nav element-->
+    
 
     <!--Start of the login and register form-->
     <div class="container" style="margin-top: 40px">
             <div class="frame">
-              <div class="nav">
+              <div class="nav-login">
                 <ul class"links">
-                  <li class="signin-active"><a class="btn">Sign in</a></li>
+                  <li class="signin-active"><a class="btn">Log in</a></li>
                   <li class="signup-inactive"><a class="btn">Sign up </a></li>
                 </ul>
               </div>
@@ -576,16 +582,27 @@ a.btn-goback:hover {
                     <input class="form-styling" type="text" name="password" placeholder=""/>
                     <input type="checkbox" id="checkbox"/>
                     <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>
+                    <div >
+                     <p class="frgt-pswd forgot"   data-toggle="modal" data-dismiss="modal"  data-target="#at-reset-pswd">	Forgot Password?</p>
+                    </div>
                     <div class="btn-animate">
                       <a class="btn-signin">Sign in</a>
                     </div>
-                                  </form>
+
+                    
+                    </form>
                   
-                                  <form class="form-signup" action="" method="post" name="form">
+                    <form class="form-signup" action="" method="post" name="form">
                     <label for="fullname">Full name</label>
-                    <input class="form-styling" type="text" name="fullname" placeholder=""/>
+                    <input class="form-styling" type="text" name="fullname" placeholder="Full Name"/>
                     <label for="email">Email</label>
-                    <input class="form-styling" type="text" name="email" placeholder=""/>
+                    <input class="form-styling" type="text" name="email" placeholder="email"/>
+                    <label for="email">Passport Number</label>
+                    <input class="form-styling" type="text" name="passport" placeholder=""/>
+                    <label for="email">Address</label>
+                    <input class="form-styling" type="text" name="address" placeholder=""/>
+                    <label for="email">Driver License Number</label>
+                    <input class="form-styling" type="text" name="license" placeholder=""/>
                     <label for="password">Password</label>
                     <input class="form-styling" type="text" name="password" placeholder=""/>
                     <label for="confirmpassword">Confirm password</label>
@@ -605,9 +622,7 @@ a.btn-goback:hover {
                        </div>
                 </div>
                 
-                <div class="forgot">
-                  <a href="#">Forgot your password?</a>
-                </div>
+                
                 
                 <div>
                   <div class="cover-photo"></div>
@@ -632,6 +647,69 @@ a.btn-goback:hover {
           </div>
     <!--End of the login and register form-->
 
+     <!-- MODAL FORGOT PASSWORD -->
+     <div class="modal fade" id="at-reset-pswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                            <p>Forgot Password page</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                            
+                        <form>
+                            <p>	Enter the email address associated with your account, and we’ll email you a link to reset your password. </p>
+                            <div class="form-group">
 
+                                <input type="email" class="form-control-form " id="exampleInputEmaillog" placeholder="Email">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                            <div class="row">
+                                <button class="btn-gst"  data-toggle="modal"  data-dismiss="modal" >Send areset Link</button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+            $(function() {
+                $(".btn").click(function() {
+                    $(".form-signin").toggleClass("form-signin-left");
+                $(".form-signup").toggleClass("form-signup-left");
+                $(".frame").toggleClass("frame-long");
+                $(".signup-inactive").toggleClass("signup-active");
+                $(".signin-active").toggleClass("signin-inactive");
+                $(".forgot").toggleClass("forgot-left");   
+                $(this).removeClass("idle").addClass("active");
+                });
+            });
+            
+            $(function() {
+                $(".btn-signup").click(function() {
+              $(".nav").toggleClass("nav-up");
+              $(".form-signup-left").toggleClass("form-signup-down");
+              $(".success").toggleClass("success-left"); 
+              $(".frame").toggleClass("frame-short");
+                });
+            });
+            
+            $(function() {
+                $(".btn-signin").click(function() {
+              $(".btn-animate").toggleClass("btn-animate-grow");
+              $(".welcome").toggleClass("welcome-left");
+              $(".cover-photo").toggleClass("cover-photo-down");
+              $(".frame").toggleClass("frame-short");
+              $(".profile-photo").toggleClass("profile-photo-down");
+              $(".btn-goback").toggleClass("btn-goback-up");
+              $(".forgot").toggleClass("forgot-fade");
+                });
+            });
+    </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
