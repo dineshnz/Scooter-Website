@@ -9,16 +9,15 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
   <link rel="stylesheet" href="main1.css">
-
-  <title>Login Page</title>
+  <title>Reset Password</title>
 </head>
 <body>
 <?php include 'header.php' ?>
   <div class="container">
     <div class="row">
       <div class="col-md-4 offset-md-4 form-wrapper auth login">
-        <h3 class="text-center form-title header">Login</h3>
-        <form action="login.php" method="post">
+        <h3 class="text-center form-title">Reset Password</h3>
+        <form action="reset_password.php" method="post">
           <?php if (count($errors) > 0): ?>
           <div class="alert alert-danger">
             <?php foreach ($errors as $error): ?>
@@ -40,19 +39,17 @@
         </div>
         <?php endif;?>
           <div class="form-group">
-            <label>Username or Email</label>
-            <input type="text" name="username" class="form-control form-control-lg" value="<?php echo $fullname; ?>">
-          </div>
-          <div class="form-group">
             <label>Password</label>
             <input type="password" name="password" class="form-control form-control-lg">
           </div>
           <div class="form-group">
-            <button type="submit" name="login-btn" class="btn btn-lg btn-block">Login</button>
+            <label>Confirm Password</label>
+            <input type="password" name="passwordConf" class="form-control form-control-lg">
+          </div>
+          <div class="form-group">
+            <button type="submit" name="reset-password-btn" class="btn btn-lg btn-block">Reset Password</button>
           </div>
         </form>
-        <p>Don't yet have an account? <a href="signup.php">Sign up</a></p>
-        <div style ="font-size: 0.8em; text-align: center;"><a href="forgot_password.php">Forgot Password?</a></div>
       </div>
     </div>
   </div>

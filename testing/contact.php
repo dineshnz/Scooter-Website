@@ -88,38 +88,8 @@ h1
 <body>
 <br><br><br>
 <h1>Contact Us Form</h1>
-<nav class="navbar navbar-expand-lg navbar-light bg-dark  fixed-top">
-    <a class="navbar-brand" href="index.html"><img class="imagelink" src="Images/Logo.png" alt=""></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto">
-           
-            <li class="nav-item ">
-                <a class="nav-link" href="howWeWork.html">How we work</a>
-            </li>
-
-            <li class="nav-item ">
-                <a class="nav-link" href="#">About Us</a>
-            </li>
-
-            <li class="nav-item ">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-            </li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            <li><a data-toggle="modal" data-target="#at-signup-filling" class ="nav-link" href="#">SignUp <i class="fa fa-user-plus"></i></a></li>
-
-            <li><a data-toggle="modal" data-target="#at-login" class="nav-link" href="#" >Login <i class="fa fa-user"></i></a></li>
-
-        </ul>
-    </div>
-</nav>
-<!--end of nav element-->
-
+<?php include 'header.php' ?>
+	
 <div class="form">  
   <form action="hello.php" method="post">
     <label>First Name: <input type="text" name="fname" required="required" placeholder="First Name"></label>

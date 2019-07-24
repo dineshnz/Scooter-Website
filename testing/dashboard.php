@@ -1,3 +1,19 @@
+<?php require_once 'controllers/authController.php'?>
+
+<?php 
+  session_start(); 
+
+  if (!isset($_SESSION['passport'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: log.php');
+  }
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['passport']);
+    header("location: log.php");
+  }
+?>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -19,28 +35,19 @@
         </div>
       </div>
       <div class="search">
-        <input type="text" placeholder="Type here"><i class="fa fa-search"></i>
+
+        <input type="text" placeholder="Type here to search passport"><i class="fa fa-search"></i>
       </div>
       <ul class="categories">
-        <li><i class="fa fa-home fa-fw" aria-hidden="true"></i><a href="#"> About us</a>
+        <li><i class="fa fa-home fa-fw" aria-hidden="true"></i><a href="#">Update profile</a>
           <ul class="side-nav-dropdown">
-            <li><a href="#">Lorem ipsum</a></li>
-            <li><a href="#">ipsum dolor</a></li>
-            <li><a href="#">dolor ipsum</a></li>
-            <li><a href="#">amet consectetur</a></li>
-            <li><a href="#">ipsum dolor sit</a></li>
+            <li><a href="#">update password</a></li>
+            <li><a href="#">Update Driver Licence Number</a></li>
+            <li><a href="#">Update Address</a></li>
           </ul>
         </li>
-        <li><i class="fa fa-support fa-fw"></i><a href="#"> Subscribe us</a>
-          <ul class="side-nav-dropdown">
-            <li><a href="#">Lorem ipsum</a></li>
-            <li><a href="#">ipsum dolor</a></li>
-            <li><a href="#">dolor ipsum</a></li>
-            <li><a href="#">amet consectetur</a></li>
-            <li><a href="#">ipsum dolor sit</a></li>
-          </ul>
-        </li>
-        <li><i class="fa fa-envelope fa-fw"></i><a href="#"> Contact us</a>
+        
+        <li><i class="fa fa-motorcycle fa-fw"></i><a href="#"> List Vehicle</a>
           <ul class="side-nav-dropdown">
             <li><a href="#">Lorem ipsum</a></li>
             <li><a href="#">ipsum dolor</a></li>
@@ -58,28 +65,9 @@
             <li><a href="#">ipsum dolor sit</a></li>
           </ul>
         </li>
-        <li><i class="fa fa-bolt fa-fw"></i><a href="#"> Testimonials</a>
-          <ul class="side-nav-dropdown">
-            <li><a href="#">Lorem ipsum</a></li>
-            <li><a href="#">ipsum dolor</a></li>
-            <li><a href="#">dolor ipsum</a></li>
-            <li><a href="#">amet consectetur</a></li>
-            <li><a href="#">ipsum dolor sit</a></li>
-          </ul>
-        </li>
-        <p>Example:</p>
-        <li><i class="fa fa-envelope-open-o fa-fw"></i><a href="#"> Messages <span class="num dang">56</span></a></li>
-        <li><i class="fa fa-wrench fa-fw"></i><a href="#"> Settings <span class="num prim">6</span></a>
-          <ul class="side-nav-dropdown">
-            <li><a href="#">Lorem ipsum</a></li>
-            <li><a href="#">ipsum dolor</a></li>
-            <li><a href="#">dolor ipsum</a></li>
-            <li><a href="#">amet consectetur</a></li>
-            <li><a href="#">ipsum dolor sit</a></li>
-          </ul>
-        </li>
-        <li><i class="fa fa-laptop fa-fw"></i><a href="#"> About UI &amp; UX <span class="num succ">43</span></a></li>
-        <li><i class="fa fa-comments-o fa-fw"></i><a href="#"> Something else</a></li>
+        
+        
+    
       </ul>
     </aside>
     <section id="contents">
@@ -104,7 +92,10 @@
                   <li><a href="#"><i class="fa fa-envelope-o fw"></i> My inbox</a></li>
                   <li><a href="#"><i class="fa fa-question-circle-o fw"></i> Help</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="#"><i class="fa fa-sign-out"></i> Log out</a></li>
+                  <li>
+      
+                    <a href="dashboard.php?logout='1'" >logout</a> 
+              </li>
                 </ul>
               </li>
               <li><a href="#"><i class="fa fa-comments"></i><span>23</span></a></li>
@@ -119,8 +110,23 @@
           <div class="row">
             <div class="col-md-12">
               <div class="content">
-                <h2>Welcome to Dashboard</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                <!-- notification message -->
+            <?php if (isset($_SESSION['success'])) : ?>
+                <div class="error success" >
+                  <h3>
+          <?php 
+            echo $_SESSION['success']; 
+            unset($_SESSION['success']);
+          ?>
+        </h3>
+      </div>
+    <?php endif ?>
+
+    <!-- logged in user information -->
+    <?php  if (isset($_SESSION['passport'])) : ?>
+      <p>Welcome <strong><?php echo $_SESSION['passport']; ?></strong></p>
+      <p> <a href="dashboard.php?logout='1'" style="color: red;">logout</a> </p>
+    <?php endif ?>
               </div>
             </div>
           </div>
@@ -360,8 +366,9 @@ var myChart = new Chart(chart, {
 });
 </script>
       
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <script src='js/main.js'></script>
       </body>
     </html>
