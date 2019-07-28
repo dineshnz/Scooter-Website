@@ -5,12 +5,12 @@
 
   if (!isset($_SESSION['passport'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: log.php');
+    header('location: login.php');
   }
   if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['passport']);
-    header("location: log.php");
+    header("location: login.php");
   }
 ?>
 

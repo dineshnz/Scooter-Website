@@ -53,11 +53,11 @@
 
 <li><a href="#"><i class="fa fa-motorcycle"></i> Vehicles</a>
 					<ul>
-						<li><a href="post_vehicle.php">Post a Vehicle</a></li>
+						<li><a href="addScooter.php">Post a Vehicle</a></li>
 						<li><a href="manage-vehicles.php">Manage Vehicles</a></li>
 					</ul>
 				</li>
-				<li><a href="manage-bookings.php"><i class="fa fa-users"></i> Update Profile</a></li>
+				<li><a href="carRenting.php"><i class="fa fa-users"></i> Search Scooters</a></li>
 
 				<li><a href="testimonials.php"><i class="fa fa-table"></i> Manage Testimonials</a></li>
 				<li><a href="manage-conactusquery.php"><i class="fa fa-desktop""></i> Manage Conatctus Query</a></li>

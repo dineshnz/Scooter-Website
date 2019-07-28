@@ -1,85 +1,25 @@
-<?php
-session_start();
-error_reporting(0);
-include('includes/config.php');
-if(strlen($_SESSION['alogin'])==0)
-	{	
-header('location:index.php');
-}
-else{ 
+<?php require_once 'controllers/authController.php'?>
 
-if(isset($_POST['submit']))
-  {
-$vehicletitle=$_POST['vehicletitle'];
-$brand=$_POST['brandname'];
-$vehicleoverview=$_POST['vehicalorcview'];
-$priceperday=$_POST['priceperday'];
-$fueltype=$_POST['fueltype'];
-$modelyear=$_POST['modelyear'];
-$vimage1=$_FILES["img1"]["name"];
-$vimage2=$_FILES["img2"]["name"];
-$vimage3=$_FILES["img3"]["name"];
-$vimage4=$_FILES["img4"]["name"];
-$vimage5=$_FILES["img5"]["name"];
-$airconditioner=$_POST['airconditioner'];
-$powerdoorlocks=$_POST['powerdoorlocks'];
-$antilockbrakingsys=$_POST['antilockbrakingsys'];
-$brakeassist=$_POST['brakeassist'];
-$powersteering=$_POST['powersteering'];
-$driverairbag=$_POST['driverairbag'];
-$passengerairbag=$_POST['passengerairbag'];
-$powerwindow=$_POST['powerwindow'];
-$cdplayer=$_POST['cdplayer'];
-$centrallocking=$_POST['centrallocking'];
-$crashcensor=$_POST['crashcensor'];
-$leatherseats=$_POST['leatherseats'];
-move_uploaded_file($_FILES["img1"]["tmp_name"],"img/vehicleimages/".$_FILES["img1"]["name"]);
-move_uploaded_file($_FILES["img2"]["tmp_name"],"img/vehicleimages/".$_FILES["img2"]["name"]);
-move_uploaded_file($_FILES["img3"]["tmp_name"],"img/vehicleimages/".$_FILES["img3"]["name"]);
-move_uploaded_file($_FILES["img4"]["tmp_name"],"img/vehicleimages/".$_FILES["img4"]["name"]);
-move_uploaded_file($_FILES["img5"]["tmp_name"],"img/vehicleimages/".$_FILES["img5"]["name"]);
+<?php 
+	error_reporting(0);
 
-$sql="INSERT INTO tblvehicles(VehiclesTitle,VehiclesBrand,VehiclesOverview,PricePerDay,FuelType,ModelYear,SeatingCapacity,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AirConditioner,PowerDoorLocks,AntiLockBrakingSystem,BrakeAssist,PowerSteering,DriverAirbag,PassengerAirbag,PowerWindows,CDPlayer,CentralLocking,CrashSensor,LeatherSeats) VALUES(:vehicletitle,:brand,:vehicleoverview,:priceperday,:fueltype,:modelyear,:seatingcapacity,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:airconditioner,:powerdoorlocks,:antilockbrakingsys,:brakeassist,:powersteering,:driverairbag,:passengerairbag,:powerwindow,:cdplayer,:centrallocking,:crashcensor,:leatherseats)";
-$query = $dbh->prepare($sql);
-$query->bindParam(':vehicletitle',$vehicletitle,PDO::PARAM_STR);
-$query->bindParam(':brand',$brand,PDO::PARAM_STR);
-$query->bindParam(':vehicleoverview',$vehicleoverview,PDO::PARAM_STR);
-$query->bindParam(':priceperday',$priceperday,PDO::PARAM_STR);
-$query->bindParam(':fueltype',$fueltype,PDO::PARAM_STR);
-$query->bindParam(':modelyear',$modelyear,PDO::PARAM_STR);
-$query->bindParam(':seatingcapacity',$seatingcapacity,PDO::PARAM_STR);
-$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
-$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
-$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
-$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
-$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
-$query->bindParam(':airconditioner',$airconditioner,PDO::PARAM_STR);
-$query->bindParam(':powerdoorlocks',$powerdoorlocks,PDO::PARAM_STR);
-$query->bindParam(':antilockbrakingsys',$antilockbrakingsys,PDO::PARAM_STR);
-$query->bindParam(':brakeassist',$brakeassist,PDO::PARAM_STR);
-$query->bindParam(':powersteering',$powersteering,PDO::PARAM_STR);
-$query->bindParam(':driverairbag',$driverairbag,PDO::PARAM_STR);
-$query->bindParam(':passengerairbag',$passengerairbag,PDO::PARAM_STR);
-$query->bindParam(':powerwindow',$powerwindow,PDO::PARAM_STR);
-$query->bindParam(':cdplayer',$cdplayer,PDO::PARAM_STR);
-$query->bindParam(':centrallocking',$centrallocking,PDO::PARAM_STR);
-$query->bindParam(':crashcensor',$crashcensor,PDO::PARAM_STR);
-$query->bindParam(':leatherseats',$leatherseats,PDO::PARAM_STR);
-$query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-$msg="Vehicle posted successfully";
-}
-else 
-{
-$error="Something went wrong. Please try again";
-}
-
-}
+  if (!isset($_SESSION['passport'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: login.php');
+  }
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['passport']);
+    header("location: login.php");
+  }
+?>
 
 
-	?>
+
+
+
+
+
 <!doctype html>
 <html lang="en" class="no-js">
 
@@ -136,6 +76,11 @@ $error="Something went wrong. Please try again";
 	<?php include('includes/leftbar.php');?>
 		<div class="content-wrapper">
 			<div class="container-fluid">
+			<a href="dashboard.php?logout='1'" >logout</a> 
+			<?php
+			$license = $_SESSION['license'];
+			echo $license;
+			?>
 
 				<div class="row">
 					<div class="col-md-12">
@@ -150,7 +95,7 @@ $error="Something went wrong. Please try again";
 				else if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
 
 									<div class="panel-body">
-<form method="post" class="form-horizontal" enctype="multipart/form-data">
+<form method="post"  class="form-horizontal" enctype="multipart/form-data">
 <div class="form-group">
 <label class="col-sm-2 control-label">Vehicle Title<span style="color:red">*</span></label>
 <div class="col-sm-4">
@@ -158,7 +103,7 @@ $error="Something went wrong. Please try again";
 </div>
 <label class="col-sm-2 control-label">Vehicle Brand<span style="color:red">*</span></label>
 <div class="col-sm-4">
-    <input type="text" name="vehicbletitle" class="form-control" required>
+    <input type="text" name="vehiclebrand" class="form-control" required>
 </div>
 </div>
 											
@@ -166,14 +111,14 @@ $error="Something went wrong. Please try again";
 <div class="form-group">
 <label class="col-sm-2 control-label">Vehical Overview<span style="color:red">*</span></label>
 <div class="col-sm-10">
-<textarea class="form-control" name="vehicalorcview" rows="3" required></textarea>
+<textarea class="form-control" name="vehicalorcview" rows="3" title="basic overview of the scooter" required></textarea>
 </div>
 </div>
 
 <div class="form-group">
 <label class="col-sm-2 control-label">Price Per Day(in USD)<span style="color:red">*</span></label>
 <div class="col-sm-4">
-<input type="text" name="priceperday" class="form-control" required>
+<input type="number" name="priceperday" class="form-control" pattern="[0-9]" title="price must be numbers" required>
 </div>
 <label class="col-sm-2 control-label">Select Fuel Type<span style="color:red">*</span></label>
 <div class="col-sm-4">
@@ -191,7 +136,7 @@ $error="Something went wrong. Please try again";
 <div class="form-group">
 <label class="col-sm-2 control-label">Model Year<span style="color:red">*</span></label>
 <div class="col-sm-4">
-<input type="text" name="modelyear" class="form-control" required>
+<input type="number" name="modelyear" class="form-control"  title="year must be numbers" required>
 </div>
 </div>
 <div class="hr-dashed"></div>
@@ -209,17 +154,17 @@ $error="Something went wrong. Please try again";
 Image 1 <span style="color:red">*</span><input type="file" name="img1" required>
 </div>
 <div class="col-sm-4">
-Image 2<span style="color:red">*</span><input type="file" name="img2" required>
+Image 2<span style="color:red">*</span><input type="file" name="img2" >
 </div>
 <div class="col-sm-4">
-Image 3<span style="color:red">*</span><input type="file" name="img3" required>
+Image 3<span style="color:red">*</span><input type="file" name="img3" >
 </div>
 </div>
 
 
 <div class="form-group">
 <div class="col-sm-4">
-Image 4<span style="color:red">*</span><input type="file" name="img4" required>
+Image 4<span style="color:red">*</span><input type="file" name="img4" >
 </div>
 <div class="col-sm-4">
 Image 5<input type="file" name="img5">
@@ -243,17 +188,6 @@ Image 5<input type="file" name="img5">
 <div class="form-group">
 <div class="col-sm-3">
 <div class="checkbox checkbox-inline">
-<input type="checkbox" id="airconditioner" name="airconditioner" value="1">
-<label for="airconditioner"> Air Conditioner </label>
-</div>
-</div>
-<div class="col-sm-3">
-<div class="checkbox checkbox-inline">
-<input type="checkbox" id="powerdoorlocks" name="powerdoorlocks" value="1">
-<label for="powerdoorlocks"> Power Door Locks </label>
-</div></div>
-<div class="col-sm-3">
-<div class="checkbox checkbox-inline">
 <input type="checkbox" id="antilockbrakingsys" name="antilockbrakingsys" value="1">
 <label for="antilockbrakingsys"> AntiLock Braking System </label>
 </div></div>
@@ -263,51 +197,6 @@ Image 5<input type="file" name="img5">
 </div>
 </div>
 
-
-
-<div class="form-group">
-<div class="col-sm-3">
-<div class="checkbox checkbox-inline">
-<input type="checkbox" id="powersteering" name="powersteering" value="1">
-<input type="checkbox" id="powersteering" name="powersteering" value="1">
-<label for="inlineCheckbox5"> Power Steering </label>
-</div>
-</div>
-<div class="col-sm-3">
-<div class="checkbox checkbox-inline">
-<input type="checkbox" id="driverairbag" name="driverairbag" value="1">
-<label for="driverairbag">Driver Airbag</label>
-</div>
-</div>
-<div class="col-sm-3">
-<div class="checkbox checkbox-inline">
-<input type="checkbox" id="passengerairbag" name="passengerairbag" value="1">
-<label for="passengerairbag"> Passenger Airbag </label>
-</div></div>
-<div class="checkbox checkbox-inline">
-<input type="checkbox" id="powerwindow" name="powerwindow" value="1">
-<label for="powerwindow"> Power Windows </label>
-</div>
-</div>
-
-
-<div class="form-group">
-<div class="col-sm-3">
-<div class="checkbox checkbox-inline">
-<input type="checkbox" id="cdplayer" name="cdplayer" value="1">
-<label for="cdplayer"> CD Player </label>
-</div>
-</div>
-<div class="col-sm-3">
-<div class="checkbox h checkbox-inline">
-<input type="checkbox" id="centrallocking" name="centrallocking" value="1">
-<label for="centrallocking">Central Locking</label>
-</div></div>
-<div class="col-sm-3">
-<div class="checkbox checkbox-inline">
-<input type="checkbox" id="crashcensor" name="crashcensor" value="1">
-<label for="crashcensor"> Crash Sensor </label>
-</div></div>
 <div class="col-sm-3">
 <div class="checkbox checkbox-inline">
 <input type="checkbox" id="leatherseats" name="leatherseats" value="1">
@@ -354,5 +243,4 @@ Image 5<input type="file" name="img5">
 	<script src="js/chartData.js"></script>
 	<script src="js/main.js"></script>
 </body>
-</html>
-<?php } ?>
+</html> -->
