@@ -161,11 +161,11 @@ if (isset($_POST['login-btn'])) {
                 $_SESSION['passport'] = $user['passport'];
                 $_SESSION['address'] = $user['address'];
                 $_SESSION['license'] = $user['driverLicense'];
-
+                $_SESSION['userLevel'] = $user['userLevel'];
                 $_SESSION['verified'] = $user['verified'];
                 $_SESSION['message'] = 'You are logged in!';
                 $_SESSION['type'] = 'alert-success';
-                header('location: addScooter.php');
+                header('location: userProfile.php');
                 exit(0);
                 }
 

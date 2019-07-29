@@ -1,5 +1,21 @@
 <?php include 'controllers/authController.php' ?>
 
+<?php 
+	error_reporting(0);
+
+  if (isset($_SESSION['passport'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: userProfile.php');
+  }
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['passport']);
+    header("location: login.php");
+  }
+
+  $userLevel = $_SESSION['userLevel'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
