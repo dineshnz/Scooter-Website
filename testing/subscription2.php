@@ -1,4 +1,9 @@
+<?php 
+    session_start();
 
+    $email = $_SESSION['email'];
+
+?>
     <style>
      .card{
          width: 300px;
@@ -63,6 +68,8 @@
                         <li class="list-group-item">Rent Scooters</li>
                     </ul>
                 </div>
+
+                
                 <div class="card-footer d-flex justify-content-center">
                 <form action="subscriptionProcess.php?sid=1" method="POST">
                     
@@ -72,6 +79,7 @@
                         data-amount="900"
                         data-name=  "Basic User"
                         data-description= "Membership"
+                        data-email = <?php echo $email ?>
                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                         data-locale="auto"
                         data-currency="nzd">

@@ -1,4 +1,9 @@
+<?php 
+    session_start();
 
+    $email = $_SESSION['email'];
+
+?>
     <style>
      .card{
          width: 300px;
@@ -73,6 +78,7 @@
                 data-amount="1900"
                 data-name=  "Premium User"
                 data-description= "Membership"
+                data-email = <?php echo $email ?>
                 data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                 data-locale="auto"
                 data-currency="nzd">
