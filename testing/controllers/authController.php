@@ -323,6 +323,7 @@ $vimage2=$_FILES["img2"]["name"];
 $vimage3=$_FILES["img3"]["name"];
 $vimage4=$_FILES["img4"]["name"];
 $vimage5=$_FILES["img5"]["name"];
+$passport = $_SESSION['passport'];
 $antilockbrakingsys=$_POST['antilockbrakingsys'];
 $brakeassist=$_POST['brakeassist'];
 $leatherseats=$_POST['leatherseats'];
@@ -334,12 +335,12 @@ move_uploaded_file($_FILES["img5"]["tmp_name"],"Images/uploadedImages/".$_FILES[
 
 
 $sql = "INSERT INTO tblscooters(VehiclesTitle,VehiclesBrand,VehiclesOverview,PricePerDay,FuelType,ModelYear,
-Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AntiLockBrakingSystem,BrakeAssist,LeatherSeats) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AntiLockBrakingSystem,BrakeAssist,LeatherSeats,userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
         $stmt = $conn->prepare($sql);
-		$stmt->bind_param('sssisisssssiii', $vehicletitle, $brand, $vehicleoverview, $priceperday, $fueltype, $modelyear, 
-		$vimage1,$vimage2,$vimage3,$vimage4,$vimage5, $antilockbrakingsys, $brakeassist, $leatherseats);
+		$stmt->bind_param('sssisisssssiiis', $vehicletitle, $brand, $vehicleoverview, $priceperday, $fueltype, $modelyear, 
+		$vimage1,$vimage2,$vimage3,$vimage4,$vimage5, $antilockbrakingsys, $brakeassist, $leatherseats, $passport);
 
         $resultSql = $stmt->execute();
 

@@ -22,13 +22,14 @@ $userLevel = $_SESSION['userLevel'];
         <?php 
         if($userLevel >= 1){ ?>
 
-        <li><a href="carRenting.php"><i class="fa fa-users"></i> Search Scooters</a></li>
+        <li><a href="searchScooter.php"><i class="fa fa-users"></i> Search Scooters</a></li>
         <?php }?>
 
         <?php 
         if($userLevel ==2){ ?>
 
         <li><a href="addScooter.php"><i class="fa fa-motorcycle"></i> List a Scooter</a></li>
+        <li><a href="pendingRequest.php"><i class="fa fa-user"></i> View pending requests</a></li>
         <?php }?>
 				
 

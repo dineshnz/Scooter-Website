@@ -71,7 +71,7 @@
 	<?php include('includes/leftbar.php');?>
 		<div class="content-wrapper">
 			<div class="container-fluid">
-			<a href="dashboard.php?logout='1'" >logout</a> 
+			
 			<?php
 			$license = $_SESSION['license'];
 			echo $license;
