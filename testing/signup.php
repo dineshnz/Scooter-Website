@@ -1,4 +1,16 @@
-<?php include 'controllers/authController.php' ?>
+<?php include 'controllers/authController.php';
+if (isset($_SESSION['passport'])) {
+  $_SESSION['msg'] = "You must log in first";
+  header('location: userProfile.php');
+}
+
+if (isset($_GET['logout'])) {
+  session_destroy();
+  unset($_SESSION['passport']);
+  header("location: login.php");
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">

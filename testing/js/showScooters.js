@@ -33,7 +33,7 @@ function searchScooter(){
 function validation(){
 	var searchInput = document.getElementById("searchInput").value;
 
-	console.log(searchInput);
+
 	var refCheck = /^[0-9a-zA-z]{0,30}$/;
 
 	if(searchInput==""){
@@ -51,3 +51,4 @@ function validation(){
     searchScooter();
 
 }
+

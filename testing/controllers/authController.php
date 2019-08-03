@@ -211,12 +211,12 @@ function verifyUser($token){
 
         if (mysqli_query($conn, $update_query)){
             //log user in
-            $_SESSION['id'] = $user['id'];
-                $_SESSION['username'] = $user['fullname'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['passport'] = $user['passport'];
-                $_SESSION['address'] = $user['address'];
-                $_SESSION['license'] = $user['license'];
+            // $_SESSION['id'] = $user['id'];
+            //     $_SESSION['username'] = $user['fullname'];
+            //     $_SESSION['email'] = $user['email'];
+            //     $_SESSION['passport'] = $user['passport'];
+            //     $_SESSION['address'] = $user['address'];
+            //     $_SESSION['license'] = $user['license'];
 
                 $_SESSION['verified'] = 1;
                 $_SESSION['message'] = 'Your Email was successfully verified! Please login and enjoy the website';
@@ -323,7 +323,7 @@ $vimage2=$_FILES["img2"]["name"];
 $vimage3=$_FILES["img3"]["name"];
 $vimage4=$_FILES["img4"]["name"];
 $vimage5=$_FILES["img5"]["name"];
-$passport = $_SESSION['passport'];
+$userId = $_SESSION['id'];
 $antilockbrakingsys=$_POST['antilockbrakingsys'];
 $brakeassist=$_POST['brakeassist'];
 $leatherseats=$_POST['leatherseats'];
@@ -339,8 +339,8 @@ Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AntiLockBrakingSystem,BrakeAssist,Leathe
 
 
         $stmt = $conn->prepare($sql);
-		$stmt->bind_param('sssisisssssiiis', $vehicletitle, $brand, $vehicleoverview, $priceperday, $fueltype, $modelyear, 
-		$vimage1,$vimage2,$vimage3,$vimage4,$vimage5, $antilockbrakingsys, $brakeassist, $leatherseats, $passport);
+		$stmt->bind_param('sssisisssssiiii', $vehicletitle, $brand, $vehicleoverview, $priceperday, $fueltype, $modelyear, 
+		$vimage1,$vimage2,$vimage3,$vimage4,$vimage5, $antilockbrakingsys, $brakeassist, $leatherseats, $userId);
 
         $resultSql = $stmt->execute();
 

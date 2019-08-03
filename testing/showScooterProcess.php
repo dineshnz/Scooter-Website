@@ -1,21 +1,25 @@
 <?php
 
 require 'config/db.php';
-error_reporting(0);
+
+session_start();
 ?>
+
 <section class="listing-page">
   <div class="container">
     <div class="row">
       <div class="col-md-9 col-md-push-3">
+      
         
           <?php 
           
           $searchInput = $_POST['searchInput'];
+          $requesterID = $_SESSION['id'];
            
-          echo "hello";
+        
 
           //Query for Listing count
-            $sql = "SELECT id FROM tblscooters WHERE userId=?";
+            $sql = "SELECT vid FROM tblscooters t join users u on u.id = t.userId WHERE u.passport=?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('s', $searchInput);
             $stmt->execute();
@@ -42,7 +46,9 @@ error_reporting(0);
 
 
            <?php
-			$sql = "SELECT * FROM tblscooters WHERE userId=?";
+           //$sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId WHERE u.passport=?";
+           $sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId join requests r on t.vid = r.vehicleId AND u.id =r.requesterId WHERE u.passport=?";
+     
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('s', $searchInput);
             $stmt->execute();
@@ -58,16 +64,24 @@ error_reporting(0);
 			  <div class="product-listing-img"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage1']);?>" class="img-fluid" alt="Image" /> </a> 
 			  </div>
 			  <div class="product-listing-content">
-				<h5><a href="vehical-details.php?vhid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities($row['BrandName']);?> 
+				<h5><a href="vehical-details.php?vhid=<?php echo htmlentities($row['vid']);?>"><?php echo htmlentities($row['VehiclesBrand']);?> 
 				 <?php echo htmlentities($row['VehiclesTitle']);?></a></h5>
 				<p class="list-price">$<?php echo htmlentities($row['PricePerDay']);?> Per Day</p>
 				<ul>
 				  
 				  <li><i class="fa fa-calendar" aria-hidden="true"></i><?php echo htmlentities($row['ModelYear']);?> model</li>
 				  <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($row['FuelType']);?></li>
-				</ul>
-        <a href="scooterDetail.php?vhid=<?php echo htmlentities($row['id']);?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-        <a href="#?vhid=<?php echo htmlentities($row['id']);?>" class="btn btn-success pull-right">Send Request <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+        </ul>
+
+        <?php $resultString = $row['result'];
+        echo $resultString;
+        if ($resultString =="approved") { ?>
+        <a href="scooterDetail.php?vhid=<?php echo htmlentities($row['vid']);?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+        <?php } ?>
+          
+          <?php echo $row['userId']; ?>
+        <a href="sendRequest.php?vhid=<?php echo htmlentities($row['vid']);?>&passportNO=<?php echo $row['userId']; ?>" class="btn btn-success pull-right"
+            >Send Request to view details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a> 
 			  </div>
 			</div>
       <?php }} ?>
@@ -75,4 +89,6 @@ error_reporting(0);
 	  </div>
 	</div>
   </div>
-	</section>
+  </section>
+  
+ 

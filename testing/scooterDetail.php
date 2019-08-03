@@ -82,7 +82,7 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
   <?php 
 $vhid=intval($_GET['vhid']);
 
-$sql =" SELECT * from tblscooters where id=?";
+$sql =" SELECT * from tblscooters where vid=?";
 $query = $conn -> prepare($sql);
 $query->bind_Param('i', $vhid);
 $query->execute();
