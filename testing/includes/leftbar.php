@@ -30,6 +30,7 @@ $userLevel = $_SESSION['userLevel'];
 
         <li><a href="addScooter.php"><i class="fa fa-motorcycle"></i> List a Scooter</a></li>
         <li><a href="pendingRequest.php"><i class="fa fa-user"></i> View pending requests</a></li>
+        <li><a href="myListing.php"><i class="fa fa-list"></i> My Assets</a></li>
         <?php }?>
 				
 

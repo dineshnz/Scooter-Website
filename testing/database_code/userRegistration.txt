@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 31, 2019 at 12:09 PM
+-- Generation Time: Aug 03, 2019 at 08:12 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -45,10 +45,6 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fullname`, `email`, `passport`, `address`, `driverLicense`, `verified`, `userLevel`, `token`, `password`) VALUES
-(38, 'Shubhadra Bhandari', 'shubhadra005@gmail.com', 'fff', '2701 sw 17th st apt 23, 2703 sw ryder st. apt 33', 'ARKANSAS', 0, 0, 'a555d373680d6a17708e7c3f214a1fedb8c74ab9fc0ee629d4274045b13e9fa1d804a4de4c084fa8ff602688f27433c335a8', '$2y$10$UFf6SldDBz6f4xPMjMe2e.Sxr3urxw6ovtKKIf3lcWiTR56Jf9SG2'),
-(40, 'Dinesh Karki', 'dineshkrk46@gmail.com', '6676', '117 Melrose road, mount roskill', 'fff', 1, 2, 'ff099270c63c3a31dfefecaae7e16065e0bb99aa05ba5a9d488697db697759c2f95f63f396da297b39ad164c260f459c2aa1', '$2y$10$tRc8eSy32j0ExA5CcKkFD.NgaYdVrm8hBgq0li6J4.DYnEwC3WoKu'),
-(42, 'dinesh', 'karkidinesh43@yahoo.com', '4444nz', '117 Melrose road, mount roskill', 'ffff', 1, 1, 'b23d5bee1300d21cf4053673dc1fd7e2a61c089c3847a70611e805c286d2b2c2b8ae2565adf3f8e298836489fe6a165e1071', '$2y$10$rMGK8G3zdzecVIi3a7Fdou4EQPPYh9vW3y2lS55utRlJ0leamR3nq');
 
 --
 -- Indexes for dumped tables
@@ -71,7 +67,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,4 +1,10 @@
+<?php
 
+require 'config/db.php';
+
+session_start();
+$requesterID = "";
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,27 +21,62 @@
   </head>
 
   <body>
+  
+
   <?php include('includes/profileHeader.php');?>
 	<div class="ts-main-content">
 	<?php include('includes/leftbar.php');?>
 		<div class="content-wrapper">
 			<div class="container-fluid">
-            <main role="main">
-                 <section class="jumbotron text-center">
-                     <div class="container">
-                        <h1 class="jumbotron-heading">User name</h1>
-                         <p class="lead text-muted">user message for request</p>
-                        <p>
-                        <a href="accept.php" class="btn btn-primary my-2">Accept</a>
-                        <a href="reject.php" class="btn btn-secondary my-2">Reject</a>
-                        </p>
-                        <small><i></i></small>
 
-                     </div>
-          
-                 </section>
+      <?php
+      $passport = $_SESSION['passport'];
 
-                 </main>
+      $sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId join requests r on t.vid = r.vehicleId AND u.id =r.requesterId WHERE u.passport=? AND r.result = 'pending'";
+     $stmt = $conn->prepare($sql);
+     $stmt->bind_param('s', $passport);
+     $stmt->execute();
+     $result = $stmt->get_result();
+     $passportCount = $result->num_rows;
+    
+     
+     $stmt->close();
+ 
+     if ($passportCount > 0) {
+        while($row = $result->fetch_assoc()){
+          $requesterID = $row['requesterId'];
+          ?>
+          <main role="main">
+          <section class="jumbotron text-center">
+              <div class="container">
+                 <h1 class="jumbotron-heading"><?php echo $row['fullname'] ?></h1>
+                  <p class="lead text-muted"><?php echo $row['message'] ?></p>
+                  <p class="lead text-muted">For <?php echo $row['vehicleId'] ?></p>
+                 <p>
+
+                 <form action="accept.php" method="post" class="d-inline" >
+                   <input type="hidden" name="vid" value="<?php echo $row['vehicleId'] ?>">
+                   <input type="hidden" name="requesterId" value="<?php echo $row['userID'] ?>">
+                   <button name="acceptBtn" type="submit" class="btn btn-primary">Acceot Request</button>
+                 </form>
+
+                 <form action="reject.php" method="post" class="d-inline">
+                   <input type="hidden" name="vid" value="<?php echo $row['vehicleId'] ?>">
+                   <input type="hidden" name="requesterId" value="<?php echo $row['userID'] ?>">
+                   <button name="rejectBtn" type="submit" class="btn btn-danger">Reject Request</button>
+                 </form>
+                 </p>
+                 <small><i></i></small>
+
+              </div>
+   
+          </section>
+
+          </main>
+        <?php } } ?>
+
+        
+
             </div>
         </div>
     </div>
