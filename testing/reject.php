@@ -7,23 +7,26 @@ session_start();
 ?>
 
 <?php 
-    if(isset($_POST['rejectBtn'])){
-        $vehicleId = $_POST['vid'];
-        $userId= $_POST['requesterId'];
+    
+        $vehicleId = $_POST['vehicleId'];
+        $userId= $_POST['userId'];
+
+        echo $vehicleId;
  
 
    
-    $nameQuery = "UPDATE requests SET result= 'approved' WHERE  result='pending' AND vehicleId=?";
+    $nameQuery = "UPDATE requests SET result= 'rejected' WHERE  result='pending' AND vehicleId=?";
     $stmt = $conn->prepare($nameQuery);
     $stmt->bind_param('i', $vehicleId);
    if($stmt->execute()){
-       echo "successful";
+       echo "Request rejected";
    }else{
        echo "failed update";
    }
     
    
    
-}
+
 
 ?>
+

@@ -3,6 +3,7 @@
 require 'config/db.php';
 
 session_start();
+$resultString ="";
 ?>
 
 <section class="listing-page">
@@ -15,6 +16,7 @@ session_start();
           
           $searchInput = $_POST['searchInput'];
           $requesterID = $_SESSION['id'];
+          $passportNo = $_SESSION['passport'];
            
         
 
@@ -46,9 +48,24 @@ session_start();
 
 
            <?php
-           //$sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId WHERE u.passport=?";
-           $sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId join requests r on t.vid = r.vehicleId AND u.id =r.requesterId WHERE u.passport=?";
-     
+
+           if($passportNo == $searchInput){
+             include 'includes/showSuperUserResult.php';
+           }
+           else{
+
+           //williams query
+
+          //  $sql = "SELECT * FROM tblscooters t left join users u on u.id = t.userId
+          //   left join requests r on t.vid = r.vehicleId 
+          //  WHERE u.passport=? AND (r.requesterId IS NULL OR r.requesterId = '$requesterID')";
+           $sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId
+           WHERE u.passport=?";
+          
+           //$sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId left join requests r on t.vid = r.vehicleId WHERE u.passport=?";
+           //$sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId join requests r on t.vid = r.vehicleId AND u.id =r.requesterId WHERE u.passport=?";
+           // $sql = "SELECT * FROM tblscooters t, requests r, users u WHERE u.passport=? AND t.vid = r.vehicleId r.requesterId = $requesterID";
+              
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('s', $searchInput);
             $stmt->execute();
@@ -73,18 +90,29 @@ session_start();
 				  <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($row['FuelType']);?></li>
         </ul>
 
-        <?php $resultString = $row['result'];
-        echo $resultString;
-        if ($resultString =="approved") { ?>
-        <a href="scooterDetail.php?vhid=<?php echo htmlentities($row['vid']);?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-        <?php } ?>
+        
+
+        <?php
+          $currentVid = $row['vid'];
+          $requestSql = "SELECT * FROM requests r WHERE r.requesterId = '$requesterID' AND r.vehicleId =  '$currentVid'";
+          $requestResult = $conn-> query($requestSql);
+          $resultRow = $requestResult -> num_rows;
           
-          <?php echo $row['userId']; ?>
-        <a href="sendRequest.php?vhid=<?php echo htmlentities($row['vid']);?>&passportNO=<?php echo $row['userId']; ?>" class="btn btn-success pull-right"
+          if ($resultRow > 0) {
+            while($row1 = $requestResult->fetch_assoc())
+	           {
+              $resultString = $row1['result'];
+            if($resultString=="approved"){
+          ?>
+          <a href="scooterDetail.php?vhid=<?php echo htmlentities($row['vid']);?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+            <?php }}} ?>
+         
+          
+        <a href="sendRequest.php?vhid=<?php echo htmlentities($row['vid']);?>&passportNO=<?php echo $_SESSION['id'] ?>" class="btn btn-success pull-right"
             >Send Request to view details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a> 
 			  </div>
 			</div>
-      <?php }} ?>
+      <?php }}} ?>
      
 	  </div>
 	</div>

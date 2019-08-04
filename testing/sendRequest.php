@@ -46,14 +46,13 @@
     
     $vhid= intval($_GET['vhid']);
     $username = $_SESSION['username'];
-    $usertype = $_SESSION['userLevel'];
     $requesterId = $_SESSION['id'];
     $request ="pending";
     $message = "would like to view your scooter detail";
 
-    $nameQuery = "SELECT * FROM requests WHERE fullname=? AND vehicleId=? LIMIT 1";
+    $nameQuery = "SELECT * FROM requests WHERE requesterId=? AND vehicleId=? LIMIT 1";
     $stmt = $conn->prepare($nameQuery);
-    $stmt->bind_param('si', $username, $vhid);
+    $stmt->bind_param('ii', $requesterId, $vhid);
     $stmt->execute();
     $result = $stmt->get_result();
     $passportCount = $result->num_rows;
