@@ -3,6 +3,13 @@
 	$arr = explode(' ',trim($myvalue));
 	$firstName= $arr[0]; // will print Test
 ?>
+<style>
+	.ts-account ul li:hover{
+		-webkit-transition: all .3s ease-in-out;
+		-webkit-transform: scale(1.05);
+	}
+
+</style>
 
 <div class="brand clearfix">
 	<a href="userProfile.php" style="font-size: 20px;">Scooter Rental</a>  

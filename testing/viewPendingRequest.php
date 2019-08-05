@@ -1,16 +1,30 @@
+<script src="js/showScooters.js"></script>
+
 <?php
     require 'config/db.php';
     session_start();
-      $passport = $_SESSION['passport'];
+      $ownerId = $_SESSION['id'];
 
-      $sql = "SELECT * FROM requests";
+      //checking if the current logged in person has any listing if there is no listing to this
+      //owner then this will print that the user does not have any listing yet
+      $ownerQuery = "SELECT * FROM tblscooters WHERE userId = '$ownerId'";
+      $ownerResult = $conn->query($ownerQuery);
+      $ownerRowCount = $ownerResult->num_rows;
+
+      if(!$ownerRowCount > 0){
+        echo  '<strong><div style="width: 30%; color: red; margin-left: 200px; margin-top: 20px;" class="alert-danger">
+        You do not have any listing yet</div></strong>';
+      }
+      else{
+        //if the user has listings this query will find out if there is any request for approval for his vehicle
+      $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId  WHERE result= 'pending' AND t.userId = '$ownerId'";
      $result = $conn->query($sql);
     
      $rowCount = $result->num_rows;
  
      if ($rowCount > 0) {
         while($row = $result->fetch_assoc()){
-          $requesterID = $row['requesterId'];
+         
           ?>
           <main role="main">
           <section class="jumbotron text-center">
@@ -20,22 +34,15 @@
                   <p class="lead text-muted">For <?php echo $row['vehicleId'] ?></p>
                  <p>
 
-                 <form class="d-inline" >
-                   <input type="hidden" id="vid" value="<?php echo $row['vehicleId'] ?>">
-                   <input type="hidden" id="requesterId" value="<?php echo $row['requesterId'] ?>">
-                   <!-- <button name="acceptBtn" type="submit" class="btn btn-primary">Acceot Request</button> -->
-                   <input name="submit" type= "button"  onclick="request()" class="btn btn-primary" 
+                 <div class="d-inline" >
+                   <input name="submit" type= "button"  onclick="onAcceptRequest(<?php echo $row['vehicleId'] ?>,<?php echo $row['requesterId'] ?>)" class="btn btn-primary" 
                    value = "Accept Request">
+                </div>
 
-                 </form>
-
-                 <form action="reject.php" method="post" class="d-inline">
-                   <input type="hidden" id="vid" value="<?php echo $row['vehicleId'] ?>">
-                   <input type="hidden" id="requesterId" value="<?php echo $row['requesterId'] ?>">
-                   <!-- <button name="rejectBtn" type="submit" class="btn btn-danger">Reject Request</button> -->
-                   <input name="submit" type= "button"  onclick="onRejectRequest()" class="btn btn-danger" 
-                   value = "Accept Request">
-                 </form>
+                 <div class="d-inline">
+                   <input name="submit" type= "button"  onclick="onRejectRequest(<?php echo $row['vehicleId'] ?>,<?php echo $row['requesterId'] ?>)" class="btn btn-danger" 
+                   value = "Reject Request">
+                 </div>
                  </p>
                  <small><i></i></small>
 
@@ -44,6 +51,7 @@
           </section>
 
           </main>
-        <?php } }else{
-          echo "No request found";
-        } ?>
+        <?php }}else{
+          echo  '<strong><div style="width: 30%; color: red; margin-left: 200px; margin-top: 20px;" class="alert-danger">
+          No requests found yet for your listings</div></strong>';
+        } }?>

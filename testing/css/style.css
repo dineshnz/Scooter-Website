@@ -728,7 +728,7 @@ li {
 }
 .ts-main-content .content-wrapper {
   padding-top: 15px;
-  margin-top: 60px;
+  margin-top: 40px;
 }
 @media only screen and (min-width: 992px) {
   .ts-main-content .ts-sidebar {
@@ -1168,4 +1168,106 @@ table {
 }
 .sorting-count span {
   color: #999999;
+}
+
+/*==========================
+	16. Profile-page
+================================*/
+.dark-overlay {
+  background: rgba(0, 0, 0, 0.1) none repeat scroll 0 0;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.profile_page {
+	background-image:url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 0 none;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+
+}
+
+.inner_pages {
+	padding:80px 0;
+}
+
+.user_profile_info {
+	margin:0 auto 45px;	
+	max-width:660px;
+	overflow:hidden;
+}
+
+
+/*========================================
+	 5. Inner-Page-Heading-Section
+==============================================*/
+
+.page-header {
+  background-image: url("../images/listing-page-header-img.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 0 none;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+}
+.page-header_wrap {
+  padding:60px 0;
+  position:relative;	
+  text-align:center;
+}
+.page-heading {
+  z-index:1;
+  position:relative;
+}
+.page-heading h2, .page-heading h1 {
+  font-size:40px;
+  color: #ffffff;
+  margin: 0 auto;
+}
+
+
+
+/*=======================
+	 6. Breadcrumb
+================================*/
+.coustom-breadcrumb {
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+
+.coustom-breadcrumb li {
+  color: #ffffff;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 45px;
+  list-style: outside none none;
+  margin: 0 auto;
+  padding: 0 10px;
+  position:relative;
+}
+.coustom-breadcrumb a {
+  color: #ffffff;
+}
+.coustom-breadcrumb li a:hover {
+	color:#fff;
+	text-decoration:underline;
+}
+.coustom-breadcrumb a::after {
+  color: #fff;
+  content: "";
+  font-family: fontawesome;
+  position: absolute;
+  right: -5px;
+  vertical-align: middle;
 }

@@ -59,7 +59,7 @@
     <div class="row">
 					<div class="col-md-12">
 						
-                        <h2 class="page-title">Post A Vehicle</h2>
+                        <h2 class="page-title">Update Vehicle</h2>
                         <div id="success"></div>
 
 						<div class="row">
@@ -130,87 +130,22 @@
                                             </div>
                                             </div>
 											<div class="hr-dashed"></div>
-
-
-											<div class="form-group">
-												<div class="col-sm-12">
-													<h4><b>Upload Images</b></h4>
-												</div>
-											</div>
-
-
-											<div class="form-group">
-												<div class="col-sm-6">
-                                                    Image 1 <span style="color:red">*</span><input type="file" name="img1" id="user_image1" required>
-                                                   
-                                                   
-												</div>
-												<div class="col-sm-6">
-                                                    Image 2<span style="color:red">*</span><input type="file" name="img2" id="user_image2" required >
-                                                    
-												</div>
-												<div class="col-sm-6">
-                                                    Image 3<span style="color:red">*</span><input type="file" name="img3" id="user_image3" >
-                                                   
-												</div>
-											</div>
-
-
-											<div class="form-group">
-												<div class="col-sm-4">
-                                                    Image 4<span style="color:red">*</span><input type="file" name="img4" id="user_image4">
-                                                    
-												</div>
-												<div class="col-sm-4">
-                                                    Image 5<input type="file" name="img5" id="user_image5">
-                                                    
-												</div>
-
-											</div>
-											<div class="hr-dashed"></div>									
+																				
 										</div>
 									</div>
 								</div>
 							</div>
-							
-
-							<div class="row">
-								<div class="col-md-12">
-									<div class="panel panel-default">
-										<div class="panel-heading">Accessories</div>
-										<div class="panel-body">
-
-
-											<div class="form-group">
-												<div class="col-sm-3">
-													<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="antilockbrakingsys" name="check" value="1">
-														<label for="antilockbrakingsys"> AntiLock Braking System </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-													<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="brakeassist" name="check" value="1">
-														<label for="brakeassist"> Brake Assist </label>
-													</div>
-												</div>
-
-												<div class="col-sm-3">
-													<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="leatherseats" name="check" value="1">
-														<label for="leatherseats"> Leather Seats </label>
-													</div>
-												</div>
-											</div>
+						
 
 
 
 
 											<div class="form-group">
 												<div class="col-sm-8 col-sm-offset-2">
-													<button class="btn btn-default" type="reset">Cancel</button>
-                                                    <input type="submit" name="insert"  id="insert" onclick="addScooterToDatabase()" value="Save Changes" class="btn btn-info" />
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+													<button class="btn btn-default" style="margin-left:5px" type="reset">Cancel</button>
+                                                    <input type="submit" name="insert"  id="insert" onclick="addScooterToDatabase()" 
+                                                    value="Save Changes" class="btn btn-info" style="margin-left:20px" />
+                                                    <button type="button" class="btn btn-danger" style="margin-left:20px" data-dismiss="modal">Close</button>
 												</div>
 											</div>
 

@@ -47,7 +47,12 @@ error_reporting(0);
     text-align: center;
     pointer-events: none;
     color: #aaa;
-}</style>
+}
+	#targetDiv{
+		margin-left: 200px;
+	}
+
+</style>
 	
 
 </head>
@@ -75,8 +80,10 @@ error_reporting(0);
 
 		</form>
 		</div>
+		
 
   <div id="targetDiv"></div> 
+	
  </div>
 </div>
 
