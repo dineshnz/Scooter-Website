@@ -10,10 +10,7 @@ session_start();
     
         $vehicleId = $_POST['vehicleId'];
         $requesterId= $_POST['requesterId'];
-        echo $vehicleId;
- 
-
-   
+       
     $nameQuery = "UPDATE requests SET result= 'approved' WHERE  result='pending' AND vehicleId=? AND requesterId=?";
     $stmt = $conn->prepare($nameQuery);
     $stmt->bind_param('ii', $vehicleId, $requesterId);

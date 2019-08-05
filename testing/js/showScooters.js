@@ -52,13 +52,11 @@ function validation(){
 
 }
 
-function request(){
+function onAcceptRequest(vehicleId, requesterId){
   if(xhr){
     var obj = document.getElementById("success");
-    var vehicleId = document.getElementById("vid").value;
-    var requsterId = document.getElementById("requesterId").value;
     var requestbody ="vehicleId="+encodeURIComponent(vehicleId)+
-    "&userId="+encodeURIComponent(requsterId);
+    "&requesterId="+encodeURIComponent(requesterId);
 		var url = "accept.php";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -91,11 +89,9 @@ function viewPendingRequests(){
 	}
 }
 
-function onRejectRequest(){
+function onRejectRequest(vehicleId, userId){
   if(xhr){
     var obj = document.getElementById("success");
-    var vehicleId = document.getElementById("vid").value;
-    var userId = document.getElementById("requesterId").value;
     var requestbody ="vehicleId="+encodeURIComponent(vehicleId)+
     "&userId="+encodeURIComponent(userId);
 		var url = "reject.php";
@@ -167,3 +163,31 @@ function addScooterToDatabase(){
 
 
 }
+
+function sendRequestForApproval(vhid){
+	if(xhr){
+		event.preventDefault();
+		var obj = document.getElementById("success");
+		console.log(vhid);
+		var requestbody ="vhid="+encodeURIComponent(vhid);
+			var url = "sendRequest.php";
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4 && xhr.status == 200){
+					obj.innerHTML = xhr.responseText;
+					$(document).ready(function(){
+			  $("#responseModal").modal("show");
+	  
+			});
+		
+				}
+				
+			}
+			xhr.send(requestbody);
+		}
+
+		
+	
+}
+
