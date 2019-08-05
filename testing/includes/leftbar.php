@@ -16,7 +16,9 @@ $userLevel = $_SESSION['userLevel'];
 				<li class="ts-label">Main</li>
 
         <li>
-          <a href="viewProfile.php"><i class="fa fa-user"></i> View your profile</a>
+
+          <a href="myProfile.php"><i class="fa fa-motorcycle"></i> update profile</a>
+
         </li>
         <?php 
         if($userLevel >= 1){ ?>
