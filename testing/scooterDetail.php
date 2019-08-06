@@ -50,7 +50,7 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
   
  
 <link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="css/css/style1.css" type="text/css">
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
 integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -75,13 +75,19 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
   margin-left: 20px;
   max-width: 95%;
 }
+
+.content{
+       width:  75%;
+          margin-top: 100px;
+          margin-left: 260px;
+      }
 </style>
 </head>
 <body>
 <?php include('includes/profileHeader.php');?>
   <div class="ts-main-content">
   <?php include('includes/leftbar.php');?>
-    <div class="content-wrapper">
+    <div class="content">
   <?php
   //this gets the value of vehicle id from the url to show the details of the clicked vehicle 
 $vhid=intval($_GET['vhid']);
