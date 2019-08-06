@@ -106,7 +106,7 @@ $resultString ="";
             if($resultString=="approved"){
           ?>
           <!-- once the vehicle request is approved, this will show the show details buttons to the user  -->
-          <a href="scooterDetail.php?vhid=<?php echo htmlentities($row['vid']);?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+          <a href="scooterDetail.php?vhid=<?php echo htmlentities(urlencode($row['vid']));?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
               <?php }}} ?>
         <!-- sending the request to the owner for approval, we need to pass the vehicle id to that page so that
       we know which vehicle was requested for -->

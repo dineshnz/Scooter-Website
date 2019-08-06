@@ -14,44 +14,56 @@
       if(!$ownerRowCount > 0){
         echo  '<strong><div style="width: 30%; color: red; margin-left: 200px; margin-top: 20px;" class="alert-danger">
         You do not have any listing yet</div></strong>';
+        exit(0);
       }
       else{
+     //showing the table header first -->
+       echo '<table class="table table-bordered table-striped ">
+        <tr class="bg-dark text-white">
+          <th>No.</th>
+          <th>Requester Name</th>
+          <th>Message</th>
+          <th>Vehicle Title</th>
+          <th>Vehicle Brand </th> 
+          <th>Accept Action</th>
+          <th>Reject Action</th>
+        </tr>';
         //if the user has listings this query will find out if there is any request for approval for his vehicle
-      $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId  WHERE result= 'pending' AND t.userId = '$ownerId'";
+      $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId  
+      WHERE result= 'pending' AND t.userId = '$ownerId'";
      $result = $conn->query($sql);
     
      $rowCount = $result->num_rows;
- 
+      $number =1;
      if ($rowCount > 0) {
         while($row = $result->fetch_assoc()){
          
           ?>
-          <main role="main">
-          <section class="jumbotron text-center">
-              <div class="container">
-                 <h1 class="jumbotron-heading"><?php echo $row['fullname'] ?></h1>
-                  <p class="lead text-muted"><?php echo $row['message'] ?></p>
-                  <p class="lead text-muted">For <?php echo $row['vehicleId'] ?></p>
-                 <p>
+         
+      
 
-                 <div class="d-inline" >
-                   <input name="submit" type= "button"  onclick="onAcceptRequest(<?php echo $row['vehicleId'] ?>,<?php echo $row['requesterId'] ?>)" class="btn btn-primary" 
-                   value = "Accept Request">
-                </div>
-
-                 <div class="d-inline">
-                   <input name="submit" type= "button"  onclick="onRejectRequest(<?php echo $row['vehicleId'] ?>,<?php echo $row['requesterId'] ?>)" class="btn btn-danger" 
-                   value = "Reject Request">
-                 </div>
-                 </p>
-                 <small><i></i></small>
-
-              </div>
-   
-          </section>
-
-          </main>
-        <?php }}else{
+            <tr>  
+				<td><?php echo $number ?></td>
+				<td><?php echo $row['fullname'] ?></td>
+				<td><?php echo $row['message'] ?></td>
+				<td><?php echo $row['VehiclesTitle'] ?></td>
+				<td><?php echo $row['VehiclesBrand'] ?></td>
+				<td>
+					<button onclick="onAcceptRequest(<?php echo $row['vehicleId'] ?>,<?php echo $row['requesterId'] ?>)" class="btn btn-success">Accept request</button>
+				</td>
+				<td>
+					<button  onclick="onRejectRequest(<?php echo $row['vehicleId'] ?>,<?php echo $row['requesterId'] ?>)" class="btn btn-danger">Reject Request</button>
+				</td>
+    		</tr>
+          
+        <?php
+        $number++; 
+         
+      }
+      echo "</table>";
+    }
+      
+      else{
           echo  '<strong><div style="width: 30%; color: red; margin-left: 200px; margin-top: 20px;" class="alert-danger">
           No requests found yet for your listings</div></strong>';
         } }?>
