@@ -17,7 +17,7 @@ $userLevel = $_SESSION['userLevel'];
 
         <li>
 
-          <a href="myProfile.php"><i class="fa fa-motorcycle"></i> update profile</a>
+          <a href="myProfile.php"><i class="fa fa-user"></i> update profile</a>
 
         </li>
         <?php 
