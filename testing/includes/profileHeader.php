@@ -1,7 +1,7 @@
 <?php session_start(); 
 	$myvalue = $_SESSION['username'];
 	$arr = explode(' ',trim($myvalue));
-	$firstName= $arr[0]; // will print Test
+	$firstName= $arr[0]; // will print the first name of the logged user
 ?>
 <style>
 	.ts-account ul li:hover{
@@ -12,7 +12,7 @@
 </style>
 
 <div class="brand clearfix">
-	<a href="userProfile.php" style="font-size: 20px;">Scooter Rental</a>  
+	<a href="userProfile.php" style="font-size: 20px;"><img class="imagelink" src="Images/Logo.png" height="40px" style="margin-left:20px; margin-top: 5px;" alt=""></a>  
 		<span class="menu-btn"><i class="fa fa-bars"></i></span>
 		<ul class="ts-profile-nav">
 			
