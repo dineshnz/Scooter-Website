@@ -57,6 +57,11 @@ if(isset($_POST['submit'])){
     <link href="css/owl.carousel.min.css" rel="stylesheet">
     <link href="css/owl.theme.default.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <!-- scripts and link tag for comment section   -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
     <style>
         .page-wrapper {
             margin-left: 20px;
@@ -150,7 +155,7 @@ if(isset($_POST['submit'])){
 
                                         <li role="presentation"><a href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab">Accessories</a></li>
 
-                                        <li role="presentation"><a href="#vehicle-history" aria-controls="history" role="tab" data-toggle="tab">History</a></li>
+<!--                                        <li role="presentation"><a href="#vehicle-history" aria-controls="history" role="tab" data-toggle="tab">History</a></li>-->
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
@@ -245,6 +250,32 @@ if(isset($_POST['submit'])){
                         <!--/Side-Bar-->
                     </div>
                 </div>
+                <!-- COMMENTING SECTION  -->
+                <div class="container">
+                   <br>
+                   <h2>Comments</h2>
+                    <form method="POST" id="comment_form" action="">
+                    <div class="form-group">
+                        <!-- USER CAN ENTER NAME / TODO: BETTER TO ALREADY HAVE USERS ID -->
+                        <input type="text" name="comment_name" id="comment_name" class="form-control" placeholder="Enter Name"/>
+                    </div>
+                        <!-- USER COMMENT -->
+                    <div class="form-group">
+                       <textarea name="comment_content" id="comment_content" class="form-control" placeholder="Enter Comment" rows="5"></textarea>
+                    </div>
+                        <!-- SUBMIT BUTTON ->sends comment data to server -->
+                    <div class="form-group">
+                        <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit">   
+                    </div>
+                    </form>
+                    <!-- span for ERROR or SUCCESS message -->
+                    <span id="comment_message"></span>
+                    <br>
+                    <!-- DISPLAY comment on web page using AJAX -->
+                    <div id="display_comment">
+                        
+                    </div>
+               </div>
             </section>
         </div>
     </div>
@@ -267,3 +298,31 @@ if(isset($_POST['submit'])){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+<script>
+//submit data for comment system
+    $(document).ready(function(){
+        //when the form is submitted this code will execute
+       $('#comment_form').on('submit', function(event){
+           //this method will stop submitting the form data to the server
+           event.preventDefault();
+           //after this, we have defined form data variable is equal to $ this with serialiazed method, this method will convert form data to URL encoded string
+           var form_data = $(this).serialize();
+           //now we start the AJAX request
+           $.ajax({
+               //1. send the request/comment to add_comment.php file, 2. the method = POST 3. define what data to send to the server = form_data, 4. the datatype, 5. success callback function - this function has been called if request is successful and will recieve data from the server
+               url:"add_comment.php", 
+               method:"POST", 
+               data:form_data,
+               dataType:"JSON",
+               success:function(data){
+                   if(data.error != ''){
+                       //reset the form field
+                       $('#comment_form')[0].reset();
+                       //after this we want to display the message under the div tag - comment_message. html method will display error or success message on web page
+                       $('#comment_message').html(data.error);
+                   }
+               }
+           })
+       });
+    });
+</script>
