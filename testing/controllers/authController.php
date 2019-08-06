@@ -18,17 +18,25 @@ $errors = [];
 
 // SIGN UP USER
 if (isset($_POST['signup-btn'])) {
-    $fullname = $_POST['fullname'];
-$email = $_POST['email'];
-$passport = $_POST['passport'];
-$address = $_POST['address'];
-$license = $_POST['license'];
+    //$fullname = $_POST['fullname'];
+    //$email = $_POST['email'];
+   // $passport = $_POST['passport'];
+    // $address = $_POST['address'];
+    // $license = $_POST['license'];
     if (empty($_POST['fullname'])) {
         $errors['fullname'] = 'Username required';
+    }
+
+    if(preg_match('^[a-zA-Z0-9 ]*$', stripslashes(trim($_POST['fullname'])))){
+        $fullname = takeInput($_POST['fullname']);
     }
     if (empty($_POST['email'])) {
         $errors['email'] = 'Email required';
     }
+    
+
+    $email = takeInput($_POST['email']);
+
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $errors['email'] = "Email address is invalid";
     }
@@ -37,12 +45,47 @@ $license = $_POST['license'];
     if (empty($_POST['passport'])) {
         $errors['passport'] = 'Passport Number required';
     }
+
+    if (preg_match ("/^[a-zA-Z0-9 ]*$/", stripslashes(trim($_POST['passport'])))) {
+
+        $passport = takeInput($_POST['passport']);
+        
+        } else {
+        
+        $passport = FALSE;
+        $errors['passport'] = 'Valid Passport Number required';
+       
+        
+        }
     if (empty($_POST['address'])) {
         $errors['address'] = 'Address required';
     }
+
+    if (preg_match ('/^[a-zA-Z0-9,.!? ]*$/', stripslashes(trim($_POST['address'])))) {
+
+        $address = takeInput($_POST['passport']);
+        
+        } else {
+        
+        $address = FALSE;
+        $errors['address'] = 'valid address required';
+       
+        
+        }
     if (empty($_POST['license'])) {
         $errors['license'] = 'Driver License Number required';
     }
+    if (preg_match ("/^[a-zA-Z0-9,.!? ]*$/", stripslashes(trim($_POST['license'])))) {
+
+        $license = takeInput($_POST['license']);
+        
+        } else {
+        
+        $license = FALSE;
+        $errors['license'] = 'Valid license Number required';
+       
+        
+        }
     if (empty($_POST['password'])) {
         $errors['password'] = 'Password required';
     }
@@ -129,6 +172,15 @@ $license = $_POST['license'];
         
     }
 }
+
+//function to remove any spaces and take input
+function takeInput($data) {
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+  }
+
 
 // LOGIN
 if (isset($_POST['login-btn'])) {
