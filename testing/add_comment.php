@@ -19,6 +19,7 @@ error_reporting(0);
 //CONNECT to DB using config/db.php
 require 'config/db.php';
 error_reporting(0);
+$mysqli = new mysqli("localhost", "DB_USER", "DB_PASS", "DB_NAME");
 //on this page we make the DB connection
 //$connect = new PDO('mysql:host=localhost;dbname=scootera', 'root', '');
 //after DB connection, define 3 variables
@@ -39,6 +40,24 @@ $comment_content = '';
     }
     //IF this is true then there is no validation error and it will execute the block below
     if($error == ''){
-        $query = "INSERT INTO tbl_comment(parent_comment_id, comment, comment_sender_name) VALUES (:)"
+        $query = $mysqli->("INSERT INTO tbl_comment(parent_comment_id, comment, comment_sender_name) VALUES (:parent_comment_id, :comment, :comment_sender_name)");
+        //below prepares $query for execution
+        $statement = $connect->prepare($query);
+        //execute method with value, pass in an array format. This method will execute INSERT query
+        $statement->execute(
+            array(
+                ':parent_comment_id'    => '0',
+                ':comment'              => $comment_content,
+                ':comment_sender_name'  => $comment_name
+            )
+            $error = '<label class-"text-success">Comment Added</label>';
+        );
     }
+
+    $data = array(
+        'error' => $error
+    );
+
+    //lastly send the data to AJAX. converts to a string and sends to AJAX
+    echo json_encode($data);
 ?>
