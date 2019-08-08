@@ -1,0 +1,164 @@
+
+#search{
+    width: 1200px;
+    height: 50px;
+    background: #007aff;
+    padding: 10px;
+    margin-top: 56px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#search >form.submit{
+	display: block;
+	width:500px;
+    height: 30px;
+	margin: 0 auto;
+	border: none;
+}
+#search .submit>input[type=text]{
+	border: none;
+	width : 400px;
+}
+#search .submit>input[type=button]{
+	border: none;
+	background-color:white;
+}
+
+
+#container{
+    width: 1200px;
+    height: auto;
+    overflow: hidden;
+    margin: 30px auto;
+}
+.left{
+    float: left;
+    width: 250px;
+    padding: 20px 10px;
+    border-radius: 5px;
+    border: 1px solid #8798b3;
+    background-color: #f8f8f8;
+}
+.left .type{
+    width: 100%;
+    line-height: 30px;
+    border-radius: 5px;
+    border: 1px solid #5f6f88;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.left>select{
+    display: block;
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.left .list{
+    width: 100%;
+    height: 50px;
+    margin-bottom: 15px;
+}
+.left .list .title{
+    width: 100%;
+    font-size: 12px;
+    color: #333;
+}
+.left .list>input{
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+    border: 1px solid #5f6f88;
+}
+
+.left .button{
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    background: #1083ff;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.right{
+    float: right;
+    width: 920px;
+    height: auto;
+}
+.right .brand{
+    width: 100%;
+    height: 460px;
+    background: #f8f8f8;
+    border-radius: 5px;
+    padding: 20px 10px;
+    color: #333;
+    margin-bottom: 10px;
+}
+.right .brand .bar{
+    float: left;
+    width: 225px;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.right .goods-box{
+    width: 100%;
+}
+.goods{
+    width: 100%;
+    height: 380px;
+    border: 1px solid #d2d2d2;
+    margin: 10px auto;
+}
+.goods .image{
+    float: left;
+    width: 600px;
+    height: 100%;
+    background: #ccc;
+}
+.goods .image>img{
+    width: 100%;
+    height: 100%;
+}
+.goods .message{
+    float: right;
+    width: 300px;
+}
+.goods .message .info{
+    width: 100%;
+    height: 280px;
+    padding: 20px 10px;
+    border-bottom: 1px solid #d2d2d2;
+}
+.goods .message .info>p{
+    width: 100%;
+    font-size: 12px;
+    color: #666;
+}
+.goods .message .info>p.name{
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+}
+.goods .message .info>p.distance{
+    font-weight: bold;
+    color: #333;
+}
+.goods .message .info .button{
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    background: #007aff;
+    color: #fff;
+    line-height: 30px;
+    cursor: pointer;
+}
+.goods .message .price{
+    width: 100%;
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+    padding: 20px 10px;
+}

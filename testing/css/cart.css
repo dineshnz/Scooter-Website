@@ -1,0 +1,152 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+body{
+    background: #fafafa;
+}
+
+/*search*/
+#nav{
+    width: 100%;
+    height: 80px;
+    background: #343a40;
+    padding: 20px 0;
+    color: #fff;
+    margin-top: 59px;
+}
+.nav-con{
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.nav-con .name{
+    font-weight: bold;
+    font-size: 25px;
+    float: left;
+    line-height: 40px;
+}
+.nav-con .search{
+    float: right;
+    width: 400px;
+    height: 100%;
+	color:white;
+}
+.nav-con .search>input{
+    display: block;
+    float: left;
+    width: 300px;
+    height: 100%;
+    border: none;
+}
+.nav-con .search .btn{
+    width: 98px;
+    height: 100%;
+    float: left;
+    background: #007bff;
+    text-align: center;
+}
+/*end search*/
+
+#container{
+    width: 1200px;
+    margin: 30px auto;
+}
+.title{
+    width: 100%;
+    font-weight: bold;
+    font-size: 25px;
+    color: #333;
+    border-bottom: 2px solid #007aff;
+}
+#container .head{
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+#container .head .message{
+    width: 750px;
+    text-align: center;
+}
+#container .head p.price{
+    width: 250px;
+}
+#container .head .operate{
+    width: 250px;
+}
+.goods{
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ccc;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+.goods>input{
+	display：block;
+	float: left;
+	margin-top: 47px;
+}
+.goods .image{
+    width: 100px;
+    height: 100px;
+    background: #007aff;
+}
+.goods .image>img{
+    width: 100%;
+    height: 100%;
+}
+.goods .name{
+    width: 300px;
+    color: #000;
+}
+.goods .desc{
+    width: 250px;
+}
+.goods .price{
+    width: 250px;
+}
+.goods .delete{
+    width: 200px;
+}
+#container .function{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 12px;
+    background: #f5f5f5;
+}
+.function .select{
+    float: left;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+.function p{
+    float: left;
+    margin-right: 20px;
+}
+.function .button{
+    float: right;
+    width: 120px;
+    height: 50px;
+    background: #007aff;
+    color: #fff;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+}
