@@ -1,4 +1,10 @@
+<?php
 
+require 'config/db.php';
+
+
+$requesterID = "";
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,35 +13,73 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Pending Request System in PHP and MySql</title>
+    <title>Show requests</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+      .content{
+       width:  75%;
+          margin-top: 0px;
+          margin-left: 280px;
+      }
+
+    .vehicleRecord{
+      border: 1px solid lightgray;
+      border-radius: 5px;
+      border-width: 45px;
+      background-color: lightgrey;
+      width: 60%;
+      margin: auto;
+    }
+    
+    </style>
+    
   </head>
 
   <body>
+  
+
   <?php include('includes/profileHeader.php');?>
 	<div class="ts-main-content">
 	<?php include('includes/leftbar.php');?>
-		<div class="content-wrapper">
-			<div class="container-fluid">
-            <main role="main">
-                 <section class="jumbotron text-center">
-                     <div class="container">
-                        <h1 class="jumbotron-heading">User name</h1>
-                         <p class="lead text-muted">user message for request</p>
-                        <p>
-                        <a href="accept.php" class="btn btn-primary my-2">Accept</a>
-                        <a href="reject.php" class="btn btn-secondary my-2">Reject</a>
-                        </p>
-                        <small><i></i></small>
+		
+			<div class="content">
 
-                     </div>
+      <p class="vehicleRecord d-inline d-flex align-items-center">Please click here to view the pending requests for your vehicles
+
+
+      <input name="submit" type= "button"  onclick="viewPendingRequests()" class="btn btn-primary d-inline" 
+                   value = "view Vehicles">
+                   </p>
+
+      <div id="targetDiv"></div>
+        <!--Start of modal to show results-->
+   <div class="modal fade" id="responseModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Response</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
           
-                 </section>
+        </div>
+        <div class="modal-body" id="success">
+          
+        </div>
 
-                 </main>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+      </div>
+      
+    </div>
+  </div>
+
+        
+
             </div>
         </div>
     </div>
@@ -44,7 +88,7 @@
 
    
 
-
+    <script type="text/javascript" src="js/showScooters.js"> </script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

@@ -18,17 +18,25 @@ $errors = [];
 
 // SIGN UP USER
 if (isset($_POST['signup-btn'])) {
-    $fullname = $_POST['fullname'];
-$email = $_POST['email'];
-$passport = $_POST['passport'];
-$address = $_POST['address'];
-$license = $_POST['license'];
+    //$fullname = $_POST['fullname'];
+    //$email = $_POST['email'];
+   // $passport = $_POST['passport'];
+    // $address = $_POST['address'];
+    // $license = $_POST['license'];
     if (empty($_POST['fullname'])) {
         $errors['fullname'] = 'Username required';
+    }
+
+    if(preg_match('^[a-zA-Z0-9 ]*$', stripslashes(trim($_POST['fullname'])))){
+        $fullname = takeInput($_POST['fullname']);
     }
     if (empty($_POST['email'])) {
         $errors['email'] = 'Email required';
     }
+    
+
+    $email = takeInput($_POST['email']);
+
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $errors['email'] = "Email address is invalid";
     }
@@ -37,12 +45,47 @@ $license = $_POST['license'];
     if (empty($_POST['passport'])) {
         $errors['passport'] = 'Passport Number required';
     }
+
+    if (preg_match ("/^[a-zA-Z0-9 ]*$/", stripslashes(trim($_POST['passport'])))) {
+
+        $passport = takeInput($_POST['passport']);
+        
+        } else {
+        
+        $passport = FALSE;
+        $errors['passport'] = 'Valid Passport Number required';
+       
+        
+        }
     if (empty($_POST['address'])) {
         $errors['address'] = 'Address required';
     }
+
+    if (preg_match ('/^[a-zA-Z0-9,.!? ]*$/', stripslashes(trim($_POST['address'])))) {
+
+        $address = takeInput($_POST['passport']);
+        
+        } else {
+        
+        $address = FALSE;
+        $errors['address'] = 'valid address required';
+       
+        
+        }
     if (empty($_POST['license'])) {
         $errors['license'] = 'Driver License Number required';
     }
+    if (preg_match ("/^[a-zA-Z0-9,.!? ]*$/", stripslashes(trim($_POST['license'])))) {
+
+        $license = takeInput($_POST['license']);
+        
+        } else {
+        
+        $license = FALSE;
+        $errors['license'] = 'Valid license Number required';
+       
+        
+        }
     if (empty($_POST['password'])) {
         $errors['password'] = 'Password required';
     }
@@ -130,6 +173,15 @@ $license = $_POST['license'];
     }
 }
 
+//function to remove any spaces and take input
+function takeInput($data) {
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+  }
+
+
 // LOGIN
 if (isset($_POST['login-btn'])) {
     if (empty($_POST['username'])) {
@@ -211,12 +263,12 @@ function verifyUser($token){
 
         if (mysqli_query($conn, $update_query)){
             //log user in
-            $_SESSION['id'] = $user['id'];
-                $_SESSION['username'] = $user['fullname'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['passport'] = $user['passport'];
-                $_SESSION['address'] = $user['address'];
-                $_SESSION['license'] = $user['license'];
+            // $_SESSION['id'] = $user['id'];
+            //     $_SESSION['username'] = $user['fullname'];
+            //     $_SESSION['email'] = $user['email'];
+            //     $_SESSION['passport'] = $user['passport'];
+            //     $_SESSION['address'] = $user['address'];
+            //     $_SESSION['license'] = $user['license'];
 
                 $_SESSION['verified'] = 1;
                 $_SESSION['message'] = 'Your Email was successfully verified! Please login and enjoy the website';
@@ -323,7 +375,7 @@ $vimage2=$_FILES["img2"]["name"];
 $vimage3=$_FILES["img3"]["name"];
 $vimage4=$_FILES["img4"]["name"];
 $vimage5=$_FILES["img5"]["name"];
-$passport = $_SESSION['passport'];
+$userId = $_SESSION['id'];
 $antilockbrakingsys=$_POST['antilockbrakingsys'];
 $brakeassist=$_POST['brakeassist'];
 $leatherseats=$_POST['leatherseats'];
@@ -339,8 +391,8 @@ Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AntiLockBrakingSystem,BrakeAssist,Leathe
 
 
         $stmt = $conn->prepare($sql);
-		$stmt->bind_param('sssisisssssiiis', $vehicletitle, $brand, $vehicleoverview, $priceperday, $fueltype, $modelyear, 
-		$vimage1,$vimage2,$vimage3,$vimage4,$vimage5, $antilockbrakingsys, $brakeassist, $leatherseats, $passport);
+		$stmt->bind_param('sssisisssssiiii', $vehicletitle, $brand, $vehicleoverview, $priceperday, $fueltype, $modelyear, 
+		$vimage1,$vimage2,$vimage3,$vimage4,$vimage5, $antilockbrakingsys, $brakeassist, $leatherseats, $userId);
 
         $resultSql = $stmt->execute();
 
@@ -360,5 +412,3 @@ $error="Something went wrong. Please try again";
 	?>
 
 
-
-?>

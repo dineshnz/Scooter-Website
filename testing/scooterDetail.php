@@ -3,6 +3,8 @@ session_start();
 require 'config/db.php';
 require_once 'config/stripeConfig.php';
 error_reporting(0);
+
+//on submit button clicked, get all the message (havent implemented yet)
 if(isset($_POST['submit']))
 {
 $fromdate=$_POST['fromdate'];
@@ -48,8 +50,9 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
   
  
 <link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="css/css/style1.css" type="text/css">
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <link rel="stylesheet" href="css/purple.css" type="text/css">
 
@@ -72,17 +75,24 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
   margin-left: 20px;
   max-width: 95%;
 }
+
+.content{
+       width:  75%;
+          margin-top: 100px;
+          margin-left: 260px;
+      }
 </style>
 </head>
 <body>
 <?php include('includes/profileHeader.php');?>
   <div class="ts-main-content">
   <?php include('includes/leftbar.php');?>
-    <div class="content-wrapper">
-  <?php 
+    <div class="content">
+  <?php
+  //this gets the value of vehicle id from the url to show the details of the clicked vehicle 
 $vhid=intval($_GET['vhid']);
 
-$sql =" SELECT * from tblscooters where id=?";
+$sql =" SELECT * from tblscooters where vid=?";
 $query = $conn -> prepare($sql);
 $query->bind_Param('i', $vhid);
 $query->execute();
@@ -95,7 +105,7 @@ if($count > 0)
 {
   while($row = $results->fetch_assoc())
   {  
-  //$_SESSION['brndid']=$result->bid;  
+  //displaying the images in the top of the page, if the image is empty in the database, then it will display empty string
   ?>  
   <div class="owl-carousel owl-theme">
   <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage1']);?>" class="img-fluid" alt="Image" /> </div> 

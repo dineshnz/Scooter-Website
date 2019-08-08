@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8404ee3-1e06-4eac-ae6c-551653cf8f98" name="Default Changelist" comment="" />
+    <list default="true" id="cfcb518e-29f6-4354-9b87-2f4123b46220" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,7 +13,7 @@
       <executable />
     </execution>
   </component>
-  <component name="ProjectId" id="1P8ImLK1jNzxTbUP1ROyVTTE1AQ" />
+  <component name="ProjectId" id="1P8SS80THUSibOAjY5311GkZXgz" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -30,17 +30,36 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="JavaScript Debug.index.html">
+    <configuration name="howWeWork.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/New folder/howWeWork.php" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/New folder/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="New folder" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner directory="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JavaScript Debug.howWeWork.php" />
+        <item itemvalue="PHPUnit.New folder" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b8404ee3-1e06-4eac-ae6c-551653cf8f98" name="Default Changelist" comment="" />
-      <created>1565249454833</created>
+      <changelist id="cfcb518e-29f6-4354-9b87-2f4123b46220" name="Default Changelist" comment="" />
+      <created>1565254227128</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1565249454833</updated>
-      <workItem from="1565249456005" duration="656000" />
+      <updated>1565254227128</updated>
+      <workItem from="1565254228247" duration="614000" />
     </task>
     <servers />
   </component>
