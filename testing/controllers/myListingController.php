@@ -16,6 +16,7 @@ if(isset($_POST['readrecords'])){
 							<th>Price Per Day</th> 
 							<th>Edit Action</th>
 							<th>Delete Action</th>
+							<th>View Detail</th>
 						</tr>'; 
 
     $displayquery = " SELECT * FROM tblScooters where userId =?"; 
@@ -40,7 +41,10 @@ if(isset($_POST['readrecords'])){
 				</td>
 				<td>
 					<button onclick="DeleteUser('.$row['vid'].')" class="btn btn-danger">Delete</button>
-				</td>
+                </td>
+                <td>
+                <a href="scooterDetail.php?vhid='.$row['vid'].'" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                </td>
             </tr>';
             $number++;
         }

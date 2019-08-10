@@ -4,10 +4,12 @@
     
     
     $vhid= $_POST['vhid'];
+    $ownerId = $_POST['ownerId'];
     $username = $_SESSION['username'];
     $requesterId = $_SESSION['id'];
     $request ="pending";
     $message = "would like to view your scooter detail";
+    $userPassport=$_SESSION['passport'];
 
     $nameQuery = "SELECT * FROM requests WHERE requesterId=? AND vehicleId=? LIMIT 1";
     $stmt = $conn->prepare($nameQuery);
@@ -30,12 +32,12 @@
     else{
    
 
-    $sql = "INSERT INTO requests (fullname, message, vehicleId, result, requesterId)
-     VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO requests (fullname, message, vehicleId, result, requesterId, ownerId)
+     VALUES (?, ?, ?, ?, ?,?)";
 
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssisi', $username, $message, $vhid, $request, $requesterId);
+    $stmt->bind_param('ssisii', $username, $message, $vhid, $request, $requesterId, $ownerId);
 
     $resultSql = $stmt->execute();
 
@@ -51,11 +53,13 @@
 
     if($row > 0)
     {
-    while($row = $result->fetch_assoc())
-    {  
+     
        echo "Request Sent!! Please wait for owner's approval"; 
+       $sql = "INSERT INTO `notifications`( `requesterId`, `type`, `message`, `status`, `notifierPassport`, `notifierName`, `date`) 
+       VALUES ($ownerId,'pending','$message', 'unread', '$userPassport','$username',CURRENT_TIMESTAMP)";
+      
+      $result = $conn->query($sql);
          }
-        }
     else{
         echo "Error";
     }

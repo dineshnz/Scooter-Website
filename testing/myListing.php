@@ -95,6 +95,7 @@
 
 <script type="text/javascript" language="javascript" src="js/showScooters.js" ></script>
 
+
 <script type="text/javascript" language="javascript" >
 $(document).ready(function () {
     readRecords(); 
@@ -105,7 +106,7 @@ $(document).ready(function () {
  //////////////////Display Records
  function readRecords(){
 		
-		var readrecords = "readrecords";
+		var readrecords = "readrecords"; 
 		$.ajax({
 			url:"controllers/myListingController.php",
 			type:"POST",

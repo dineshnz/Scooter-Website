@@ -27,9 +27,16 @@ if (isset($_POST['signup-btn'])) {
         $errors['fullname'] = 'Username required';
     }
 
-    if(preg_match('^[a-zA-Z0-9 ]*$', stripslashes(trim($_POST['fullname'])))){
+    if(preg_match("/^[a-zA-Z0-9 ]*$/", stripslashes(trim($_POST['fullname'])))){
         $fullname = takeInput($_POST['fullname']);
     }
+    else {
+        
+        $fullname = FALSE;
+        $errors['fullname'] = 'Valid name required';
+       
+        
+        }
     if (empty($_POST['email'])) {
         $errors['email'] = 'Email required';
     }
