@@ -45,6 +45,15 @@
           </div>
           <?php endif;?>
 
+          <?php if (isset($_SESSION['msg'])): ?>
+        <div class="alert <?php echo $_SESSION['type'] ?>">
+          <?php
+            echo $_SESSION['msg'];
+            unset($_SESSION['msg']);
+            unset($_SESSION['type']);
+          ?>
+        </div>
+        <?php endif;?>
           <!-- Display messages -->
         <?php if (isset($_SESSION['message'])): ?>
         <div class="alert <?php echo $_SESSION['type'] ?>">

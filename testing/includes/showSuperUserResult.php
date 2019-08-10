@@ -1,8 +1,8 @@
 <?php
 
-$sql = "SELECT * FROM tblscooters t join users u where t.userId = u.id AND u.passport =?";
+$sql = "SELECT * FROM tblscooters t join users u where t.userId = u.id AND u.passport =? or u.fullname=?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('s', $searchInput);
+$stmt->bind_param('ss', $searchInput, $searchInput);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->num_rows;

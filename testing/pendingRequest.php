@@ -1,63 +1,92 @@
-<?php
-
-require 'config/db.php';
-
-
-$requesterID = "";
-?>
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Show requests</title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-
-    <style>
-      .content{
-       width:  75%;
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>View Pending Requests</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+       
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="css/style.css">
+        
+        <style>
+          .content{
+          
           margin-top: 0px;
-          margin-left: 280px;
+          margin-left: 250px;
+          
+           }  
+
+      .main {
+          width: 30%;
+          margin: 10px auto;
       }
 
-    .vehicleRecord{
-      border: 1px solid lightgray;
-      border-radius: 5px;
-      border-width: 45px;
-      background-color: lightgrey;
-      width: 60%;
-      margin: auto;
-    }
-    
-    </style>
-    
-  </head>
 
-  <body>
+        #targetDiv{
+            margin-top: 30px;
+            width: 95%;
+            margin-left:30px;
+        }
+        
+        
+        </style>
+        
   
-
-  <?php include('includes/profileHeader.php');?>
+ </head>
+ <body>
+ <?php include('includes/profileHeader.php');?>
 	<div class="ts-main-content">
 	<?php include('includes/leftbar.php');?>
-		
-			<div class="content">
+		<div class="content">
+    <div class="card-deck">
+    
+    <div class="card" style="background-color: lightblue; margin-left: 0px; margin-right: 0px;">
+     
+      <div class="card-body">
+        <h3 class="card-title text-center">Search Requester's history</h3>
+        <p class="card-text text-center">Please enter the name or passport number you know about the requester to search his/her renting history</p>
 
-      <p class="vehicleRecord d-inline d-flex align-items-center">Please click here to view the pending requests for your vehicles
+        <form>
+          <div class="main">
+          <div class="input-group">
+	
+            <input type="text" class="form-control" id="searchInput" placeholder="dinesh Karki" required>
+            
+            <div class="input-group-append">
+                <button class="btn btn-secondary" id="searchBtn" type="button" onclick="validation()">
+                  <i class="fa fa-search"></i>
+                </button>
+            </div>
+              
+            </div>
+            <span id="refErr" class="text-danger font-weight-bold"></span>
+          </div>
+	    	</form>
+        <div id="referenceTarget"></div>
 
+    </div>
+    </div>
+     <!--End of the cards-->
+ 
+  <!--target div for the table--> 
+</div>
+  
+    <div id="targetDiv">	</div>
 
-      <input name="submit" type= "button"  onclick="viewPendingRequests()" class="btn btn-primary d-inline" 
-                   value = "view Vehicles">
-                   </p>
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+ </body>
+</html>
 
-      <div id="targetDiv"></div>
-        <!--Start of modal to show results-->
-   <div class="modal fade" id="responseModal" role="dialog">
+    <!--Start of modal to show results-->
+    <div class="modal fade" id="responseModal" role="dialog">
     <div class="modal-dialog">
     
       <div class="modal-content">
@@ -78,22 +107,85 @@ $requesterID = "";
     </div>
   </div>
 
-        
 
-            </div>
-        </div>
-    </div>
+<script type="text/javascript" language="javascript" >
+        $(document).ready(function () {
+         viewPendingRequests(); 
+	    });
 
-    
+function createRequest() {
+    var xhr = false;  
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return xhr;
+} // end function createRequest()
 
-   
 
-    <script type="text/javascript" src="js/showScooters.js"> </script>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
-</html>
+
+var xhr= createRequest();
+
+  function onAcceptRequest(vehicleId, requesterId){
+  if(xhr){
+    var obj = document.getElementById("success");
+    var requestbody ="vehicleId="+encodeURIComponent(vehicleId)+
+    "&requesterId="+encodeURIComponent(requesterId);
+		var url = "accept.php";
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				obj.innerHTML = xhr.responseText;
+				$(document).ready(function(){
+          $("#responseModal").modal("show");
+  
+        });
+        viewPendingRequests();
+			}
+		}
+		xhr.send(requestbody);
+	}
+}
+
+function viewPendingRequests(){
+  if(xhr){
+		var obj = document.getElementById("targetDiv");
+		var dataSource = "viewPendingRequest.php";
+		xhr.open("POST", dataSource, true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				obj.innerHTML = xhr.responseText;
+			}
+		}
+		xhr.send();
+	}
+}
+
+function onRejectRequest(vehicleId, requesterId){
+  if(xhr){
+    var obj = document.getElementById("success");
+    var requestbody ="vehicleId="+encodeURIComponent(vehicleId)+
+    "&requesterId="+encodeURIComponent(requesterId);
+		var url = "reject.php";
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				obj.innerHTML = xhr.responseText;
+				$(document).ready(function(){
+          $("#responseModal").modal("show");
+  
+        });
+        viewPendingRequests();
+			}
+		}
+		xhr.send(requestbody);
+	}
+}
+
+  
+  </script>

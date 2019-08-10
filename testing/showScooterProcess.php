@@ -14,23 +14,29 @@ $resultString ="";
         
           <?php 
           //getting input from users and getting session values of logged in user
-          $searchInput = $_POST['searchInput'];
+          $searchInput = strtolower($_POST['searchInput']);
           $requesterID = $_SESSION['id'];
           $passportNo = $_SESSION['passport'];
+          $fullname = strtolower($_SESSION['username']);
+          
+        
            
         
 
           //Query for Listing count. This will show the number of vehicles related to the owner passport input
-            $sql = "SELECT vid FROM tblscooters t join users u on u.id = t.userId WHERE u.passport=?";
+            $sql = "SELECT vid FROM tblscooters t join users u on u.id = t.userId
+             WHERE u.passport=? OR u.fullname=?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('s', $searchInput);
+            $stmt->bind_param('ss', $searchInput, $searchInput);
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->num_rows;
             $stmt->close();
             
             if($row > 0){
-              if($passportNo == $searchInput){
+              if($passportNo == $searchInput || $fullname == $searchInput ){
+
+              
                 ?>
              <div class="result-sorting-wrapper">
           <div class="sorting-count">
@@ -57,16 +63,16 @@ $resultString ="";
            <?php
             //if the user is owner then this will show his/her vehicle so that they do not have to send request
             //to view their own vehicle.
-           if($passportNo == $searchInput){
+           if($passportNo == $searchInput || $fullname == $searchInput ){
              include 'includes/showSuperUserResult.php';
            }
            else{
             //this will search the scooters related to the owner which 
            $sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId
-           WHERE u.passport=?";
+           WHERE u.passport=? OR u.fullname=?";
               
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('s', $searchInput);
+            $stmt->bind_param('ss', $searchInput,$searchInput);
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->num_rows;
@@ -78,18 +84,20 @@ $resultString ="";
 	    {  ?>
 			<div class="product-listing-m" style="background:#eeeeee">
         <div class="product-listing-img"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage1']);?>" 
-            class="img-fluid" style="height: 191px" alt="<?php echo $row['VehiclesTitle'] ?>" /> </a> 
+            class="img-fluid" style="height: 220px" alt="<?php echo $row['VehiclesTitle'] ?>" /> </a> 
 			  </div>
 			  <div class="product-listing-content">
-				<h5><a href="vehical-details.php?vhid=<?php echo htmlentities($row['vid']);?>"><?php echo htmlentities($row['VehiclesBrand']);?> 
-				 <?php echo htmlentities($row['VehiclesTitle']);?></a></h5>
-				<p class="list-price">$<?php echo htmlentities($row['PricePerDay']);?> Per Day</p>
+				<h5><a href="scooterDetail.php?vhid=<?php echo htmlentities($row['vid']);?>"><?php echo htmlentities($row['VehiclesBrand']);?> 
+         <?php echo htmlentities($row['VehiclesTitle']);?></a> </h5>
+         
+        <p class="list-price">$<?php echo htmlentities($row['PricePerDay']);?> Per Day</p>
+        <h4>Owner: <?php echo htmlentities($row['fullname'])?></h4>
 				<ul>
 				  
 				  <li><i class="fa fa-calendar" aria-hidden="true"></i><?php echo htmlentities($row['ModelYear']);?> model</li>
 				  <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($row['FuelType']);?></li>
         </ul>
-
+			 
         
 
         <?php
@@ -111,7 +119,7 @@ $resultString ="";
         <!-- sending the request to the owner for approval, we need to pass the vehicle id to that page so that
       we know which vehicle was requested for -->
               <input name="submit" type= "button" name="requrstBtn"  
-                  onclick="sendRequestForApproval(<?php echo $row['vid'] ?>)" 
+                  onclick="sendRequestForApproval(<?php echo $row['vid']?>, <?php echo $row['userId']?>)" 
                   class="btn btn-primary pull-right" 
                    value = "Send Requests for approval" title="Please send request to owner to be able to view the detail of the vehicle">
              

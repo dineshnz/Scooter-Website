@@ -29,7 +29,7 @@
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	
-	<title>Post a scooter</title>
+	<title>User Home Page</title>
 
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

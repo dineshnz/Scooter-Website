@@ -12,7 +12,7 @@ $userLevel = $_SESSION['userLevel'];
 </style>
 <nav class="ts-sidebar">
 			<ul class="ts-sidebar-menu">
-			
+
 				<li class="ts-label">Main</li>
 
         <li>
