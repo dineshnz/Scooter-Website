@@ -11,7 +11,6 @@
   <div class="header">
   	<h2>Register</h2>
   </div>
-	
   <form method="post" action="register.php">
   	<?php include('errors.php'); ?>
   	<div class="input-group">
@@ -22,7 +21,6 @@
   	  <label>Email</label>
   	  <input type="email" name="email">
   	</div>
-
     <div class="input-group">
       <label>Passport Number</label>
       <input type="text" name="passport">
