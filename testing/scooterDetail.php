@@ -1,155 +1,143 @@
 <?php 
-session_start();
-require 'config/db.php';
-require_once 'config/stripeConfig.php';
-error_reporting(0);
+  session_start();
+  require 'config/db.php';
+  require_once 'config/stripeConfig.php';
+  error_reporting(0);
 
-//on submit button clicked, get all the message (havent implemented yet)
-if(isset($_POST['submit']))
-{
-$fromdate=$_POST['fromdate'];
-$todate=$_POST['todate']; 
-$message=$_POST['message'];
-$useremail=$_SESSION['login'];
-$status=0;
-$vhid=$_GET['vhid'];
-$sql="INSERT INTO  tblbooking(userEmail,VehicleId,FromDate,ToDate,message,Status) 
-VALUES(?, ?, ?, ?, ?, ?)";
-$query = $conn->prepare($sql);
+  //on submit button clicked, get all the message (havent implemented yet)
+  if(isset($_POST['submit'])){
+    $fromdate=$_POST['fromdate'];
+    $todate=$_POST['todate']; 
+    $message=$_POST['message'];
+    $useremail=$_SESSION['login'];
+    $status=0;
+    $vhid=$_GET['vhid'];
+    $sql="INSERT INTO  tblbooking(userEmail,VehicleId,FromDate,ToDate,message,Status) 
+    VALUES(?, ?, ?, ?, ?, ?)";
+    $query = $conn->prepare($sql);
 
-$query-> bind_param('sisssis',$useremail, $vhid, $fromdate, $todate, $message, $status);
-$query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-echo "<script>alert('Booking successfull.');</script>";
-}
-else 
-{
-echo "<script>alert('Something went wrong. Please try again');</script>";
-}
-
-}
-
+    $query-> bind_param('sisssis',$useremail, $vhid, $fromdate, $todate, $message, $status);
+    $query->execute();
+    $lastInsertId = $dbh->lastInsertId();
+    if($lastInsertId){
+      echo "<script>alert('Booking successfull.');</script>";
+    }else{
+      echo "<script>alert('Something went wrong. Please try again');</script>";
+    }
+  }
 ?>
-
 
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="keywords" content="">
-<meta name="description" content="">
-<title>Scooter Detail</title>
-<!-- Font awesome -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Sandstone Bootstrap CSS -->
-  
-  
- 
-<link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>Scooter Detail</title>
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Sandstone Bootstrap CSS -->
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/purple.css" type="text/css">
+  <!--OWL Carousel slider-->
+  <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+  <link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
+  <!--slick-slider -->
+  <link href="css/slick.css" rel="stylesheet">
+  <!--bootstrap-slider -->
+  <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+  <!--FontAwesome Font Style -->
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/owl.carousel.min.css" rel="stylesheet">
+  <link href="css/owl.theme.default.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+  <style>
+    .page-wrapper{
+      margin-left: 20px;
+      max-width: 95%;
+    }
 
-
-<link rel="stylesheet" href="css/purple.css" type="text/css">
-
-<!--OWL Carousel slider-->
-<link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
-<link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
-<!--slick-slider -->
-<link href="css/slick.css" rel="stylesheet">
-<!--bootstrap-slider -->
-<link href="css/bootstrap-slider.min.css" rel="stylesheet">
-<!--FontAwesome Font Style -->
-<link href="css/font-awesome.min.css" rel="stylesheet">
-<link href="css/owl.carousel.min.css" rel="stylesheet">
-<link href="css/owl.theme.default.min.css" rel="stylesheet">
-
-
-<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-<style>
-.page-wrapper{
-  margin-left: 20px;
-  max-width: 95%;
-}
-
-.content{
-       width:  75%;
-          margin-top: 100px;
-          margin-left: 260px;
-      }
-</style>
+    .content{
+      width:  75%;
+      margin-top: 100px;
+      margin-left: 260px;
+    }
+    .user{
+      font-weight: bold;
+      color: black;
+    }
+    .time{
+      color: gray;
+    }
+    .userComment{
+      color: black;
+    }
+    .replies{
+      margin-left: 20px;
+    }
+  </style>
 </head>
 <body>
-<?php include('includes/profileHeader.php');?>
+  <?php include('includes/profileHeader.php');
+  ?>
   <div class="ts-main-content">
-  <?php include('includes/leftbar.php');?>
-    <div class="content">
+  <?php include('includes/leftbar.php');
+  ?>
+  <div class="content">
   <?php
-  //this gets the value of vehicle id from the url to show the details of the clicked vehicle 
-$vhid=intval($_GET['vhid']);
-
-$sql =" SELECT * from tblscooters where vid=?";
-$query = $conn -> prepare($sql);
-$query->bind_Param('i', $vhid);
-$query->execute();
-$results=$query->get_result();
-$count = $results->num_rows;
-
-
-$cnt=1;
-if($count > 0)
-{
-  while($row = $results->fetch_assoc())
-  {  
-  //displaying the images in the top of the page, if the image is empty in the database, then it will display empty string
+    //this gets the value of vehicle id from the url to show the details of the clicked vehicle 
+    $vhid=intval($_GET['vhid']);
+    $sql =" SELECT * from tblscooters where vid=?";
+    $query = $conn -> prepare($sql);
+    $query->bind_Param('i', $vhid);
+    $query->execute();
+    $results=$query->get_result();
+    $count = $results->num_rows;
+    $cnt=1;
+    if($count > 0){
+      while($row = $results->fetch_assoc()){  
+      //displaying the images in the top of the page, if the image is empty in the database, then it will display empty string
   ?>  
   <div class="owl-carousel owl-theme">
-  <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage1']);?>" class="img-fluid" alt="Image" /> </div> 
-  
-  <?php if($row['Vimage2']=="")
-{
-
-} else {
-  ?>
- <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage2']);?>" class="img-fluid" alt="Image" /></div>
-  <?php } ?>
-
-  <?php if($row['Vimage3']=="")
-{
-
-} else {
-  ?>
- <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage3']);?>" class="img-fluid" alt="Image" /></div>
-  <?php } ?>
-
-  <?php if($row['Vimage4']=="")
-{
-
-} else {
-  ?>
- <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage4']);?>" class="img-fluid" alt="Image" /></div>
-  <?php } ?>
-
-  <?php if($row['Vimage5']=="")
-{
-
-} else {
-  ?>
- <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage5']);?>" class="img-fluid" alt="Image" /></div>
-  <?php } ?>
-  
-
+    <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage1']);?>" class="img-fluid" alt="Image" /> </div> 
+    
+    <?php 
+      if($row['Vimage2']==""){
+      }else{
+    ?>
+    <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage2']);?>" class="img-fluid" alt="Image" /></div>
+    <?php 
+      } 
+    ?>
+    <?php 
+      if($row['Vimage3']==""){
+      }else{
+    ?>
+    <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage3']);?>" class="img-fluid" alt="Image" /></div>
+    <?php 
+      } 
+    ?>
+    <?php 
+      if($row['Vimage4']==""){
+      }else{
+    ?>
+    <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage4']);?>" class="img-fluid" alt="Image" /></div>
+    <?php 
+      } 
+    ?>
+    <?php 
+      if($row['Vimage5']==""){
+      }else{
+    ?>
+    <div class="item"><img src="Images/uploadedImages/<?php echo htmlentities($row['Vimage5']);?>" class="img-fluid" alt="Image" /></div>
+    <?php 
+      } 
+    ?>
  </div>
-
- 
-
-
-
   <!-- Listing details -->
   <section class="listing-detail">
     <div class="page-wrapper">
@@ -319,6 +307,28 @@ if($count > 0)
     </div>
 
     </div>
+<!--   COMMENT SECTION -->
+  <div class="container"
+  >
+    <div class="row">
+      <div class="col-md-12">
+        <h1>comment</h1>
+        <textarea class="form-control" placeholder="Add Comment" cols="30" rows="2"></textarea><br>
+        <button style="float: right;" class="btn-primary btn">Add Comment</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="userComments">
+          <div class="comment">
+            <div class="user">Senaid B<span class="time">2019-07-15</span></div>
+            <div class="userComment">this is my comment</div>
+            <div class="replies"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   </section>
 
@@ -340,6 +350,9 @@ if($count > 0)
 	<script src="js/chartData.js"></script>
 	<script src="js/main.js"></script> 
 <script src="js/owl.carousel.min.js"></script>
+
+<script
+  src="http://code.jquery.com/jquery-3.4.1.min.js"integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>
 
 <script src="js/scooterDetail.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
