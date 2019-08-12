@@ -16,6 +16,7 @@
       <div class="comment">
         <div class="user">'.$data['fullname'].'<span class="time"> '.$data['createdOn'].'</span></div>
         <div class="userComment">'.$data['comment'].'</div>
+        <div class="reply"><a href="javascript:void(0)" onclick="reply(this)" > REPLY</a></div>
         <div class="replies">
 
         </div>
@@ -105,6 +106,9 @@
   <link href="css/owl.theme.default.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
   <style>
+    .comment{
+      margin-bottom: 20px;
+    }
     .page-wrapper{
       margin-left: 20px;
       max-width: 95%;
@@ -117,12 +121,16 @@
     .user{
       font-weight: bold;
       color: black;
+      font-size: 15px;
     }
-    .time{
+    .time, .reply{
+      font-size: 15px;
       color: gray;
+      font-weight: bold;
     }
     .userComment{
       color: black;
+      font-size: 18px;
     }
     .replies .comment{
       margin-top: 20px;
@@ -307,23 +315,34 @@
           </div>
         </div>
       <!-- COMMENT SECTION -->
+      <br><h1 style="margin-left: 20px;">Add Comment</h1>
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <!-- DISPLAY the number of comments -->
-              <h2><b id="numComments"><?php echo $numComments ?> comments</b></h2>
+              <!-- ADD COMMENT -->
               <textarea class="form-control" id="mainComment" placeholder="Add Comment" cols="30" rows="2"></textarea><br>
-              <button style="float: right;" class="btn-primary btn" id="addComment">Add Comment</button>
+              <button style="float: right;" class="btn-primary btn" onclick="isReply = false;" id="addComment">Add Comment</button>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
+              <!-- DISPLAY the number of comments -->
+              <h2><b id="numComments"><?php echo $numComments ?> Comments</b></h2>
               <div class="userComments">
                 
               </div>
             </div>
           </div>
         </div>
+        <!-- REPLY -->
+        <div class="replyRow" style="display: none">
+              <div class="col-md-12">
+                <textarea class="form-control" id="replyComment" placeholder="Add Comment" cols="30" rows="2"></textarea><br>
+                  <button style="float: right;" class="btn-primary btn" onclick="isReply = true;" id="addReply">Add Reply</button>
+                  <button style="float: right;" class="btn-default" onclick="$('.replyRow').hide();">Close</button>
+              </div>
+        </div>
+          
       </section>
     </div>
   </div>
@@ -344,10 +363,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script type="text/javascript">
-    var max = <?php echo $numComments ?>;
+    var isReply = false, max = <?php echo $numComments ?>;
     $(document).ready(function(){
-      $("#addComment").on('click', function(){
-        var comment = $("#mainComment").val();
+      $("#addComment, #addReply").on('click', function(){
+        var comment;
+
+        //onclick for add reply button is set to true when clicked
+        if(!isReply)
+          comment = $("#mainComment").val();
+        else
+          comment = $("#replyComment").val();
+
         if(comment.length > 5){
           $.ajax({
             url: 'scooterDetail.php',
@@ -359,7 +385,17 @@
             }, success: function (response){
               max++;
               $("#numComments").text(max + " Comments");
-              $(".userComments").prepend(response);
+
+              if(!isReply){
+                $(".userComments").prepend(response);
+                //empty mainComment
+                $("mainComment").val("");
+              }else{
+                $("#replyComment").val("");
+                $(".replyRow").hide();
+                //Find reply parent then next = div(replies) and append reply
+                $('.replyRow').parent().next().append(response);
+              }
             }
           });
         }else
@@ -367,8 +403,13 @@
       });
       //call FUNCTION geALLComments: to get the comments.
       //Start at 0 and pass in the maximum as well from the beginning php script, $numComments
-      getAllComments(0, <?php echo $numComments ?>);
+      getAllComments(0, max);
     });
+    //FUNCTION for REPLY fields to appear after reply button is clicked
+    function reply(caller){
+      $(".replyRow").insertAfter($(caller));
+      $('.replyRow').show();
+    }
     //FUNCTION to dynamically get all the comments from DB: start and maximum number of comments
     function getAllComments(start, max){
       //IF start is bigger than max we will exit and stop getting the comments
