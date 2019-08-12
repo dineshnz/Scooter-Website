@@ -13,41 +13,9 @@
         
         <style>
           .content{
-          
           margin-top: 0px;
           margin-left: 250px;
-          
-           }  
-
-      .main {
-          width: 40%;
-          margin: 10px auto;
-      }
-
-
-        #targetDiv{
-            margin-top: 30px;
-            width: 95%;
-            margin-left:30px;
-        }
-
-        #referenceTarget{
-          margin:0 auto;
-          width: 40%;
-          text-align: center;
-          
-        }
-
-        .firstLine{
-          border-left: 6px solid red;
-          background-color: #9ba832;
-          box-sizing: content-box;
-          width: 50%;
-          margin: 10px auto;
-
-        }
-        
-        
+         }  
         </style>
         
   
@@ -58,33 +26,7 @@
   <?php include('includes/leftbar.php');?>
 
 		<div class="content">
-        <div class="row" style="background:lightgray; margin-top:19px; padding-top:10px">
-          <div class="col-md-6 firstCol">
-          <h3 class=" text-center text-white firstLine">Search Renter's history</h3>
-        <p class="text-center">Please enter the name or passport number<br> you know about the requester<br> to search his/her renting history</p>
-
-        <form>
-          <div class="main">
-          <div class="input-group">
-	
-            <input type="text" class="form-control" id="searchInput" placeholder="dinesh Karki" required>
-            
-            <div class="input-group-append">
-                <button class="btn btn-secondary" id="searchBtn" type="button" onclick="validation()">
-                  <i class="fa fa-search"></i>
-                </button>
-            </div>
-              
-            </div>
-            <span id="refErr" class="text-danger font-weight-bold"></span>
-          </div>
-	    	</form>
-        
-
-          </div>
-          <div id="referenceTarget" class="col-md-4" ></div>
-          
-        </div>
+       
         <div id="targetDiv">	</div>
 	</div>
     </div>
@@ -134,51 +76,8 @@ function createRequest() {
     return xhr;
 } // end function createRequest()
 
-//function to view the reuslt of renter's profile
-function searchHistory(){
-	if(xhr){
-        var obj = document.getElementById("referenceTarget");
-        var searchInput = document.getElementById("searchInput").value;
-        var dataSource = "showProfileRequestResult.php";
-        var requestbody ="searchInput="+encodeURIComponent(searchInput);
-		xhr.open("POST", dataSource, true);
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.onreadystatechange = function(){
-			if(xhr.readyState == 4 && xhr.status == 200){
-				obj.innerHTML = xhr.responseText;
-			}
-		}
-		xhr.send(requestbody);
-	}
-}
-
-//this function will validate the input from the user when searching the history
-function validation(){
-	var searchInput = document.getElementById("searchInput").value;
-
-
-	var refCheck = /^[0-9a-zA-z ]{0,30}$/;
-
-	if(searchInput==""){
-        document.getElementById('refErr').innerHTML = "fullname or passport number input is required";
-        return false;
-      }
-      else if(!refCheck.test(searchInput)){
-        document.getElementById('refErr').innerHTML = "Only letters numbers and spaces are allowed";
-        return false;
-      }
-      else{
-        document.getElementById('refErr').innerHTML = "";
-      }
-
-   searchHistory();
-
-}
-
-
-
 var xhr= createRequest();
-
+    //This function will accept the request to view profile
   function onAcceptRequest(vehicleId, requesterId){
   if(xhr){
     var obj = document.getElementById("success");

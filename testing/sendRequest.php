@@ -7,6 +7,7 @@
     $ownerId = $_POST['ownerId'];
     $username = $_SESSION['username'];
     $requesterId = $_SESSION['id'];
+    
     $request ="pending";
     $message = "would like to view your scooter detail";
     $userPassport=$_SESSION['passport'];
