@@ -66,7 +66,7 @@ if (!isset($_SESSION['passport'])) {
                 <div class="card-header text center"><h1>Response</h1> </div>
                 <div class="card-body">
                 <?php echo ucfirst($i['message'])." by ". ucfirst($i['notifierName'])." with passport number ".$i['notifierPassport']."<br> Please check your status"; 
-                    
+                   
                 ?>
                     
         </div>
@@ -85,7 +85,9 @@ if (!isset($_SESSION['passport'])) {
     <div class="card" style="background-color: lightblue; margin-left: 45px; margin-right: 45px;">
     <div class="card-header text center"><h1>Response</h1> </div>
     <div class="card-body">
-    <?php echo ucfirst($i['notifierName'])." would like to view one of your vehicle"?>
+    <?php echo ucfirst($i['notifierName'])." would like to view one of your vehicle";
+     
+    ?>
 
 </div>
 </div>

@@ -22,8 +22,12 @@
       else{
      
         //if the user has listings this query will find out if there is any request for approval for his vehicle
-      $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId  
-      WHERE result= 'pending' AND t.userId = '$ownerId'";
+      // $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId  
+      // WHERE result= 'pending' AND t.userId = '$ownerId'";
+
+      $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId join users u on r.requesterId = u.id
+      WHERE r.result= 'pending' AND t.userId = '$ownerId'";
+      
      $result = $conn->query($sql);
     
      $rowCount = $result->num_rows;
@@ -34,6 +38,7 @@
         <tr class="bg-dark text-white">
           <th>No.</th>
           <th>Requester Name</th>
+          <th>Requester Passport<br> Number</th>
           <th>Message</th>
           <th>Vehicle Title</th>
           <th>Vehicle Brand </th> 
@@ -50,6 +55,7 @@
             <tr>  
 				<td><?php echo $number ?></td>
 				<td><?php echo $row['fullname'] ?></td>
+				<td><?php echo $row['passport'] ?></td>
 				<td><?php echo $row['message'] ?></td>
 				<td><?php echo $row['VehiclesTitle'] ?></td>
 				<td><?php echo $row['VehiclesBrand'] ?></td>
@@ -59,6 +65,7 @@
 				<td>
 					<button  onclick="onRejectRequest(<?php echo $row['vehicleId'] ?>,<?php echo $row['requesterId'] ?>)" class="btn btn-danger">Reject Request</button>
         </td>
+        
 
     		</tr>
           

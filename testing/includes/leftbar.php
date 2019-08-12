@@ -24,6 +24,7 @@ $userLevel = $_SESSION['userLevel'];
         if($userLevel >= 1){ ?>
 
         <li><a href="searchScooter.php"><i class="fa fa-motorcycle"></i> Search Scooters</a></li>
+        <li><a href="viewProfileRequests.php"><i class="fa fa-user"></i> View Profie Requests</a></li>
         <?php }?>
 
         <?php 
