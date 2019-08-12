@@ -4,14 +4,55 @@
   require_once 'config/stripeConfig.php';
   error_reporting(0);
 
-  //COMMENTING
+  //REPLIES code
+  // <div class="comment">
+  //   <div class="user">Senaid B<span class="time">2019-07-15</span></div>
+  //   <div class="userComment">this is my comment</div>
+  // </div>
+
+  //FUNCTION to createCommentRow
+  function createCommentRow($data){
+    return '
+      <div class="comment">
+        <div class="user">'.$data['fullname'].'<span class="time"> '.$data['createdOn'].'</span></div>
+        <div class="userComment">'.$data['comment'].'</div>
+        <div class="replies">
+
+        </div>
+      </div>
+    ';
+  }
+
+  //COMMENTING - GET ALL THE COMMENTS
+  if(isset($_POST['getAllComments'])){
+    $start = $conn->real_escape_string($_POST['start']);
+    $response = "";
+    //QUERY to get basic info - userName, date and comment. 
+    //NEED to use a JOIN to get the UserID
+    //LIMIT $start to 20 for each iteration
+    $sql = $conn->query("SELECT fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT $start, 20");
+    while($data = $sql->fetch_assoc())
+      //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
+      $response .= createCommentRow($data);
+    exit($response);
+  }
+
+  //COMMENTING - variable for userID
   $id = $_SESSION['id'];
-  //echo "userID ".$id;
+  //COMMENTING - addComment TO DB
   if(isset($_POST['addComment'])){
     $comment = $conn->real_escape_string($_POST['comment']);
     $conn->query("INSERT INTO comments(userID, comment, createdOn) VALUES('$id', '$comment', NOW()) ");
-    exit('success');
+    //SET LIMIT to 1 so we get only the latest comment
+    $sql = $conn->query("SELECT fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
+    $data = $sql->fetch_assoc();
+    exit(createCommentRow($data));
   }
+
+  //GET COMMENTS FROM THE DATABASE TO DISPLAY
+  $sqlNumComments = $conn->query("SELECT id FROM comments");
+  $numComments = $sqlNumComments->num_rows;
+
   //on submit button clicked, get all the message (havent implemented yet)
   if(isset($_POST['submit'])){
     $fromdate=$_POST['fromdate'];
@@ -269,7 +310,8 @@
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <h2><b>335 comments</b></h2>
+              <!-- DISPLAY the number of comments -->
+              <h2><b id="numComments"><?php echo $numComments ?> comments</b></h2>
               <textarea class="form-control" id="mainComment" placeholder="Add Comment" cols="30" rows="2"></textarea><br>
               <button style="float: right;" class="btn-primary btn" id="addComment">Add Comment</button>
             </div>
@@ -277,17 +319,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="userComments">
-                <div class="comment">
-                  <div class="user">Senaid B<span class="time">2019-07-15</span></div>
-                  <div class="userComment">this is my comment</div>
-                  <div class="replies">
-                    <div class="comment">
-                      <div class="user">Senaid B<span class="time">2019-07-15</span></div>
-                      <div class="userComment">this is my comment</div>
-                      <div class="replies"></div>
-                    </div>    
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -312,6 +344,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script type="text/javascript">
+    var max = <?php echo $numComments ?>;
     $(document).ready(function(){
       $("#addComment").on('click', function(){
         var comment = $("#mainComment").val();
@@ -324,13 +357,41 @@
               addComment: 1,
               comment: comment
             }, success: function (response){
-              console.log(response);
+              max++;
+              $("#numComments").text(max + " Comments");
+              $(".userComments").prepend(response);
             }
           });
         }else
           alert('Please enter a comment');
       });
+      //call FUNCTION geALLComments: to get the comments.
+      //Start at 0 and pass in the maximum as well from the beginning php script, $numComments
+      getAllComments(0, <?php echo $numComments ?>);
     });
+    //FUNCTION to dynamically get all the comments from DB: start and maximum number of comments
+    function getAllComments(start, max){
+      //IF start is bigger than max we will exit and stop getting the comments
+      if(start > max){
+        return;
+      }
+      $.ajax({
+            url: 'scooterDetail.php',
+            method: 'POST',
+            dateType: 'text',
+            data: {
+              //flag
+              getAllComments: 1,
+              //start
+              start: start
+            }, success: function (response){
+              //grab the UserComments and append
+              $(".userComments").append(response);
+              //increase starting point by 20 for the number of comments returned during each iteration              
+              getAllComments((start+20), max);
+            }
+      });
+    }
   </script>
 </body>
 </html>
