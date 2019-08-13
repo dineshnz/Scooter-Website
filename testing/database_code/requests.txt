@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2019 at 08:10 AM
+-- Generation Time: Aug 13, 2019 at 03:01 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -30,22 +30,23 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `requests` (
   `id` int(11) NOT NULL,
-  `fullname` varchar(255) NOT NULL,
-  `message` varchar(255) NOT NULL,
+  `fullname` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
   `vehicleId` int(11) NOT NULL,
-  `result` varchar(100) NOT NULL,
+  `vehicleTitle` varchar(255) DEFAULT NULL,
+  `vehicleBrand` varchar(255) NOT NULL,
+  `result` varchar(100) DEFAULT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
-  `requesterId` int(11) NOT NULL
+  `requesterId` int(11) DEFAULT NULL,
+  `ownerId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `requests`
 --
 
-INSERT INTO `requests` (`id`, `fullname`, `message`, `vehicleId`, `result`, `date`, `requesterId`) VALUES
-(1, 'Dinesh Karki', 'I would like to view your scooter detail', 2, 'approved', '2019-08-03', 40),
-(2, 'Dinesh Karki', 'I would like to view your scooter detail', 3, 'pending', '2019-08-03', 40),
-(3, 'Dinesh Karki', 'I would like to view your scooter detail', 4, 'approved', '2019-08-03', 40);
+INSERT INTO `requests` (`id`, `fullname`, `message`, `vehicleId`, `vehicleTitle`, `vehicleBrand`, `result`, `date`, `requesterId`, `ownerId`) VALUES
+(1, 'user3', 'would like to view your scooter detail', 5, 'my scooter', 'japanese', 'pending', '2019-08-13', 5, 3);
 
 --
 -- Indexes for dumped tables
@@ -55,9 +56,7 @@ INSERT INTO `requests` (`id`, `fullname`, `message`, `vehicleId`, `result`, `dat
 -- Indexes for table `requests`
 --
 ALTER TABLE `requests`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `requesterId` (`requesterId`),
-  ADD KEY `vehicleId` (`vehicleId`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -67,18 +66,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `requests`
---
-ALTER TABLE `requests`
-  ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`requesterId`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `requests_ibfk_2` FOREIGN KEY (`vehicleId`) REFERENCES `tblscooters` (`vid`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

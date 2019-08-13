@@ -100,6 +100,7 @@ var xhr= createRequest();
 	}
 }
 
+
 function viewPendingRequests(){
   if(xhr){
 		var obj = document.getElementById("targetDiv");

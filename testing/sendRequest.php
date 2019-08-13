@@ -7,6 +7,8 @@
     $ownerId = $_POST['ownerId'];
     $username = $_SESSION['username'];
     $requesterId = $_SESSION['id'];
+    $vehicleTitle =  $_POST['vehicleTitle'];
+    $vehicleBrand =  $_POST['vehicleBrand'];
     
     $request ="pending";
     $message = "would like to view your scooter detail";
@@ -18,6 +20,7 @@
     $stmt->execute();
     $result = $stmt->get_result();
     $passportCount = $result->num_rows;
+
    
     
     $stmt->close();
@@ -33,13 +36,13 @@
     else{
    
 
-    $sql = "INSERT INTO requests (fullname, message, vehicleId, result, requesterId, ownerId)
-     VALUES (?, ?, ?, ?, ?,?)";
-
+    $sql = "INSERT INTO requests (fullname, message, vehicleId, vehicleTitle, vehicleBrand,result, requesterId, ownerId)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+ 
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssisii', $username, $message, $vhid, $request, $requesterId, $ownerId);
-
+    $stmt->bind_param('ssisssii', $username, $message, $vhid, $vehicleTitle, $vehicleBrand, $request, $requesterId, $ownerId);
+        
     $resultSql = $stmt->execute();
 
     if($resultSql){
