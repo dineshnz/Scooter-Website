@@ -56,10 +56,10 @@
     {
      
        echo "Request Sent!! Please wait for owner's approval"; 
-    //    $sql = "INSERT INTO `notifications`( `requesterId`, `type`, `message`, `status`, `notifierPassport`, `notifierName`, `date`) 
-    //    VALUES ($ownerId,'pending','$message', 'unread', '$userPassport','$username',CURRENT_TIMESTAMP)";
+       $sql = "INSERT INTO `notifications`( `requesterId`, `type`, `message`, `status`, `notifierPassport`, `notifierName`, `date`) 
+       VALUES ($requesteeId,'viewProfile','$message', 'unread', '$userPassport','$fullname',CURRENT_TIMESTAMP)";
       
-    //   $result = $conn->query($sql);
+      $result = $conn->query($sql);
          }
     else{
         echo "Error";

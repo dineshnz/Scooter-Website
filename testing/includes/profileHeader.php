@@ -70,6 +70,9 @@
                 }else if($row['type']=='viewProfile'){
                     echo ucfirst($row['notifierName'])." would like to view your profile.";
 				}
+				else if($row['type']=='acceptedProfile' || $row['type']=='rejectedProfile'){
+                    echo ucfirst($row['notifierName'])." updated your<br> request for his/her profile.";
+				}
 				else if($row['type']=='pending'){
                     echo ucfirst($row['notifierName'])." would like to view your vehicle";
                 }
