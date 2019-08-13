@@ -25,8 +25,11 @@
       // $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId  
       // WHERE result= 'pending' AND t.userId = '$ownerId'";
 
-      $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId join users u on r.requesterId = u.id
-      WHERE r.result= 'pending' AND t.userId = '$ownerId'";
+      // $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId join users u on r.requesterId = u.id
+      // WHERE r.result= 'pending' AND t.userId = '$ownerId'";
+
+      $sql = "SELECT * FROM requests r join users u on r.requesterId = u.id
+      WHERE r.result= 'pending' AND r.ownerId = '$ownerId'";
       
      $result = $conn->query($sql);
     
@@ -41,7 +44,7 @@
           <th>Requester Passport<br> Number</th>
           <th>Message</th>
           <th>Vehicle Title</th>
-          <th>Vehicle Brand </th> 
+          <th>Vehicle Brand</th>
           <th>Accept Action</th>
           <th>Reject Action</th>
           
@@ -57,8 +60,8 @@
 				<td><?php echo $row['fullname'] ?></td>
 				<td><?php echo $row['passport'] ?></td>
 				<td><?php echo $row['message'] ?></td>
-				<td><?php echo $row['VehiclesTitle'] ?></td>
-				<td><?php echo $row['VehiclesBrand'] ?></td>
+				<td><?php echo $row['vehicleTitle'] ?></td>
+				<td><?php echo $row['vehicleBrand'] ?></td>
 				<td>
 					<button onclick="onAcceptRequest(<?php echo $row['vehicleId'] ?>,<?php echo $row['requesterId'] ?>)" class="btn btn-success">Accept request</button>
 				</td>

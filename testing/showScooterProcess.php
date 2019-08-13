@@ -118,8 +118,13 @@ $resultString ="";
               <?php }}} ?>
         <!-- sending the request to the owner for approval, we need to pass the vehicle id to that page so that
       we know which vehicle was requested for -->
+
+      <?php 
+        $vehicleTitle = $row['VehiclesTitle'];
+        $vehicleBrand = $row['VehiclesBrand'];
+      ?>
               <input name="submit" type= "button" name="requrstBtn"  
-                  onclick="sendRequestForApproval(<?php echo $row['vid']?>, <?php echo $row['userId']?>)" 
+                  onclick="sendRequestForApproval(<?php echo $row['vid']?>, <?php echo $row['userId']?>, '<?php echo $vehicleTitle ?>', '<?php echo $vehicleBrand ?>')"
                   class="btn btn-primary pull-right" 
                    value = "Send Requests for approval" title="Please send request to owner to be able to view the detail of the vehicle">
              

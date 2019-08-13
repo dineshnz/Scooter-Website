@@ -53,6 +53,7 @@ function validation(){
 
 }
 
+//this function accepts the request for viewing vehichles
 function onAcceptRequest(vehicleId, requesterId){
   if(xhr){
     var obj = document.getElementById("success");
@@ -75,6 +76,7 @@ function onAcceptRequest(vehicleId, requesterId){
 	}
 }
 
+//This function shows the pending requests to view the vehicles
 function viewPendingRequests(){
   if(xhr){
 		var obj = document.getElementById("targetDiv");
@@ -90,6 +92,7 @@ function viewPendingRequests(){
 	}
 }
 
+//This function rejects the request to view vehicles
 function onRejectRequest(vehicleId, userId){
   if(xhr){
     var obj = document.getElementById("success");
@@ -113,13 +116,15 @@ function onRejectRequest(vehicleId, userId){
 }
 
 
-
-function sendRequestForApproval(vhid, ownerId){
+//This function is for sending requests to owner of the vehicle to get the permission to view the vehicle.
+function sendRequestForApproval(vhid, ownerId, vehicleTitle, vehicleBrand){
 	if(xhr){
 		event.preventDefault();
 		var obj = document.getElementById("success");
 		var requestbody ="vhid="+encodeURIComponent(vhid)+
-		"&ownerId="+encodeURIComponent(ownerId);
+		"&ownerId="+encodeURIComponent(ownerId)+
+		"&vehicleBrand="+encodeURIComponent(vehicleBrand)+
+		"&vehicleTitle="+encodeURIComponent(vehicleTitle);
 			var url = "sendRequest.php";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -163,6 +168,7 @@ function sendRequestForProfile(historyId, userId){
 		}
 }
 
+//THis function is to view the history of the renters
 function viewUserHistory(historyId){
 	if(xhr){
 		var obj = document.getElementById("success");
