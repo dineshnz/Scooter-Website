@@ -4,7 +4,7 @@
   require_once 'config/stripeConfig.php';
   error_reporting(0);
 
-  //REPLIES code
+  //REPLIES CODE
   // <div class="comment">
   //   <div class="user">Senaid B<span class="time">2019-07-15</span></div>
   //   <div class="userComment">this is my comment</div>
@@ -12,16 +12,25 @@
 
   //FUNCTION to createCommentRow
   function createCommentRow($data){
-    return '
+    $response = '
       <div class="comment">
         <div class="user">'.$data['fullname'].'<span class="time"> '.$data['createdOn'].'</span></div>
         <div class="userComment">'.$data['comment'].'</div>
-        <div class="reply"><a href="javascript:void(0)" onclick="reply(this)" > REPLY</a></div>
-        <div class="replies">
+        <div class="reply"><a href="javascript:void(0)" data-commentID="'.$data['id'].'" onclick="reply(this)" > REPLY</a></div>
+        <div class="replies">';
+    //QUERY to grab the reply comments ONLY for the $data['id'] in the query above, uses a WHERE condition
+    $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
+
+    while($dataR = $sql->fetch_assoc())
+      $response .= createCommentRow($dataR);
+
+    $response .= '
 
         </div>
       </div>
     ';
+
+    return $response;
   }
 
   //COMMENTING - GET ALL THE COMMENTS
@@ -31,7 +40,7 @@
     //QUERY to get basic info - userName, date and comment. 
     //NEED to use a JOIN to get the UserID
     //LIMIT $start to 20 for each iteration
-    $sql = $conn->query("SELECT fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT $start, 20");
+    $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT $start, 20");
     while($data = $sql->fetch_assoc())
       //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
       $response .= createCommentRow($data);
@@ -43,9 +52,18 @@
   //COMMENTING - addComment TO DB
   if(isset($_POST['addComment'])){
     $comment = $conn->real_escape_string($_POST['comment']);
-    $conn->query("INSERT INTO comments(userID, comment, createdOn) VALUES('$id', '$comment', NOW()) ");
-    //SET LIMIT to 1 so we get only the latest comment
-    $sql = $conn->query("SELECT fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
+    $isReply = $conn->real_escape_string($_POST['isReply']);
+    $commentID = $conn->real_escape_string($_POST['commentID']);
+
+    if($isReply){
+      $conn->query("INSERT INTO replies(comment, commentID, createdOn, userID) VALUES('$comment', '$commentID', NOW(), '$id') ");
+      $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
+    }else{
+      $conn->query("INSERT INTO comments(userID, comment, createdOn) VALUES('$id', '$comment', NOW()) ");
+      //SET LIMIT to 1 so we get only the latest comment
+      $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
+    }
+
     $data = $sql->fetch_assoc();
     exit(createCommentRow($data));
   }
@@ -363,7 +381,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script type="text/javascript">
-    var isReply = false, max = <?php echo $numComments ?>;
+    var isReply = false, commentID = 0, max = <?php echo $numComments ?>;
     $(document).ready(function(){
       $("#addComment, #addReply").on('click', function(){
         var comment;
@@ -381,7 +399,9 @@
             dateType: 'text',
             data: {
               addComment: 1,
-              comment: comment
+              comment: comment,
+              isReply: isReply,
+              commentID: commentID
             }, success: function (response){
               max++;
               $("#numComments").text(max + " Comments");
@@ -391,6 +411,8 @@
                 //empty mainComment
                 $("mainComment").val("");
               }else{
+                //reser commentID back to 0
+                commentID = 0;
                 $("#replyComment").val("");
                 $(".replyRow").hide();
                 //Find reply parent then next = div(replies) and append reply
@@ -407,6 +429,7 @@
     });
     //FUNCTION for REPLY fields to appear after reply button is clicked
     function reply(caller){
+      commentID = $(caller).attr('data-commentID');
       $(".replyRow").insertAfter($(caller));
       $('.replyRow').show();
     }
