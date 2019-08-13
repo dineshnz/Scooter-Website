@@ -93,15 +93,31 @@ if (!isset($_SESSION['passport'])) {
 </div>
     </div>
     <?php }
-    else{?>
+         else if($i['type']=='viewProfile'){?>
+          <div class="card-deck">
+          
+          <div class="card" style="background-color: lightblue; margin-left: 45px; margin-right: 45px;">
+          <div class="card-header text center"><h1>Response</h1> </div>
+          <div class="card-body">
+          <?php echo ucfirst($i['notifierName'])." would like to view your profile";
+           
+          ?>
+      
+      </div>
+      </div>
+          </div>
+          <?php }
+
+    else if($i['type']=='acceptedProfile' || $i['type']=='rejectedProfile'){?>
             <div class="card-deck">
     
     <div class="card" style="background-color: lightblue; margin-left: 45px; margin-right: 45px;">
     <div class="card-header text center"><h1>Response</h1> </div>
      
       <div class="card-body">
-      <?php  echo ucfirst($i['notifierName'])." would like to view your profile. Please go to your pending request
-                page to view the requests."; ?>
+      <?php echo ucfirst($i['message'])." by ". ucfirst($i['notifierName'])." with passport number ".$i['notifierPassport']."<br> Please check your status"; 
+                   
+                ?>
 
     </div>
     </div>

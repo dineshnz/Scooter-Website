@@ -16,6 +16,13 @@
           margin-top: 0px;
           margin-left: 250px;
          }  
+
+         #targetDiv{
+            margin-top: 30px;
+            width: 95%;
+            margin-left:30px;
+        }
+
         </style>
         
   
@@ -78,12 +85,12 @@ function createRequest() {
 
 var xhr= createRequest();
     //This function will accept the request to view profile
-  function onAcceptRequest(vehicleId, requesterId){
+  function onAcceptRequest(historyId, requestFromId){
   if(xhr){
     var obj = document.getElementById("success");
-    var requestbody ="vehicleId="+encodeURIComponent(vehicleId)+
-    "&requesterId="+encodeURIComponent(requesterId);
-		var url = "accept.php";
+    var requestbody ="historyId="+encodeURIComponent(historyId)+
+    "&requestFromId="+encodeURIComponent(requestFromId);
+		var url = "profileRequest/acceptProfileRequest.php";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.onreadystatechange = function(){
@@ -104,7 +111,7 @@ var xhr= createRequest();
 function viewPendingRequests(){
   if(xhr){
 		var obj = document.getElementById("targetDiv");
-		var dataSource = "viewPendingRequest.php";
+		var dataSource = "profileRequest/viewPendingRequestProcess.php";
 		xhr.open("POST", dataSource, true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.onreadystatechange = function(){
@@ -116,12 +123,12 @@ function viewPendingRequests(){
 	}
 }
 
-function onRejectRequest(vehicleId, requesterId){
+function onRejectRequest(historyId, requestFromId){
   if(xhr){
     var obj = document.getElementById("success");
-    var requestbody ="vehicleId="+encodeURIComponent(vehicleId)+
-    "&requesterId="+encodeURIComponent(requesterId);
-		var url = "reject.php";
+    var requestbody ="historyId="+encodeURIComponent(historyId)+
+    "&requestFromId="+encodeURIComponent(requestFromId);
+		var url = "profileRequest/rejectProfileRequest.php";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.onreadystatechange = function(){
