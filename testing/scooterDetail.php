@@ -11,27 +11,26 @@
   // </div>
 
   //FUNCTION to createCommentRow
-  function createCommentRow($data){
+function createCommentRow($data) {
+    global $conn;
+
     $response = '
       <div class="comment">
-        <div class="user">'.$data['fullname'].'<span class="time"> '.$data['createdOn'].'</span></div>
+        <div class="user">'.$data['name'].' <span class="time">'.$data['createdOn'].'</span></div>
         <div class="userComment">'.$data['comment'].'</div>
-        <div class="reply"><a href="javascript:void(0)" data-commentID="'.$data['id'].'" onclick="reply(this)" > REPLY</a></div>
+        <div class="reply"><a href="javascript:void(0)" data-commentID="'.$data['id'].'" onclick="reply(this)">REPLY</a></div>
         <div class="replies">';
-    //QUERY to grab the reply comments ONLY for the $data['id'] in the query above, uses a WHERE condition
-    $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
+          $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
+          while($dataR = $sql->fetch_assoc())
+              $response .= createCommentRow($dataR);
 
-    while($dataR = $sql->fetch_assoc())
-      $response .= createCommentRow($dataR);
-
-    $response .= '
-
+          $response .= '
         </div>
       </div>
     ';
 
     return $response;
-  }
+}
 
   //COMMENTING - GET ALL THE COMMENTS
   if(isset($_POST['getAllComments'])){
