@@ -15,10 +15,6 @@ session_start();
         $passportNoOwner= $_SESSION['passport'];
         $username = $_SESSION['username'];//logged in person
 
-
- 
-
-   
     $acceptQuery = "UPDATE profilerequest SET result= 'approved' WHERE  result='pending' AND userHistoryId=? AND requestFromId=?";
     $stmt = $conn->prepare($acceptQuery);
     $stmt->bind_param('ii', $historyId, $requestToId);

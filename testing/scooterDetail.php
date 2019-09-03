@@ -3,27 +3,29 @@
   require 'config/db.php';
   require_once 'config/stripeConfig.php';
   error_reporting(0);
-
-  //REPLIES code
+  //REPLIES CODE
   // <div class="comment">
   //   <div class="user">Senaid B<span class="time">2019-07-15</span></div>
   //   <div class="userComment">this is my comment</div>
   // </div>
-
   //FUNCTION to createCommentRow
-  function createCommentRow($data){
-    return '
+function createCommentRow($data) {
+    global $conn;
+    $response = '
       <div class="comment">
-        <div class="user">'.$data['fullname'].'<span class="time"> '.$data['createdOn'].'</span></div>
+        <div class="user">'.$data['name'].' <span class="time">'.$data['createdOn'].'</span></div>
         <div class="userComment">'.$data['comment'].'</div>
-        <div class="reply"><a href="javascript:void(0)" onclick="reply(this)" > REPLY</a></div>
-        <div class="replies">
-
+        <div class="reply"><a href="javascript:void(0)" data-commentID="'.$data['id'].'" onclick="reply(this)">REPLY</a></div>
+        <div class="replies">';
+          $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
+          while($dataR = $sql->fetch_assoc())
+              $response .= createCommentRow($dataR);
+          $response .= '
         </div>
       </div>
     ';
-  }
-
+    return $response;
+}
   //COMMENTING - GET ALL THE COMMENTS
   if(isset($_POST['getAllComments'])){
     $start = $conn->real_escape_string($_POST['start']);
@@ -31,28 +33,34 @@
     //QUERY to get basic info - userName, date and comment. 
     //NEED to use a JOIN to get the UserID
     //LIMIT $start to 20 for each iteration
-    $sql = $conn->query("SELECT fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT $start, 20");
+    $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT $start, 20");
     while($data = $sql->fetch_assoc())
       //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
       $response .= createCommentRow($data);
     exit($response);
   }
-
   //COMMENTING - variable for userID
   $id = $_SESSION['id'];
   //COMMENTING - addComment TO DB
   if(isset($_POST['addComment'])){
     $comment = $conn->real_escape_string($_POST['comment']);
-    $conn->query("INSERT INTO comments(userID, comment, createdOn) VALUES('$id', '$comment', NOW()) ");
-    //SET LIMIT to 1 so we get only the latest comment
-    $sql = $conn->query("SELECT fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
+    $isReply = $conn->real_escape_string($_POST['isReply']);
+    $commentID = $conn->real_escape_string($_POST['commentID']);
+    if($isReply){
+      $conn->query("INSERT INTO replies(comment, commentID, createdOn, userID) VALUES('$comment', '$commentID', NOW(), '$id') ");
+      $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
+    }else{
+      $conn->query("INSERT INTO comments(userID, comment, createdOn) VALUES('$id', '$comment', NOW()) ");
+      //SET LIMIT to 1 so we get only the latest comment
+      $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
+    }
     $data = $sql->fetch_assoc();
     exit(createCommentRow($data));
   }
-
   //GET COMMENTS FROM THE DATABASE TO DISPLAY
   $sqlNumComments = $conn->query("SELECT id FROM comments");
   $numComments = $sqlNumComments->num_rows;
+
 
   //on submit button clicked, get all the message (havent implemented yet)
   if(isset($_POST['submit'])){
@@ -90,20 +98,18 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Sandstone Bootstrap CSS -->
   <link rel="stylesheet" href="css/style.css" type="text/css">
-  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+ 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="css/purple.css" type="text/css">
   <!--OWL Carousel slider-->
   <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
   <link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
-  <!--slick-slider -->
-  <link href="css/slick.css" rel="stylesheet">
-  <!--bootstrap-slider -->
+  
   <link href="css/bootstrap-slider.min.css" rel="stylesheet">
-  <!--FontAwesome Font Style -->
-  <link href="css/font-awesome.min.css" rel="stylesheet">
+
+ 
   <link href="css/owl.carousel.min.css" rel="stylesheet">
-  <link href="css/owl.theme.default.min.css" rel="stylesheet">
+
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
   <style>
     .comment{
