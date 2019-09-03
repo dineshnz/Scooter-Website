@@ -3,6 +3,7 @@
   require 'config/db.php';
   require_once 'config/stripeConfig.php';
   error_reporting(0);
+
   //REPLIES CODE
   // <div class="comment">
   //   <div class="user">Senaid B<span class="time">2019-07-15</span></div>
@@ -11,6 +12,7 @@
   //FUNCTION to createCommentRow
 function createCommentRow($data) {
     global $conn;
+
     $response = '
       <div class="comment">
         <div class="user">'.$data['name'].' <span class="time">'.$data['createdOn'].'</span></div>
@@ -20,12 +22,16 @@ function createCommentRow($data) {
           $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
           while($dataR = $sql->fetch_assoc())
               $response .= createCommentRow($dataR);
+
           $response .= '
         </div>
       </div>
     ';
+
     return $response;
 }
+
+
   //COMMENTING - GET ALL THE COMMENTS
   if(isset($_POST['getAllComments'])){
     $start = $conn->real_escape_string($_POST['start']);
@@ -46,6 +52,7 @@ function createCommentRow($data) {
     $comment = $conn->real_escape_string($_POST['comment']);
     $isReply = $conn->real_escape_string($_POST['isReply']);
     $commentID = $conn->real_escape_string($_POST['commentID']);
+    
     if($isReply){
       $conn->query("INSERT INTO replies(comment, commentID, createdOn, userID) VALUES('$comment', '$commentID', NOW(), '$id') ");
       $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
@@ -54,6 +61,7 @@ function createCommentRow($data) {
       //SET LIMIT to 1 so we get only the latest comment
       $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
     }
+    
     $data = $sql->fetch_assoc();
     exit(createCommentRow($data));
   }
@@ -369,7 +377,7 @@ function createCommentRow($data) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script type="text/javascript">
-    var isReply = false, max = <?php echo $numComments ?>;
+    var isReply = false, commentID = 0, max = <?php echo $numComments ?>;
     $(document).ready(function(){
       $("#addComment, #addReply").on('click', function(){
         var comment;
@@ -387,7 +395,9 @@ function createCommentRow($data) {
             dateType: 'text',
             data: {
               addComment: 1,
-              comment: comment
+              comment: comment,
+              isReply: isReply,
+              commentID: commentID
             }, success: function (response){
               max++;
               $("#numComments").text(max + " Comments");
@@ -397,6 +407,8 @@ function createCommentRow($data) {
                 //empty mainComment
                 $("mainComment").val("");
               }else{
+                //reser commentID back to 0
+                commentID = 0;
                 $("#replyComment").val("");
                 $(".replyRow").hide();
                 //Find reply parent then next = div(replies) and append reply
@@ -413,6 +425,7 @@ function createCommentRow($data) {
     });
     //FUNCTION for REPLY fields to appear after reply button is clicked
     function reply(caller){
+      commentID = $(caller).attr('data-commentID');
       $(".replyRow").insertAfter($(caller));
       $('.replyRow').show();
     }

@@ -44,6 +44,17 @@ CREATE TABLE `replies` (
 --
 -- Indexes for dumped tables
 --
+ALTER TABLE `replies`
+  ADD FOREIGN KEY (`commentID`)
+  REFERENCES `comments`(`id`)
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE;
+
+ALTER TABLE `replies`
+  ADD FOREIGN KEY (`userID`)
+  REFERENCES `users`(`id`)
+  ON DELETE CASCADE 
+  ON UPDATE CASCADE;
 
 --
 -- Indexes for table `replies`
