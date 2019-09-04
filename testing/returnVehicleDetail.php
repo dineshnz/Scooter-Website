@@ -337,7 +337,7 @@ function createCommentRow($data) {
                  
                   <div class="form-group">
                       <input type="button" class="btn btn-primary form-control" value="Submit Review" 
-                      onclick="addReviews(<?php echo $ownerId ?>)">
+                      onclick="addReviews(<?php echo $ownerId ?>, <?php echo $vhid ?>)">
                  
                   </div>
 
@@ -488,7 +488,7 @@ var xhr= createRequest();
 
 
     //function to add review
-    function addReviews(ownerId){
+    function addReviews(ownerId, vehicleId){
         if(xhr){
             var message= document.getElementById("message").value;
             if(message ===''){
@@ -499,10 +499,11 @@ var xhr= createRequest();
                 document.getElementById('error').innerHTML = "";
             }
     var obj = document.getElementById("success");
-    alert(ownerId);
+   
     
     var requestbody ="ownerId="+encodeURIComponent(ownerId)+
-    "&message="+encodeURIComponent(message);
+    "&message="+encodeURIComponent(message)+
+    "&vehicleId="+encodeURIComponent(vehicleId);
 		var url = "submitReview.php";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

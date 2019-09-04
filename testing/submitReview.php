@@ -6,22 +6,24 @@ require 'config/db.php';
  
        $paidToId = $_POST['ownerId'];
        $ownerResponse = $_POST['message'];
+       $vehicleId = $_POST['vehicleId'];
     //   select the tblscooter and transaction table to view vehicle brought column and userId (renterId) column
-    $query = "select * from tblscooters s join transactions t on t.vehicleId = s.vid where t.paidToId =?";
-    $query = $conn -> prepare($query);
-    $query->bind_Param('i', $paidToId);
+    
+    $sql ="SELECT * FROM tblscooters s JOIN transactions t ON t.vehicleId = s.vid WHERE t.paidToId =? AND vehicleID =?";
+    $query = $conn -> prepare($sql);
+    $query->bind_Param('ii', $paidToId, $vehicleId);
     $query->execute();
     $results=$query->get_result();
     $count = $results->num_rows;
     if($count > 0){
       while($row = $results->fetch_assoc()){
-            $vehicleBrought = $row['VehiclesTitle'];
+          
             $userId = $row['paidById'];
 
             //lets check if the owner has already provided review
-            $sql = "SELECT historyId FROM userhistory WHERE userId=? AND ownerId=?";
+            $sql = "SELECT historyId FROM userhistory WHERE userId=? AND ownerId=? AND vehicleId =?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ii', $userId, $paidToId);
+            $stmt->bind_param('iii', $userId, $paidToId, $vehicleId);
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->num_rows;
@@ -36,11 +38,11 @@ require 'config/db.php';
             
 
 
-            $sql = "INSERT INTO userhistory(ownerResponse, userId, ownerId, vehicleBrought)
+            $sql = "INSERT INTO userhistory(ownerResponse, userId, ownerId, vehicleId)
              VALUES (?, ?, ?, ?)";
              $query1 = $conn->prepare($sql);
 
-             $query1-> bind_param('siis',$ownerResponse, $userId, $paidToId, $vehicleBrought);
+             $query1-> bind_param('siii',$ownerResponse, $userId, $paidToId, $vehicleId);
              $result = $query1->execute();
             
              if($result){
@@ -49,7 +51,7 @@ require 'config/db.php';
               
 
              }else{
-               echo "something went wrong";
+               echo "You have already posted a review";
              }
        }
     } 

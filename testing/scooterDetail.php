@@ -3,12 +3,7 @@
   require 'config/db.php';
   require_once 'config/stripeConfig.php';
   error_reporting(0);
-<<<<<<< HEAD
-  $rentalStatus="";
-=======
 
->>>>>>> 4fb658c4738aba4a1992493a66a8685056fb25c8
-  //REPLIES CODE
   // <div class="comment">
   //   <div class="user">Senaid B<span class="time">2019-07-15</span></div>
   //   <div class="userComment">this is my comment</div>
