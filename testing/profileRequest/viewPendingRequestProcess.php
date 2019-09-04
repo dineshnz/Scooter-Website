@@ -36,10 +36,10 @@
 				<td><?php echo $row['requesterFullname'] ?></td>
 				<td><?php echo $row['message'] ?></td>
 				<td>
-					<button onclick="onAcceptRequest(<?php echo $row['userHistoryId'] ?>,<?php echo $row['requestFromId'] ?>)" class="btn btn-success">Accept request</button>
+					<button onclick="onAcceptRequest(<?php echo $row['requestFromId'] ?>)" class="btn btn-success">Accept request</button>
 				</td>
 				<td>
-					<button  onclick="onRejectRequest(<?php echo $row['userHistoryId'] ?>,<?php echo $row['requestFromId'] ?>)" class="btn btn-danger">Reject Request</button>
+					<button  onclick="onRejectRequest(<?php echo $row['requestFromId'] ?>)" class="btn btn-danger">Reject Request</button>
         </td>
         
 

@@ -29,26 +29,22 @@
             else{
                 echo '<p class="alert-danger">Results not found</p>';
             }
+           
 
-            //if the user has history then we need to send request to that user
-            $sql = "SELECT * FROM userhistory h join users u on u.id = h.userId
-            WHERE u.passport=? OR u.fullname=?";
-               
-             $stmt = $conn->prepare($sql);
-             $stmt->bind_param('ss', $searchInput,$searchInput);
-             $stmt->execute();
-             $result = $stmt->get_result();
-             $row = $result->num_rows;
-             $stmt->close();
- 
-         if($row > 0)
-         {
-            while($re = $result->fetch_assoc())
-            {  ?>
+            $userQuery ="SELECT * FROM users WHERE passport='$searchInput' OR fullname='$searchInput'";
+            $userResult= $conn->query($userQuery);
+            $userRow = $userResult->num_rows;
 
-        <?php
-          $currentHistory = $re['historyId'];
-          $requestSql = "SELECT * FROM profilerequest  WHERE requestFromId = '$myId' AND userHistoryId =  '$currentHistory'";
+            if($userRow>0){
+                while($re= $userResult->fetch_assoc()){
+                   $userToLookFor = $re['id'];
+                   $fullNameOfUser= $re['fullname'];
+                }
+            }
+
+            
+         
+          $requestSql = "SELECT * FROM profilerequest  WHERE requestFromId = '$myId' AND requesteeId =  '$userToLookFor'";
           $requestResult = $conn-> query($requestSql);
           $resultRow = $requestResult -> num_rows;
           
@@ -56,22 +52,27 @@
             while($row1 = $requestResult->fetch_assoc())
 	           {
               $resultString = $row1['result'];
+               }
 
-            if($resultString=="approved"){
-               echo '<button onclick="viewUserHistory('.$re['historyId'].')" class="btn btn-primary">View Details</button>';
-            }}} ?>
-                <!-- sending the request to the owner for approval, we need to pass the vehicle id to that page so that
+            if($resultString=="approved"){?>
+              <button onclick="viewUserHistory(<?php echo $userToLookFor ?>)" class="btn btn-primary">View Details</button>
+           <?php }else if($resultString=="rejected"){ ?>
+                <!-- showing rejected option -->
+                <button class="btn btn-danger" disabled>Your request to view renter's profile has been rejected</button>
+                <?php }else if($resultString=="pending"){?>
+                    <button class="btn btn-danger" disabled>Request sent to view profile</button>
+             <?php }?>
+       
+       <?php }else{?>
+        <!-- sending the request to the owner for approval, we need to pass the vehicle id to that page so that
                 we know which vehicle was requested for -->
-              <input name="submit" type= "button"  
-                  onclick="sendRequestForProfile(<?php echo $re['historyId']?>, <?php echo $re['userId']?>)" 
+                <input name="submit" type= "button"  
+                  onclick="sendRequestForProfile(<?php echo $userToLookFor ?>)" 
                   class="btn btn-success " style="margin: 0 auto"
-                   value = "Send Requests to <?php echo $re['fullname'] ?> to view his/her profile" title="Please send request to user to be able to view the detailed history of the renter">
-             
-            
-            
-             <?php 
-                 
-       }}?>
+                   value = "Send Requests to <?php echo $fullNameOfUser ?> to view his/her profile" 
+                   title="Please send request to user to be able to view the detailed history of the renter">
+
+       <?php }?>
         <div id="targetDiv"></div>
         <!--Start of modal to show results-->
             <div class="modal fade" id="responseModal" role="dialog">

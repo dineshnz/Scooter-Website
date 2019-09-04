@@ -144,12 +144,11 @@ function sendRequestForApproval(vhid, ownerId, vehicleTitle, vehicleBrand){
 }
 
 //function to send request from owner to user to view their profile
-function sendRequestForProfile(historyId, userId){
+function sendRequestForProfile(userId){
 	if(xhr){
 		event.preventDefault();
 		var obj = document.getElementById("success");
-		var requestbody ="historyId="+encodeURIComponent(historyId)+
-		"&userId="+encodeURIComponent(userId);
+		var requestbody ="userId="+encodeURIComponent(userId);
 			var url = "sendRequestForProfile.php";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -168,11 +167,12 @@ function sendRequestForProfile(historyId, userId){
 		}
 }
 
+// 
 //THis function is to view the history of the renters
-function viewUserHistory(historyId){
+function viewUserHistory(userId){
 	if(xhr){
 		var obj = document.getElementById("success");
-		var requestbody ="historyId="+encodeURIComponent(historyId);
+		var requestbody ="userId="+encodeURIComponent(userId);
 			var url = "userHistory.php";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

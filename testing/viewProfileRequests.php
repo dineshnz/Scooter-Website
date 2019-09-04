@@ -85,11 +85,10 @@ function createRequest() {
 
 var xhr= createRequest();
     //This function will accept the request to view profile
-  function onAcceptRequest(historyId, requestFromId){
+  function onAcceptRequest(requestFromId){
   if(xhr){
     var obj = document.getElementById("success");
-    var requestbody ="historyId="+encodeURIComponent(historyId)+
-    "&requestFromId="+encodeURIComponent(requestFromId);
+    var requestbody ="requestFromId="+encodeURIComponent(requestFromId);
 		var url = "profileRequest/acceptProfileRequest.php";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -123,11 +122,10 @@ function viewPendingRequests(){
 	}
 }
 
-function onRejectRequest(historyId, requestFromId){
+function onRejectRequest(requestFromId){
   if(xhr){
     var obj = document.getElementById("success");
-    var requestbody ="historyId="+encodeURIComponent(historyId)+
-    "&requestFromId="+encodeURIComponent(requestFromId);
+    var requestbody ="requestFromId="+encodeURIComponent(requestFromId);
 		var url = "profileRequest/rejectProfileRequest.php";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

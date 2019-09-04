@@ -3,11 +3,11 @@
     session_start();
 
     //get all the inputs
-    $historyId = $_POST['historyId'];
+    $userId = $_POST['userId'];
 
-    $sql =" SELECT * from userhistory h join users u on h.userId = u.id where h.historyId=?";
+    $sql =" SELECT * from userhistory h join users u on h.userId = u.id where h.userId=?";
     $query = $conn -> prepare($sql);
-    $query->bind_Param('i', $historyId);
+    $query->bind_Param('i', $userId);
     $query->execute();
     $results=$query->get_result();
     $count = $results->num_rows;
