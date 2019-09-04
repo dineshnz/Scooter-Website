@@ -1171,10 +1171,14 @@ table {
 }
 
 /*==========================
-	16. Profile-page
+	My listing page
 ================================*/
+.div_zindex {
+  position: relative;
+  z-index: 1;
+}
 .dark-overlay {
-  background: rgba(0, 0, 0, 0.1) none repeat scroll 0 0;
+  background: rgba(0, 0, 0, 0.75) none repeat scroll 0 0;
   content: "";
   height: 100%;
   left: 0;
@@ -1184,13 +1188,7 @@ table {
 }
 
 .profile_page {
-	background-image:url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80");
-  background-repeat: no-repeat;
-  background-size: cover;
-  border: 0 none;
-  margin: 0 auto;
-  padding: 0;
-  position: relative;
+	background-image:url(../Images/profile-page-header-img.jpg);
 
 }
 

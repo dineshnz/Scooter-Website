@@ -115,7 +115,15 @@ $resultString ="";
           ?>
           <!-- once the vehicle request is approved, this will show the show details buttons to the user  -->
           <a href="scooterDetail.php?vhid=<?php echo htmlentities(urlencode($row['vid']));?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-              <?php }}} ?>
+              <?php }
+            // if the result string for this vehicle is pending then show pending message to the user.
+            else if($resultString=="pending"){?>
+                <button class="btn btn-danger" disabled title="Please wait until owner approves your request">Request Sent</button>
+            <?php } else if($resultString=="rejected"){ ?>
+               <button class="btn btn-danger" disabled title="Your request to view this vehicle has been rejected by owner of this vehicle">
+                 Request Rejected by owner</button>
+            <?php }
+            }}else{ ?>
         <!-- sending the request to the owner for approval, we need to pass the vehicle id to that page so that
       we know which vehicle was requested for -->
 
@@ -127,7 +135,7 @@ $resultString ="";
                   onclick="sendRequestForApproval(<?php echo $row['vid']?>, <?php echo $row['userId']?>, '<?php echo $vehicleTitle ?>', '<?php echo $vehicleBrand ?>')"
                   class="btn btn-primary pull-right" 
                    value = "Send Requests for approval" title="Please send request to owner to be able to view the detail of the vehicle">
-             
+              <?php } ?>
             
             
               <div id="targetDiv"></div>

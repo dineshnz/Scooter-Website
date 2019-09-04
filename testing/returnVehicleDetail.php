@@ -4,6 +4,8 @@
   require_once 'config/stripeConfig.php';
   error_reporting(0);
   $rentalStatus="";
+  echo $ownerId = $_SESSION['id'];
+
   //REPLIES CODE
   // <div class="comment">
   //   <div class="user">Senaid B<span class="time">2019-07-15</span></div>
@@ -62,28 +64,6 @@ function createCommentRow($data) {
   $sqlNumComments = $conn->query("SELECT id FROM comments");
   $numComments = $sqlNumComments->num_rows;
 
-
-  //on submit button clicked, get all the message (havent implemented yet)
-  if(isset($_POST['submit'])){
-    $fromdate=$_POST['fromdate'];
-    $todate=$_POST['todate']; 
-    $message=$_POST['message'];
-    $useremail=$_SESSION['email'];
-    $status=0;
-    $vhid=$_GET['vhid'];
-    $sql="INSERT INTO  tblbooking(userEmail,VehicleId,FromDate,ToDate,message,Status) 
-    VALUES(?, ?, ?, ?, ?, ?)";
-    $query = $conn->prepare($sql);
-
-    $query-> bind_param('sisssis',$useremail, $vhid, $fromdate, $todate, $message, $status);
-    $query->execute();
-    $lastInsertId = $dbh->lastInsertId();
-    if($lastInsertId){
-      echo "<script>alert('Booking successfull.');</script>";
-    }else{
-      echo "<script>alert('Something went wrong. Please try again');</script>";
-    }
-  }
 ?>
 
 <!DOCTYPE HTML>
@@ -112,6 +92,7 @@ function createCommentRow($data) {
   <link href="css/owl.carousel.min.css" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+  
   <style>
     .comment{
       margin-bottom: 20px;
@@ -346,26 +327,21 @@ function createCommentRow($data) {
             <aside class="col-md-3">
               <div class="sidebar_widget">
                 <div class="widget_heading">
-                  <h5><i class="fa fa-envelope" aria-hidden="true"></i>Book Now</h5>
+                  <h5><i class="fa fa-comment" aria-hidden="true"></i>Add Review For Renter</h5>
                 </div>
-                <form method="post">
+                <form>
                   <div class="form-group">
-                    <input type="text" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
+                    <textarea rows="4" class="form-control" id="message" name="message" placeholder="Message" required></textarea>
                   </div>
+                  <span id="error" class="text-danger"></span>
+                 
                   <div class="form-group">
-                    <input type="text" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
+                      <input type="button" class="btn btn-primary form-control" value="Submit Review" 
+                      onclick="addReviews(<?php echo $ownerId ?>)">
+                 
                   </div>
-                  <div class="form-group">
-                    <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
-                  </div>
-                  <?php if($_SESSION['passport']) {?>
-                  <div class="form-group">
-                    <input type="submit" class="btn"  name="submit" value="Book Now">
-                  </div>
-                  <?php } else { ?>
 
-                  <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
-                  <?php } ?>
+                  <div id="success"></div>
                 </form>
               </div>
             </aside>
@@ -420,7 +396,9 @@ function createCommentRow($data) {
   <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script type="text/javascript">
+ 
+ 
+ <script type="text/javascript">
     var isReply = false, max = <?php echo $numComments ?>;
     $(document).ready(function(){
       $("#addComment, #addReply").on('click', function(){
@@ -490,6 +468,51 @@ function createCommentRow($data) {
               getAllComments((start+20), max);
             }
       });
+    }
+
+    function createRequest() {
+    var xhr = false;  
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return xhr;
+} // end function createRequest()
+
+
+
+var xhr= createRequest();
+
+
+
+    //function to add review
+    function addReviews(ownerId){
+        if(xhr){
+            var message= document.getElementById("message").value;
+            if(message ===''){
+                document.getElementById('error').innerHTML = "Please enter review";
+                return;
+            }
+            else{
+                document.getElementById('error').innerHTML = "";
+            }
+    var obj = document.getElementById("success");
+    alert(ownerId);
+    
+    var requestbody ="ownerId="+encodeURIComponent(ownerId)+
+    "&message="+encodeURIComponent(message);
+		var url = "submitReview.php";
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				obj.innerHTML = xhr.responseText;
+			}
+		}
+		xhr.send(requestbody);
+	}
     }
   </script>
 </body>

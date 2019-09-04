@@ -6,7 +6,14 @@ $ownerId = $_SESSION['id'];
 
 if(isset($_POST['readrecords'])){
 
-	$data =  '<table class="table table-bordered table-striped ">
+	
+
+    $displayquery = " SELECT * FROM tblScooters where userId =?"; 
+    $stmt = $conn->prepare($displayquery);
+    $stmt->bind_param('i',  $ownerId);
+        
+    if ($stmt->execute()) {
+        $data =  '<table class="table table-bordered table-striped ">
 						<tr class="bg-dark text-white">
 							<th>No.</th>
 							<th>Vehicle Image</th>
@@ -18,12 +25,6 @@ if(isset($_POST['readrecords'])){
 							<th>Delete Action</th>
 							<th>View Detail</th>
 						</tr>'; 
-
-    $displayquery = " SELECT * FROM tblScooters where userId =?"; 
-    $stmt = $conn->prepare($displayquery);
-    $stmt->bind_param('i',  $ownerId);
-        
-    if ($stmt->execute()) {
         $number = 1;
         $result = $stmt->get_result();
         while ($row = $result->fetch_assoc()){
@@ -76,7 +77,7 @@ if($count > 0) {
         $response = $row;
     }
 }
-//  // agar ek bhi value nai milta hai tho data not found no. of rows 0 hai tho
+
 else
 {
     $response['status'] = 200;
@@ -87,8 +88,8 @@ else
 
 echo json_encode($response);
 }
-   
-// ye top wala id jo humhe mil raha hai uska hai jaha wo id check karega sahi hai ya nai agar nai tho invalid req boldega...
+
+//this will look into the id and if the id is not right, then it will pass invalid data
 else
 {
     $response['status'] = 200;

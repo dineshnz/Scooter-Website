@@ -27,6 +27,7 @@
 
 <div class="brand clearfix">
 	<a href="userProfile.php" style="font-size: 20px;"><img class="imagelink" src="Images/Logo.png" height="40px" style="margin-left:20px; margin-top: 5px;" alt=""></a>  
+	<a href="index.html" style="font-size: 20px;">Home</a>  
 		<span class="menu-btn"><i class="fa fa-bars"></i></span>
 		<ul class="ts-profile-nav">
 		<li class="dropdown ts-account">

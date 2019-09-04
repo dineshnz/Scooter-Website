@@ -25,6 +25,7 @@ $userLevel = $_SESSION['userLevel'];
 
         <li><a href="searchScooter.php"><i class="fa fa-motorcycle"></i> Search Scooters</a></li>
         <li><a href="viewProfileRequests.php"><i class="fa fa-user"></i> View Profie Requests</a></li>
+        <li><a href="myActiveAssets.php"><i class="fa fa-user"></i> My active assets</a></li>
         <?php }?>
 
         <?php 
@@ -33,6 +34,7 @@ $userLevel = $_SESSION['userLevel'];
         <li><a href="addScooter.php"><i class="fa fa-motorcycle"></i> List a Scooter</a></li>
         <li><a href="pendingRequest.php"><i class="fa fa-user"></i> View pending requests</a></li>
         <li><a href="myListing.php"><i class="fa fa-list"></i> My Assets</a></li>
+        <li><a href="myRentedAssets.php"><i class="fa fa-list"></i> My Rented Vehicles</a></li>
         <?php }?>
 				
 
