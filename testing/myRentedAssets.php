@@ -98,7 +98,8 @@
                     <a href="returnVehicleDetail.php?vhid=<?php echo htmlentities($row['vid']);?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
               </div>
         </div>
-        <?php }}?>
+        <?php }}else{
+          echo '<p style="color:red"> No records found</p>';}?>
       </div>
     </div>
   </div>
