@@ -131,13 +131,10 @@ function sendRequestForApproval(vhid, ownerId, vehicleTitle, vehicleBrand){
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState == 4 && xhr.status == 200){
 					obj.innerHTML = xhr.responseText;
-					$(document).ready(function(){
-			  $("#responseModal").modal("show");
-	  
-			});
-		
+					
+					//reload the page
+					searchScooter();					
 				}
-				
 			}
 			xhr.send(requestbody);
 		}

@@ -95,10 +95,11 @@ $resultString ="";
 				<ul>
 				  
 				  <li><i class="fa fa-calendar" aria-hidden="true"></i><?php echo htmlentities($row['ModelYear']);?> model</li>
-				  <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($row['FuelType']);?></li>
+          <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($row['FuelType']);?></li>
         </ul>
+       
 			 
-        
+        <div id="resultDiv"></div>
 
         <?php
           $currentVid = $row['vid'];
@@ -114,13 +115,17 @@ $resultString ="";
             if($resultString=="approved"){
           ?>
           <!-- once the vehicle request is approved, this will show the show details buttons to the user  -->
-          <a href="scooterDetail.php?vhid=<?php echo htmlentities(urlencode($row['vid']));?>" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+          <a href="scooterDetail.php?vhid=<?php echo htmlentities(urlencode($row['vid']));?>"
+           class="btn btn-primary">View Details <span class="angle_arrow">
+             <i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
               <?php }
             // if the result string for this vehicle is pending then show pending message to the user.
             else if($resultString=="pending"){?>
-                <button class="btn btn-danger" disabled title="Please wait until owner approves your request">Request Sent</button>
+                <button class="btn btn-danger" disabled title="Please wait until owner approves your request">
+                  Request Sent</button>
             <?php } else if($resultString=="rejected"){ ?>
-               <button class="btn btn-danger" disabled title="Your request to view this vehicle has been rejected by owner of this vehicle">
+               <button class="btn btn-danger" disabled 
+               title="Your request to view this vehicle has been rejected by owner of this vehicle">
                  Request Rejected by owner</button>
             <?php }
             }}else{ ?>
@@ -132,15 +137,19 @@ $resultString ="";
         $vehicleBrand = $row['VehiclesBrand'];
       ?>
               <input name="submit" type= "button" name="requrstBtn"  
-                  onclick="sendRequestForApproval(<?php echo $row['vid']?>, <?php echo $row['userId']?>, '<?php echo $vehicleTitle ?>', '<?php echo $vehicleBrand ?>')"
+                onclick="sendRequestForApproval(<?php echo $row['vid']?>, <?php echo $row['userId']?>, 
+                '<?php echo $vehicleTitle ?>', '<?php echo $vehicleBrand ?>')"
                   class="btn btn-primary pull-right" 
-                   value = "Send Requests for approval" title="Please send request to owner to be able to view the detail of the vehicle">
+                   value = "Send Requests for approval" 
+                   title="Please send request to owner to be able to view the detail of the vehicle">
               <?php } ?>
+
+             
             
             
               <div id="targetDiv"></div>
-              <!--Start of modal to show results-->
-   <div class="modal fade" id="responseModal" role="dialog">
+               <!--Start of modal to show results-->
+    <div class="modal fade" id="responseModal" role="dialog">
     <div class="modal-dialog">
     
       <div class="modal-content">
@@ -160,6 +169,7 @@ $resultString ="";
       
     </div>
   </div>
+
 
 
         

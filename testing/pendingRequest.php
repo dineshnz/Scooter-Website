@@ -238,5 +238,54 @@ function onRejectRequest(vehicleId, requesterId){
 	}
 }
 
+
+
+//function to send request from owner to user to view their profile
+function sendRequestForProfile(userId){
+	if(xhr){
+		event.preventDefault();
+		var obj = document.getElementById("success");
+		var requestbody ="userId="+encodeURIComponent(userId);
+			var url = "sendRequestForProfile.php";
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4 && xhr.status == 200){
+					obj.innerHTML = xhr.responseText;
+					$(document).ready(function(){
+			  $("#responseModal").modal("show");
+	  
+			    });
+          searchHistory(); 
+				}
+				
+			}
+			xhr.send(requestbody);
+		}
+}
+
+// 
+//THis function is to view the history of the renters
+function viewUserHistory(userId){
+	if(xhr){
+		var obj = document.getElementById("success");
+		var requestbody ="userId="+encodeURIComponent(userId);
+			var url = "userHistory.php";
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4 && xhr.status == 200){
+					obj.innerHTML = xhr.responseText;
+					$(document).ready(function(){
+			  $("#responseModal").modal("show");
+	  
+			});
+		
+				}
+			}
+			xhr.send(requestbody);
+		}
+}
+
   
   </script>

@@ -43,17 +43,7 @@
     $resultSql = $stmt->execute();
 
     if($resultSql){
-        $sql = "SELECT * FROM userhistory WHERE userId=? AND requestFromId=? AND requestFromId=?";
-        //$sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId WHERE u.passport=?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ii', $requesteeId, $requestFromId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->num_rows;
-        $stmt->close();
-
-    if($row > 0)
-    {
+     
      
        echo "Request Sent!! Please wait for owner's approval"; 
        $sql = "INSERT INTO `notifications`( `requesterId`, `type`, `message`, `status`, `notifierPassport`, `notifierName`, `date`) 
@@ -67,7 +57,7 @@
 
 }
 
-    }
+    
 
 
 ?>
