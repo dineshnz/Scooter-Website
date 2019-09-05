@@ -2,8 +2,8 @@
     require_once 'stripe-php-master/init.php';
 
     $stripeDetails = array(
-        "secretKey" => "sk_test_XejJD32y4F69B4q3lKnQO2qI00Cjg8zsHD",
-        "publishableKey" => "pk_test_ryOO49LI3maIYmhohuV6jJIb00tzJQN1Sd"
+        "secretKey"      => "sk_test_hLmKJaaxCjcWVz4vdiKQstIt00KAJIO8ZU",
+         "publishableKey" => "pk_test_qwyBT1RyIMuwU8OlVy5gYh3Z00URvI8hFw",
     );
 
       // Set your secret key: remember to change this to your live secret key in production

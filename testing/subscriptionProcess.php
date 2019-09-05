@@ -9,8 +9,8 @@ $passport = $_SESSION['passport'];
 
 $products = array(
     "sids" => ["1","2"],
-    "1" => "plan_FWQAA7qsuAknOF",
-    "2" => "plan_FWQBL2Tt3IJs2d"
+    "1" => "plan_FkeoiJRbHTlgEj",
+    "2" => "plan_FkemmxPswGWnoD"
 );
 
 if(!isset($_GET['sid']) || !in_array($_GET['sid'], $products['sids']) || !isset($_POST['stripeToken']) || !isset($_POST['stripeEmail'])){
