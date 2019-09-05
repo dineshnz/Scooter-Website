@@ -5,6 +5,7 @@
 
   if (isset($_SESSION['passport'])) {
     $_SESSION['msg'] = "You must log in first";
+    $_SESSION['type'] = 'alert-danger';
     header('location: userProfile.php');
   }
   if (isset($_GET['logout'])) {
@@ -24,7 +25,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="main1.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <title>Login Page</title>
 </head>

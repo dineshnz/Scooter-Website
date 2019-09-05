@@ -1,5 +1,20 @@
 <!-- Display messages -->
-<?php session_start() ?>
+<?php
+     session_start();
+        error_reporting(0);
+
+    // redirect to login if not logged in
+    if (!isset($_SESSION['passport'])) {
+      $_SESSION['msg'] = "You must log in first";
+      $_SESSION['type'] = 'alert-danger';
+      header('location: login.php');
+    }
+    if (isset($_GET['logout'])) {
+      session_destroy();
+      unset($_SESSION['passport']);
+      header("location: login.php");
+    }
+?>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->

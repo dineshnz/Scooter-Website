@@ -1,3 +1,17 @@
+<?php
+  error_reporting(0);
+  if (!isset($_SESSION['passport'])) {
+      $_SESSION['msg'] = "You must log in first";
+      $_SESSION['type'] = 'alert-danger';
+      header('location: login.php');
+    }
+    if (isset($_GET['logout'])) {
+      session_destroy();
+      unset($_SESSION['passport']);
+      header("location: login.php");
+    }
+?>
+
 <!DOCTYPE html>
     <head>
         <meta charset="utf-8">

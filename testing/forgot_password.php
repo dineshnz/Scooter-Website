@@ -1,4 +1,15 @@
-<?php include 'controllers/authController.php' ?>
+<?php include 'controllers/authController.php';
+  if (!isset($_SESSION['passport'])) {
+    $_SESSION['msg'] = "You must log in first";
+    $_SESSION['type'] = 'alert-danger';
+    header('location: login.php');
+  }
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['passport']);
+    header("location: login.php");
+  }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +19,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="main1.css">
+  <link rel="stylesheet" href="css/style.css">
   <title>Forgot Password</title>
 </head>
 <body>

@@ -4,10 +4,16 @@
   require_once 'config/stripeConfig.php';
   error_reporting(0);
 
-  // <div class="comment">
-  //   <div class="user">Senaid B<span class="time">2019-07-15</span></div>
-  //   <div class="userComment">this is my comment</div>
-  // </div>
+  if (!isset($_SESSION['passport'])) {
+    $_SESSION['msg'] = "You must log in first";
+    $_SESSION['type'] = 'alert-danger';
+    header('location: login.php');
+  }
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['passport']);
+    header("location: login.php");
+  }
   //FUNCTION to createCommentRow
 function createCommentRow($data) {
     global $conn;

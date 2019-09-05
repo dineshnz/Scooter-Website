@@ -3,8 +3,19 @@
   require 'config/db.php';
   require_once 'config/stripeConfig.php';
   error_reporting(0);
+// if not logged in
+  if (!isset($_SESSION['passport'])) {
+    $_SESSION['msg'] = "You must log in first";
+    $_SESSION['type'] = 'alert-danger';
+    header('location: login.php');
+  }
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['passport']);
+    header("location: login.php");
+  }
   $rentalStatus="";
-  echo $ownerId = $_SESSION['id'];
+  $ownerId = $_SESSION['id'];
 
   //REPLIES CODE
   // <div class="comment">
