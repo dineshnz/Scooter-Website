@@ -56,7 +56,7 @@
 </section>
 </section>
   
-<section class="listing-page" style="margin-top:30px">
+<section class="listing-page" style="margin-top:30px; margin-left:90px;">
   <div class="container">
     <div class="row">
       <div class="col-md-9 col-md-push-3">

@@ -39,7 +39,7 @@
  <?php include('includes/profileHeader.php');?>
 	<div class="ts-main-content">
 	<?php include('includes/leftbar.php');?>
-		<div class="content-wrapper" style="margin-top: 0px!important">
+		<div class="content-wrapper" style="margin-top: 0px!important;">
             <!-- header of the page -->
             <section class="page-header profile_page">
             <div class="content">
@@ -56,7 +56,7 @@
 </section>
 </section>
   
-<section class="listing-page" style="margin-top:30px">
+<section class="listing-page" style="margin-top:30px; margin-left:90px;">
   <div class="container">
     <div class="row">
       <div class="col-md-9 col-md-push-3">
