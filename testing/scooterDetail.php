@@ -342,7 +342,7 @@ if(isset($_POST['submit'])){
 
                         <?php $_SESSION['price'] = $row['PricePerDay']; ?>
                         <form action="stripeIPN.php?id=<?php echo $vhid; ?>" method="POST">
-                          <input type="hidden" name="OwnerId" value="<?=$_GET['OwnerId']?>" />  
+                          <input type="hidden" name="ownerId" value="<?=$_GET['ownerId']?>" />  
                           <input type="hidden" name="id" value="<?php echo $row['vid']?>" />  
                           <script
                           src="https://checkout.stripe.com/checkout.js" class="stripe-button"
