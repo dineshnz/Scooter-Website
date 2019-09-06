@@ -14,8 +14,8 @@ if (isset($_GET['logout'])) {
 require 'config/db.php';
 
 
-
-$requesteeId = $_POST['userId'];
+    
+    $requesteeId = $_POST['userId'];
      $requestFromId = $_SESSION['id'];//current logged in user will be the one to send the request
      $fullname =$_SESSION['username'];
      
