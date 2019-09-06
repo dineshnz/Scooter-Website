@@ -1,7 +1,19 @@
 <?php
-  require_once 'config/stripeConfig.php';
-  require_once 'config/db.php';
 session_start();
+error_reporting(0);
+if (!isset($_SESSION['passport'])) {
+  $_SESSION['msg'] = "You must log in first";
+  $_SESSION['type'] = 'alert-danger';
+  header('location: login.php');
+}
+if (isset($_GET['logout'])) {
+  session_destroy();
+  unset($_SESSION['passport']);
+  header("location: login.php");
+}
+require_once 'config/stripeConfig.php';
+require_once 'config/db.php';
+
 $price = $_SESSION['price'];
 $paidById = $_SESSION['id'];
 $paidToId = $_POST['OwnerId'];
@@ -22,34 +34,34 @@ $returnStatus = 0;
 
 
 $charge = \Stripe\Charge::create([
-    'amount' => $price*100,
-    'currency' => 'nzd',
-    'description' => 'Example charge',
-    'source' => $token,
+  'amount' => $price*100,
+  'currency' => 'nzd',
+  'description' => 'Example charge',
+  'source' => $token,
 ]);
 
 
 global $conn;
     //inserting data to the transaction table 
-    $sql = "INSERT INTO transactions (amount, paidById, paidToId, vehicleId, paidStatus, returnStatus)
-     VALUES (?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO transactions (amount, paidById, paidToId, vehicleId, paidStatus, returnStatus)
+VALUES (?, ?, ?, ?, ?, ?)";
 
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('iiiiii', $price, $paidById, $paidToId, $vehicleId, $paidStatus, $returnStatus);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('iiiiii', $price, $paidById, $paidToId, $vehicleId, $paidStatus, $returnStatus);
 
-    $resultSql = $stmt->execute();
+$resultSql = $stmt->execute();
 
-    if($resultSql){
+if($resultSql){
       //set flash messages
-      $_SESSION['message'] = 'Thank you for your payment. Enjoy your ride';
-      $_SESSION['alert-class'] = 'alert-success';
-      header('location: successVehiclePayment.php');
-      exit();
+  $_SESSION['message'] = 'Thank you for your payment. Enjoy your ride';
+  $_SESSION['alert-class'] = 'alert-success';
+  header('location: successVehiclePayment.php');
+  exit();
 
-  }else{
-      $errors['db_error'] = "Database Error: Failed to register";
+}else{
+  $errors['db_error'] = "Database Error: Failed to register";
       //$_SESSION['error_msg'] = "Database error: Could not register user";
-  }
-   
+}
+
 ?>

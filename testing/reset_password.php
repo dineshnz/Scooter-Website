@@ -1,4 +1,18 @@
-<?php include 'controllers/authController.php' ?>
+<?php 
+session_start();
+error_reporting(0);
+if (!isset($_SESSION['passport'])) {
+  $_SESSION['msg'] = "You must log in first";
+  $_SESSION['type'] = 'alert-danger';
+  header('location: login.php');
+}
+if (isset($_GET['logout'])) {
+  session_destroy();
+  unset($_SESSION['passport']);
+  header("location: login.php");
+}
+include 'controllers/authController.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,32 +26,32 @@
   <title>Reset Password</title>
 </head>
 <body>
-<?php include 'header.php' ?>
+  <?php include 'header.php' ?>
   <div class="container">
     <div class="row">
       <div class="col-md-4 offset-md-4 form-wrapper auth login">
         <h3 class="text-center form-title">Reset Password</h3>
         <form action="reset_password.php" method="post">
           <?php if (count($errors) > 0): ?>
-          <div class="alert alert-danger">
-            <?php foreach ($errors as $error): ?>
-            <li>
-              <?php echo $error; ?>
-            </li>
-            <?php endforeach;?>
-          </div>
+            <div class="alert alert-danger">
+              <?php foreach ($errors as $error): ?>
+                <li>
+                  <?php echo $error; ?>
+                </li>
+              <?php endforeach;?>
+            </div>
           <?php endif;?>
 
           <!-- Display messages -->
-        <?php if (isset($_SESSION['message'])): ?>
-        <div class="alert <?php echo $_SESSION['type'] ?>">
-          <?php
-            echo $_SESSION['message'];
-            unset($_SESSION['message']);
-            unset($_SESSION['type']);
-          ?>
-        </div>
-        <?php endif;?>
+          <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert <?php echo $_SESSION['type'] ?>">
+              <?php
+              echo $_SESSION['message'];
+              unset($_SESSION['message']);
+              unset($_SESSION['type']);
+              ?>
+            </div>
+          <?php endif;?>
           <div class="form-group">
             <label>Password</label>
             <input type="password" name="password" class="form-control form-control-lg">

@@ -73,12 +73,12 @@ if (isset($_GET['logout'])) {
 	<?php include('includes/profileHeader.php');?>
 	<div class="ts-main-content">
 		<?php include('includes/leftbar.php');?>
-		<div class="content-wrapper">
+		<div class="content-wrapper" style="margin-top: 60px">
 			<div class="container-fluid">
 				
 				<?php
 				$license = $_SESSION['license'];
-				echo $license;
+				
 				?>
 
 				<div class="row">
@@ -163,7 +163,7 @@ if (isset($_GET['logout'])) {
 
 											<div class="form-group">
 												<div class="col-sm-4">
-													Image 4<span style="color:red">*</span><input type="file" name="img4" >
+													Image 4<input type="file" name="img4" >
 												</div>
 												<div class="col-sm-4">
 													Image 5<input type="file" name="img5">
@@ -208,7 +208,7 @@ if (isset($_GET['logout'])) {
 
 
 											<div class="form-group">
-												<div class="col-sm-8 col-sm-offset-2">
+												<div class="col-sm-8 offset-sm-2">
 													<button class="btn btn-default" type="reset">Cancel</button>
 													<button class="btn btn-primary" name="submit" type="submit">Save changes</button>
 												</div>

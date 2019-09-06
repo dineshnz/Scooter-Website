@@ -53,32 +53,41 @@ if (isset($_GET['logout'])) {
         </div>
         <?php endif;?>
           <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="fullname" class="form-control form-control-lg" value="<?php echo $fullname; ?>">
+            <label>Username<span class="text-danger">*</span></label>
+            <input type="text" name="fullname" class="form-control form-control" 
+            value="<?php echo $fullname; ?>">
+            <small class="form-text text-muted">Only letters and spaces allowed</small>
           </div>
           <div class="form-group">
-            <label>Email</label>
-            <input type="text" name="email" class="form-control form-control-lg" value="<?php echo $email; ?>">
+            <label>Email<span class="text-danger">*</span></label>
+            <input type="text" name="email" class="form-control form-control"
+             value="<?php echo $email; ?>">
           </div>
           <div class="form-group">
-            <label>Passport Number</label>
-            <input type="text" name="passport" class="form-control form-control-lg" value="<?php echo $passport; ?>">
+            <label>Passport Number<span class="text-danger">*</span></label>
+            <input type="text" name="passport" class="form-control form-control" 
+            value="<?php echo $passport; ?>">
+            <small class="form-text text-muted">Only letters and spaces allowed</small>
           </div>
           <div class="form-group">
-            <label>Address</label>
-            <input type="text" name="address" class="form-control form-control-lg" value="<?php echo $address; ?>">
+            <label>Address<span class="text-danger">*</span></label>
+            <input type="text" name="address" class="form-control form-control" 
+            value="<?php echo $address; ?>">
           </div>
           <div class="form-group">
-            <label>Driver License Number</label>
-            <input type="text" name="license" class="form-control form-control-lg" value="<?php echo $license; ?>">
+            <label>Driver License Number<span class="text-danger">*</span></label>
+            <input type="text" name="license" class="form-control form-control" 
+            value="<?php echo $license; ?>">
+            <small class="form-text text-muted">Only letters and spaces allowed</small>
           </div>
           <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" class="form-control form-control-lg">
+            <label>Password<span class="text-danger">*</span></label>
+            <input type="password" name="password" class="form-control form-control">
+            <small class="form-text text-muted">Password must contailn at least 1 uppercase and 1 number and one special character and at least 8 characters</small>
           </div>
           <div class="form-group">
-            <label>Password Confirm</label>
-            <input type="password" name="confirmpassword" class="form-control form-control-lg">
+            <label>Confirm Password<span class="text-danger">*</span></label>
+            <input type="password" name="confirmpassword" class="form-control form-control">
           </div>
           <div class="form-group">
             <button type="submit" name="signup-btn" class="btn btn-lg btn-block">Sign Up</button>

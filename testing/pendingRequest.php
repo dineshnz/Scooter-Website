@@ -1,4 +1,19 @@
+<?php 
+session_start();
+error_reporting(0);
+if (!isset($_SESSION['passport'])) {
+  $_SESSION['msg'] = "You must log in first";
+  $_SESSION['type'] = 'alert-danger';
+  header('location: login.php');
+}
+if (isset($_GET['logout'])) {
+  session_destroy();
+  unset($_SESSION['passport']);
+  header("location: login.php");
+}
+?>
 <!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +29,7 @@
         <style>
           .content{
           
-          margin-top: 0px;
+          margin-top: 60px!important;
           margin-left: 250px;
           
            }  
@@ -67,7 +82,7 @@
           <div class="main">
           <div class="input-group">
 	
-            <input type="text" class="form-control" id="searchInput" placeholder="dinesh Karki" required>
+            <input type="text" class="form-control" id="searchInput" placeholder="username or passport" required>
             
             <div class="input-group-append">
                 <button class="btn btn-secondary" id="searchBtn" type="button" onclick="validation()">
