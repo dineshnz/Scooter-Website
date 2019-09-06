@@ -155,9 +155,6 @@ $resultString ="";
           value = "Send Requests for approval" 
           title="Please send request to owner to be able to view the detail of the vehicle">
         <?php } ?>
-
-        
-        
         
         <div id="targetDiv"></div>
         <!--Start of modal to show results-->
@@ -181,10 +178,6 @@ $resultString ="";
             
           </div>
         </div>
-
-
-
-        
       </div>
     </div>
   <?php }}} ?>
