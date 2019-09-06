@@ -16,7 +16,7 @@ require_once 'config/db.php';
 
 $price = $_SESSION['price'];
 $paidById = $_SESSION['id'];
-$paidToId = $_POST['OwnerId'];
+$paidToId = $_POST['ownerId'];//retrieved from scooterDetail.php page
 $paidStatus = 1;
 
 
