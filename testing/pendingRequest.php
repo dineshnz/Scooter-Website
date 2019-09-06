@@ -259,7 +259,6 @@ function onRejectRequest(vehicleId, requesterId){
 function sendRequestForProfile(userId){
 	if(xhr){
     event.preventDefault();
-    alert(userId);
 		var obj = document.getElementById("success");
 		var requestbody ="userId="+encodeURIComponent(userId);
 			var url = "sendRequestForProfile.php";

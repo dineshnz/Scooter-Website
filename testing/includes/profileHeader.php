@@ -35,7 +35,8 @@
 	   <i class="fa fa-bell fa-lg" ></i>
 	   <span  style="font-size:18px;"></span>
 	   <?php
-				$query = "SELECT * from `notifications` where `status` = 'unread' AND `requesterId`= '$requesterId' order by `date` DESC";
+				$query = "SELECT * from `notifications` where `status` = 'unread' 
+				AND `requesterId`= '$requesterId' order by `date` ASC";
 				$result = $conn->query($query);
 				$count = $result->num_rows;
 
@@ -48,7 +49,7 @@
 	</a>
        <ul class="dropdown-menu scrollable-menu" style="width: 300px;" >
 	   <?php
-                $query1 = "SELECT * from `notifications` where `requesterId`= '$requesterId' order by `status` DESC ";
+                $query1 = "SELECT * from `notifications` where `requesterId`= '$requesterId' order by `date` DESC ";
 				$result1 = $conn->query($query1);
 				$rowcount = $result1->num_rows;
 				
