@@ -234,7 +234,7 @@ $numComments = $sqlNumComments->num_rows;
                           </li>
 
                         <?php }} else{?> 
-                          <li><i class="fa fa-cogs" aria-hidden="true"></i>
+                          <li><i class="fa fa-motorcycle" aria-hidden="true"></i>
                             <h5>Available for Rent</h5>
                             <p>Rental Status</p>
                           </li>

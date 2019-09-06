@@ -25,7 +25,7 @@ $userLevel = $_SESSION['userLevel'];
 
         <li><a href="searchScooter.php"><i class="fa fa-motorcycle"></i> Search Scooters</a></li>
         <li><a href="viewProfileRequests.php"><i class="fa fa-user"></i> View Profie Requests</a></li>
-        <li><a href="myActiveAssets.php"><i class="fa fa-user"></i> My active assets</a></li>
+        <li><a href="myActiveAssets.php"><i class="fa fa-motorcycle"></i> My Bookings</a></li>
         <?php }?>
 
         <?php 
