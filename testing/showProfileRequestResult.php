@@ -36,20 +36,13 @@ $stmt->close();
 
 if($row > 0){
   echo '<p class="alert-success">Results found</p>';
-
-}
-else{
-  echo '<p class="alert-danger">Results not found</p>';
-}
-
-
 $userQuery ="SELECT * FROM users WHERE passport='$searchInput' OR fullname='$searchInput'";
 $userResult= $conn->query($userQuery);
 $userRow = $userResult->num_rows;
 
 if($userRow>0){
   while($re= $userResult->fetch_assoc()){
-   $userToLookFor = $re['id'];
+  $userToLookFor = $re['id'];
    $fullNameOfUser= $re['fullname'];
  }
 }
@@ -85,6 +78,14 @@ if ($resultRow > 0) {
           title="Please send request to user to be able to view the detailed history of the renter">
 
         <?php }?>
+
+<?php }
+else{
+  echo '<p class="alert-danger">No history found or this user may not exist</p>';
+}?>
+
+
+
         <div id="targetDiv"></div>
         <!--Start of modal to show results-->
         <div class="modal fade" id="responseModal" role="dialog">
@@ -107,6 +108,9 @@ if ($resultRow > 0) {
 
           </div>
         </div>    
+
+
+
         
         
         

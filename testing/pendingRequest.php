@@ -258,7 +258,8 @@ function onRejectRequest(vehicleId, requesterId){
 //function to send request from owner to user to view their profile
 function sendRequestForProfile(userId){
 	if(xhr){
-		event.preventDefault();
+    event.preventDefault();
+    alert(userId);
 		var obj = document.getElementById("success");
 		var requestbody ="userId="+encodeURIComponent(userId);
 			var url = "sendRequestForProfile.php";

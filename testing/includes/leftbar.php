@@ -32,7 +32,7 @@ $userLevel = $_SESSION['userLevel'];
         if($userLevel ==2){ ?>
 
         <li><a href="addScooter.php"><i class="fa fa-motorcycle"></i> List a Scooter</a></li>
-        <li><a href="pendingRequest.php"><i class="fa fa-user"></i> View pending requests</a></li>
+        <li><a href="pendingRequest.php"><i class="fa fa-user"></i> View vehicle requests</a></li>
         <li><a href="myListing.php"><i class="fa fa-list"></i> My Assets</a></li>
         <li><a href="myRentedAssets.php"><i class="fa fa-list"></i> My Rented Vehicles</a></li>
         <?php }?>
