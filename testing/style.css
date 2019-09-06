@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lora');
+
 :root{
     --mainBlue: #84bae0;
     --transparentBlue: rgba(64,172,241,0.7);
@@ -114,22 +116,6 @@ img{
     color: var(--mainWhite);
 }
 
-
-/*#howitworks {*/
-/*    border: 1px dotted yellow;*/
-/*    background: rgba(227, 181, 5, 0.75);*/
-/*    height: 150px;*/
-/*    margin-left: 1.66%;*/
-/*    margin-right: 2%;*/
-/*    justify-content: center;*/
-/*    display: inline-block;*/
-/*    width: 30%;*/
-/*    padding-left: 20px;*/
-/*    padding-top: 18px;*/
-/*    padding-bottom: 20px;*/
-
-
-/*}*/
 
 .error {
   width: 92%; 
