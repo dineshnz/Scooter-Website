@@ -29,8 +29,13 @@ if (isset($_GET['logout'])) {
         <style>
           .content{
           
-          margin-top: 60px!important;
-          margin-left: 250px;
+          margin-top: 70px!important;
+          margin-left: 270px;
+          margin-right: 20px;
+          border:1px solid #ccc;
+          box-shadow: 1px 1px 5px black;
+       
+          text-align: center;
           
            }  
 
@@ -43,7 +48,7 @@ if (isset($_GET['logout'])) {
         #targetDiv{
             margin-top: 30px;
             width: 95%;
-            margin-left:30px;
+            margin-left:70px;
         }
 
         #referenceTarget{
@@ -55,7 +60,7 @@ if (isset($_GET['logout'])) {
 
         .firstLine{
           border-left: 6px solid red;
-          background-color: #9ba832;
+          background-color:gray;
           box-sizing: content-box;
           width: 50%;
           margin: 10px auto;
@@ -73,7 +78,7 @@ if (isset($_GET['logout'])) {
   <?php include('includes/leftbar.php');?>
 
 		<div class="content">
-        <div class="row" style="background:lightgray; margin-top:19px; padding-top:10px">
+        <div class="row" style=" margin-top:19px; padding-top:10px">
           <div class="col-md-6 firstCol">
           <h3 class=" text-center text-white firstLine">Search Renter's history</h3>
         <p class="text-center">Please enter the name or passport number<br> you know about the requester<br> to search his/her renting history</p>
@@ -100,8 +105,9 @@ if (isset($_GET['logout'])) {
           <div id="referenceTarget" class="col-md-4" ></div>
           
         </div>
-        <div id="targetDiv">	</div>
-	</div>
+      
+  </div>
+  <div id="targetDiv">	</div>
     </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
