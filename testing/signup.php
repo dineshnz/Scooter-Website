@@ -83,7 +83,8 @@ if (isset($_GET['logout'])) {
           <div class="form-group">
             <label>Password<span class="text-danger">*</span></label>
             <input type="password" name="password" class="form-control form-control">
-            <small class="form-text text-muted">Password must contailn at least 1 uppercase and 1 number and one special character and at least 8 characters</small>
+            <small class="form-text text-muted">Password must contailn at least 1 uppercase and 1 number 
+              and one special character(@#$%) and at least 8 characters long</small>
           </div>
           <div class="form-group">
             <label>Confirm Password<span class="text-danger">*</span></label>
