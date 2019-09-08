@@ -20,7 +20,7 @@ require '../config/db.php';
     // if(isset($_POST['readrecords'])){
 $myId = $_SESSION['id'];
 
-$sql = "SELECT * FROM profilerequest p join users u on p.requestFromId = u.id
+$sql = "SELECT * FROM profilerequest p join users u on p.requesteeId = u.id
 WHERE p.result= 'pending' AND p.requesteeId = '$myId'";
 
 $result = $conn->query($sql);

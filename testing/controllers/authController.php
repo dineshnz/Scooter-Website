@@ -88,19 +88,19 @@
             $errors['license'] = 'Valid license Number required';
            
             }
-            if (empty($_POST['password'])) {
-                $errors['password'] = 'Password required';
+        if (empty($_POST['password'])) {
+            $errors['password'] = 'Password required';
+        }
+        if (preg_match ("((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})", stripslashes(trim($_POST['password'])))) {
+
+            $password = takeInput($_POST['password']);
+            
+            } else {
+            
+            $password = FALSE;
+            $errors['password'] = 'Valid password required';
+            
             }
-            if (preg_match ("((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})", stripslashes(trim($_POST['password'])))) {
-    
-                $license = takeInput($_POST['password']);
-                
-                } else {
-                
-                $password = FALSE;
-                $errors['password'] = 'Valid password required';
-               
-                }
         if (empty($_POST['confirmpassword'])) {
             $errors['confirmpassword'] = 'Confirm password required';
         }

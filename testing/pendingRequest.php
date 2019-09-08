@@ -13,7 +13,6 @@ if (isset($_GET['logout'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,13 +28,8 @@ if (isset($_GET['logout'])) {
         <style>
           .content{
           
-          margin-top: 70px!important;
-          margin-left: 270px;
-          margin-right: 20px;
-          border:1px solid #ccc;
-          box-shadow: 1px 1px 5px black;
-       
-          text-align: center;
+          margin-top: 60px;
+          margin-left: 250px;
           
            }  
 
@@ -48,7 +42,7 @@ if (isset($_GET['logout'])) {
         #targetDiv{
             margin-top: 30px;
             width: 95%;
-            margin-left:70px;
+            margin-left:30px;
         }
 
         #referenceTarget{
@@ -60,7 +54,7 @@ if (isset($_GET['logout'])) {
 
         .firstLine{
           border-left: 6px solid red;
-          background-color:gray;
+          background-color: #9ba832;
           box-sizing: content-box;
           width: 50%;
           margin: 10px auto;
@@ -78,7 +72,7 @@ if (isset($_GET['logout'])) {
   <?php include('includes/leftbar.php');?>
 
 		<div class="content">
-        <div class="row" style=" margin-top:19px; padding-top:10px">
+        <div class="row" style="background:lightgray; margin-top:19px; padding-top:10px">
           <div class="col-md-6 firstCol">
           <h3 class=" text-center text-white firstLine">Search Renter's history</h3>
         <p class="text-center">Please enter the name or passport number<br> you know about the requester<br> to search his/her renting history</p>
@@ -87,7 +81,7 @@ if (isset($_GET['logout'])) {
           <div class="main">
           <div class="input-group">
 	
-            <input type="text" class="form-control" id="searchInput" placeholder="username or passport" required>
+            <input type="text" class="form-control" id="searchInput" placeholder="6565" required>
             
             <div class="input-group-append">
                 <button class="btn btn-secondary" id="searchBtn" type="button" onclick="validation()">
@@ -105,9 +99,8 @@ if (isset($_GET['logout'])) {
           <div id="referenceTarget" class="col-md-4" ></div>
           
         </div>
-      
-  </div>
-  <div id="targetDiv">	</div>
+        <div id="targetDiv">	</div>
+	</div>
     </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -115,7 +108,6 @@ if (isset($_GET['logout'])) {
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
  </body>
 </html>
-
     <!--Start of modal to show results-->
     <div class="modal fade" id="responseModal" role="dialog">
     <div class="modal-dialog">
