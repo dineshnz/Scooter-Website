@@ -15,6 +15,7 @@ if (isset($_GET['logout'])) {
 <html>
 <head>
   <title>My Profile</title>
+
  
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- Sandstone Bootstrap CSS -->
@@ -23,6 +24,7 @@ if (isset($_GET['logout'])) {
 	
 	<link rel="stylesheet" href="css/style.css">
 	
+
   <script type="text/javascript" src="js/myProfileUpdate.js"></script>
   <style>
     #length{
