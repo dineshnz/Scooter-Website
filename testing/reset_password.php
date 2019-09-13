@@ -13,7 +13,7 @@ include 'controllers/authController.php';
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/style2.css">
+  <link rel="stylesheet" href="main1.css">
   <title>Reset Password</title>
 </head>
 <body>
