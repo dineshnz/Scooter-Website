@@ -112,12 +112,12 @@ if(isset($_POST['submit'])){
   <meta name="keywords" content="">
   <meta name="description" content="">
   <title>Scooter Detail</title>
-  <!-- Font awesome -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Sandstone Bootstrap CSS -->
-  <link rel="stylesheet" href="css/style.css" type="text/css">
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- Sandstone Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/purple.css" type="text/css">
   <!--OWL Carousel slider-->
   <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
