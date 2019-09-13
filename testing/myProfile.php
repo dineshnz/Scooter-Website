@@ -15,7 +15,7 @@ if (isset($_GET['logout'])) {
 <html>
 <head>
   <title>My Profile</title>
-  <link rel="stylesheet" type="text/css" href="style.css">  
+  <link rel="stylesheet" type="text/css" href="css/style1.css">  
   <script type="text/javascript" src="js/myProfileUpdate.js"></script>
 
 </head>

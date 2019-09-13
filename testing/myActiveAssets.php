@@ -122,19 +122,7 @@ if (isset($_GET['logout'])) {
           </section>
           
           
-          
-
-          
-          
-          
-          
-          
-          
-          
-          
-
-          
-
+    
         </div>
       </div>
       
