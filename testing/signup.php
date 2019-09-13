@@ -21,7 +21,7 @@ if (isset($_GET['logout'])) {
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/style2.css">
+  <link rel="stylesheet" href="main1.css">
   <title>User verification system PHP</title>
 </head>
 <body>
