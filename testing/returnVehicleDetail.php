@@ -86,12 +86,12 @@ $numComments = $sqlNumComments->num_rows;
   <meta name="keywords" content="">
   <meta name="description" content="">
   <title>Scooter Detail</title>
-  <!-- Font awesome -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Sandstone Bootstrap CSS -->
-  <link rel="stylesheet" href="css/style.css" type="text/css">
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- Sandstone Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/purple.css" type="text/css">
   <!--OWL Carousel slider-->
   <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
@@ -360,8 +360,14 @@ $numComments = $sqlNumComments->num_rows;
                     </ul>
                   </div>
                   <hr>
+                  <!-- extracting first name of the user -->
+                  <?php
+                      $myvalue = $nameOfRenter;
+                      $arr = explode(' ',trim($myvalue));
+                      $firstName= $arr[0]; // will print the first name of the logged user
+                   ?>
                       <div class="widget_heading">
-                        <h5><i class="fa fa-comment" aria-hidden="true"></i>Add Review For <?php echo $nameOfRenter?></h5>
+                        <h5><i class="fa fa-comment" aria-hidden="true"></i>Add Review For <?php echo $firstName?></h5>
                       </div>
                       <form>
                         <div class="form-group">
