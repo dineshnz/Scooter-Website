@@ -32,15 +32,8 @@ if(!($ownerRowCount >0)){
   exit();
 }
 else{
- 
-        //if the user has listings this query will find out if there is any request for approval for his vehicle
-      // $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId  
-      // WHERE result= 'pending' AND t.userId = '$ownerId'";
-
-      // $sql = "SELECT * FROM requests r join tblscooters t on t.vid = r.vehicleId join users u on r.requesterId = u.id
-      // WHERE r.result= 'pending' AND t.userId = '$ownerId'";
-
-  $sql = "SELECT * FROM requests r join users u on r.requesterId = u.id
+//  display teh request result with renter information such as passport number and name
+  $sql = "SELECT * FROM requests r join users u on r.ownerId = u.id
   WHERE r.result= 'pending' AND r.ownerId = '$ownerId'";
   
   $result = $conn->query($sql);
