@@ -1,4 +1,4 @@
-
+<!-- this page will display the rented vehicles for the owner.  -->
 <?php 
 session_start();
 error_reporting(0);
@@ -11,6 +11,13 @@ if (isset($_GET['logout'])) {
   session_destroy();
   unset($_SESSION['passport']);
   header("location: login.php");
+}
+
+//if the user level is less than 2 then user will not be able to visit this page
+if (($_SESSION['userLevel']) !=2) {
+	$_SESSION['msg'] = "You are not allowed to visit url you entered";
+	$_SESSION['type'] = 'alert-danger';
+	header('location: userProfile.php');
 }
 ?>
 <!DOCTYPE html>
@@ -80,7 +87,7 @@ if (isset($_GET['logout'])) {
               $passportNo = $_SESSION['passport'];
 
 
-            //this will search the scooters related to the owner which 
+            //this will search the scooters related to the owner which are rented out
               $sql = "SELECT * FROM tblscooters s join transactions t on s.vid = t.vehicleId join users u on u.id = t.paidToId
               WHERE u.id = ? AND t.returnStatus ='0'";
               

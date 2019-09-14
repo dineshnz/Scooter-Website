@@ -35,6 +35,7 @@
 	   <i class="fa fa-bell fa-lg" ></i>
 	   <span  style="font-size:18px;"></span>
 	   <?php
+	   //querying database to show notifications.
 				$query = "SELECT * from `notifications` where `status` = 'unread' 
 				AND `requesterId`= '$requesterId' order by `date` ASC";
 				$result = $conn->query($query);
@@ -49,6 +50,7 @@
 	</a>
        <ul class="dropdown-menu scrollable-menu" style="width: 300px;" >
 	   <?php
+	   	//querying database for loading notifications, it will show the latest date first. 
                 $query1 = "SELECT * from `notifications` where `requesterId`= '$requesterId' order by `date` DESC ";
 				$result1 = $conn->query($query1);
 				$rowcount = $result1->num_rows;

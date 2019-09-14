@@ -1,8 +1,7 @@
-<!-- <script src="js/showScooters.js"></script> -->
-
 <?php
 session_start();
 error_reporting(0);
+//if user is not logged in then redirect user to login page
 if (!isset($_SESSION['passport'])) {
   $_SESSION['msg'] = "You must log in first";
   $_SESSION['type'] = 'alert-danger';
@@ -43,12 +42,13 @@ if ($rowCount > 0) {
   ?>
   
   
-
+<!-- showing the profile request. -->
   <tr>  
     <td><?php echo $number ?></td>
     <td><?php echo $row['requesterFullname'] ?></td>
     <td><?php echo $row['message'] ?></td>
     <td>
+      <!-- sending requestfrom id to the server to send the information on where the request come from-->
      <button onclick="onAcceptRequest(<?php echo $row['requestFromId'] ?>)" class="btn btn-success">Accept request</button>
    </td>
    <td>

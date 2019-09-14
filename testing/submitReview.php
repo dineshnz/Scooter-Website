@@ -1,3 +1,4 @@
+<!-- controller to provide review from owner to user. -->
 <?php 
 session_start();
 error_reporting(0);
@@ -10,6 +11,12 @@ if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['passport']);
     header("location: login.php");
+}
+//if the user level is less than 2 then user will not be able to visit this page
+if (($_SESSION['userLevel']) !=2) {
+	$_SESSION['msg'] = "You are not allowed to visit url you entered";
+	$_SESSION['type'] = 'alert-danger';
+	header('location: userProfile.php');
 }
 require 'config/db.php';
 

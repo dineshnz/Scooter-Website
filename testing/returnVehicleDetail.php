@@ -1,3 +1,6 @@
+<!-- this page displays the currently rented vehicle details for the owner with the information 
+about who rented the vehicle, and gives option to owner to provide review for the renter of the scooter. -->
+
 <?php 
 session_start();
 error_reporting(0);
@@ -10,6 +13,13 @@ if (isset($_GET['logout'])) {
   session_destroy();
   unset($_SESSION['passport']);
   header("location: login.php");
+}
+
+//if the user level is less than 2 then user will not be able to visit this page
+if (($_SESSION['userLevel']) !=2) {
+	$_SESSION['msg'] = "You are not allowed to visit url you entered";
+	$_SESSION['type'] = 'alert-danger';
+	header('location: userProfile.php');
 }
 require 'config/db.php';
 require_once 'config/stripeConfig.php';

@@ -15,8 +15,6 @@ if (isset($_GET['logout'])) {
 <html>
 <head>
   <title>My Profile</title>
-
- 
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- Sandstone Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
@@ -61,7 +59,7 @@ if (isset($_GET['logout'])) {
 
   
 
-  //Receive all the data based on what user has entered to login instead of searching in the database
+  //Receive all the data about the users
   $id=$_SESSION['id'];
   $sql = "SELECT * FROM users where id = ? LIMIT 1";
         $stmt = $conn->prepare($sql);

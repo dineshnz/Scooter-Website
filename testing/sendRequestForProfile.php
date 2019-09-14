@@ -1,6 +1,10 @@
+<!-- this page will send request to the user from owner to view user's history of renting
+if there is any history, owner can send request to user to view the history. Once the request is approved by user
+then only the owner will be able to view the renting history of the particular user.  -->
 <?php
 session_start();
 error_reporting(0);
+//if not logged in then redirect to login page
 if (!isset($_SESSION['passport'])) {
   $_SESSION['msg'] = "You must log in first";
   $_SESSION['type'] = 'alert-danger';
@@ -23,6 +27,7 @@ require 'config/db.php';
      $message = "would like to view your history of renting";
      $userPassport=$_SESSION['passport'];
 
+      //querying profile request table to see if there is any request already for the selected user
      $historyQuery = "SELECT * FROM profilerequest WHERE requesteeId=? AND requestFromId=?";
      $stmt = $conn->prepare($historyQuery);
      $stmt->bind_param('ii', $requesteeId, $requestFromId);
@@ -42,8 +47,7 @@ require 'config/db.php';
        
      }
      else{
-       
-
+      //if there is no requests sent by the current owner to selected user, then send the request
       $sql = "INSERT INTO profilerequest (requestFromId, requesterFullname, message,
       requesteeId, result)
       VALUES (?, ?, ?, ?, ?)";
@@ -57,6 +61,7 @@ require 'config/db.php';
        
        
        echo "Request Sent!! Please wait for owner's approval"; 
+       //updating notification table after sending the request.
        $sql = "INSERT INTO `notifications`( `requesterId`, `type`, `message`, `status`, `notifierPassport`, `notifierName`, `date`) 
        VALUES ($requesteeId,'viewProfile','$message', 'unread', '$userPassport','$fullname',CURRENT_TIMESTAMP)";
        

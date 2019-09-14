@@ -5,6 +5,7 @@
   session_start();
 
   error_reporting(0);
+  //if not logged in then redirect to the login page. 
   if (!isset($_SESSION['passport'])) {
     $_SESSION['msg'] = "You must log in first";
     $_SESSION['type'] = 'alert-danger';
@@ -39,16 +40,7 @@
     <!-- Sandstone Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Bootstrap Datatables -->
-    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
-    <!-- Bootstrap social button library -->
-    <link rel="stylesheet" href="css/bootstrap-social.css">
-    <!-- Bootstrap select -->
-    <link rel="stylesheet" href="css/bootstrap-select.css">
-    <!-- Bootstrap file input -->
-    <link rel="stylesheet" href="css/fileinput.min.css">
-    <!-- Awesome Bootstrap checkbox -->
-    <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-    <!-- Admin Stye -->
+   
     <link rel="stylesheet" href="css/style.css">
     <style>
       .content{
@@ -65,11 +57,23 @@
   	<?php include('includes/profileHeader.php');?>
   	<div class="ts-main-content">
      <?php include('includes/leftbar.php');?>
+
+        
      
      <?php if($userLevel == 0){ ?>
       <div class="content">
         <div class="jumbotron">
           <h1 class="display-4">Hello, <?php echo $_SESSION['username'] ?></h1>
+           <!-- display success messages -->
+         <?php if (isset($_SESSION['msg'])): ?>
+        <div class="alert <?php echo $_SESSION['type'] ?>">
+          <?php
+            echo $_SESSION['msg'];
+            unset($_SESSION['msg']);
+            unset($_SESSION['type']);
+          ?>
+        </div>
+        <?php endif;?>
           <hr>
           <p class="lead">Since you have not chosen any subscription plan, You only have access to your profile.
             Please upgrade to one of the subscription plan below to enjoy our website. 
@@ -85,6 +89,16 @@
     <?php if($userLevel == 1){ ?>
       <div class="content">
         <div class="jumbotron">
+           <!-- display success messages -->
+         <?php if (isset($_SESSION['msg'])): ?>
+        <div class="alert <?php echo $_SESSION['type'] ?>">
+          <?php
+            echo $_SESSION['msg'];
+            unset($_SESSION['msg']);
+            unset($_SESSION['type']);
+          ?>
+        </div>
+        <?php endif;?>
           <h1 class="display-4">Hello, <?php echo $_SESSION['username'] ?></h1>
           <hr>
           <p class="lead"> Upgrade to the premium and get privilige to be able to rent your own scooter. 
@@ -100,6 +114,16 @@
     <?php if($userLevel == 2){ ?>
       <div class="content">
         <div class="jumbotron">
+           <!-- display success messages -->
+         <?php if (isset($_SESSION['msg'])): ?>
+        <div class="alert <?php echo $_SESSION['type'] ?>">
+          <?php
+            echo $_SESSION['msg'];
+            unset($_SESSION['msg']);
+            unset($_SESSION['type']);
+          ?>
+        </div>
+        <?php endif;?>
           <h1 class="display-4">Hello, <?php echo $_SESSION['username'] ?></h1>
           <hr>
           <p class="lead"> Enjoy the privilege to be able to list and rent scooters. If you think you would only like to rent the scooter, 
@@ -117,9 +141,7 @@
 
 
   <!-- Loading Scripts -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap-select.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+
   <script src="js/main.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

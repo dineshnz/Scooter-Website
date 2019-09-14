@@ -1,3 +1,4 @@
+<!-- This page provides super member to degrade their membership plan to basic user. -->
 <?php 
 session_start();
 error_reporting(0);

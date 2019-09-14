@@ -1,6 +1,11 @@
+<!-- This is the page to view the pending vehicle requests. If there is any pending request then the owner of
+the vehicle will have to either accept or reject the request. Owner also has privilege to search for user history
+before accepting or rejecting the requests.  -->
+
 <?php 
 session_start();
 error_reporting(0);
+//redirect user to login page if not logged in
 if (!isset($_SESSION['passport'])) {
   $_SESSION['msg'] = "You must log in first";
   $_SESSION['type'] = 'alert-danger';
@@ -10,6 +15,13 @@ if (isset($_GET['logout'])) {
   session_destroy();
   unset($_SESSION['passport']);
   header("location: login.php");
+}
+
+//if the user level is less than 2 then user will not be able to visit this page
+if (($_SESSION['userLevel']) !=2) {
+	$_SESSION['msg'] = "You are not allowed to visit url you entered";
+	$_SESSION['type'] = 'alert-danger';
+	header('location: userProfile.php');
 }
 ?>
 <!DOCTYPE html>
@@ -129,7 +141,10 @@ if (isset($_GET['logout'])) {
       
     </div>
   </div>
+  <!-- end of the modal -->
 
+
+  <!-- javascript to perform the ajax operation. -->
   <script type="text/javascript" src="js/showScooters.js"></script>
 <script type="text/javascript" language="javascript" >
         $(document).ready(function () {
@@ -214,6 +229,7 @@ var xhr= createRequest();
 	}
 }
 
+//this function will load all the pending request related to the logged in owner.
 function viewPendingRequests(){
   if(xhr){
 		var obj = document.getElementById("targetDiv");
@@ -229,6 +245,7 @@ function viewPendingRequests(){
 	}
 }
 
+//this function handles the reject request from the owner
 function onRejectRequest(vehicleId, requesterId){
   if(xhr){
     var obj = document.getElementById("success");

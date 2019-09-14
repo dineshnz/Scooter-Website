@@ -1,3 +1,4 @@
+<!-- This page provides basic member to upgrade their membership plan to super user. -->
 <?php 
 session_start();
 error_reporting(0);

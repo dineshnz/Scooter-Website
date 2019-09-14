@@ -1,6 +1,9 @@
+<!-- This page displays currently listed scooters of the owner. -->
+
 <?php 
 session_start();
 error_reporting(0);
+//if the user is not logged in then redirect to login page. 
 if (!isset($_SESSION['passport'])) {
   $_SESSION['msg'] = "You must log in first";
   $_SESSION['type'] = 'alert-danger';
@@ -10,6 +13,12 @@ if (isset($_GET['logout'])) {
   session_destroy();
   unset($_SESSION['passport']);
   header("location: login.php");
+}
+//if the user level is less than 2 then user will not be able to visit this page
+if (($_SESSION['userLevel']) !=2) {
+	$_SESSION['msg'] = "You are not allowed to visit url you entered";
+	$_SESSION['type'] = 'alert-danger';
+	header('location: userProfile.php');
 }
 ?>
 
@@ -96,7 +105,7 @@ if (isset($_GET['logout'])) {
       <!-- Modal footer -->
       <div class="modal-footer">
        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-       <button type="button" class="btn btn-primary" onclick="UpdateUserDetails()" >Update</button>
+       <button type="button" class="btn btn-primary" onclick="UpdateVehicleDetails()" >Update</button>
        <input type="hidden" id="hidden_scooter_id">
      </div>
 
@@ -133,7 +142,7 @@ if (isset($_GET['logout'])) {
 });
 }
 
-function GetUserDetails(id){
+function GetVehicleDetails(id){
  $("#hidden_scooter_id").val(id);
  $.post("controllers/myListingController.php", {
   id: id
@@ -155,8 +164,8 @@ function (data, status) {
 
 
 
-
-function UpdateUserDetails() {
+//this function updates the vehicle details. 
+function UpdateVehicleDetails() {
   var title = $("#update_title").val();
   var overview = $("#update_overview").val();
   var price = $("#update_price").val();
@@ -175,8 +184,8 @@ function UpdateUserDetails() {
   );
 }
 
- /////////////delete userdetails ////////////
- function DeleteUser(deleteid){
+ /////////////delete vehicle details ////////////
+ function DeleteVehicle(deleteid){
 
   var conf = confirm("Are you sure, you want to delete this listing?");
   if(conf == true) {

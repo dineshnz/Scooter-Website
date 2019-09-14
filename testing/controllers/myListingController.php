@@ -4,9 +4,8 @@ session_start();
 extract($_POST);
 $ownerId = $_SESSION['id'];
 
+//displaying the records to the page. 
 if(isset($_POST['readrecords'])){
-
-	
 
     $displayquery = " SELECT * FROM tblScooters where userId =?"; 
     $stmt = $conn->prepare($displayquery);
@@ -38,10 +37,10 @@ if(isset($_POST['readrecords'])){
                 <td>'.$row['VehiclesBrand'].'</td>
                 <td>'.$row['PricePerDay'].'</td>
 				<td>
-					<button onclick="GetUserDetails('.$row['vid'].')" class="btn btn-success">Edit</button>
+					<button onclick="GetVehicleDetails('.$row['vid'].')" class="btn btn-success">Edit</button>
 				</td>
 				<td>
-					<button onclick="DeleteUser('.$row['vid'].')" class="btn btn-danger">Delete</button>
+					<button onclick="DeleteVehicle('.$row['vid'].')" class="btn btn-danger">Delete</button>
                 </td>
                 <td>
                 <a href="scooterDetail.php?vhid='.$row['vid'].'" class="btn btn-primary">View Details <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>

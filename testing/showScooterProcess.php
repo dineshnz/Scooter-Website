@@ -1,3 +1,4 @@
+<!-- controller to handle the process to show the scooter when user searches the scooter related to owner -->
 <?php
 session_start();
 error_reporting(0);

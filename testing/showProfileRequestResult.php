@@ -1,3 +1,4 @@
+<!-- page to display profile requests to the user. -->
 <script type="text/javascript" src="js/showScooters.js"></script>
 
 <?php

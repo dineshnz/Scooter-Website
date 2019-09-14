@@ -14,7 +14,7 @@ error_reporting(0);
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="main1.css">
+  <link rel="stylesheet" href="css/style2.css">
   <title>Forgot Password</title>
 </head>
 <body>
@@ -27,6 +27,7 @@ error_reporting(0);
         <form action="forgot_password.php" method="post">
         <p>Please enter your email address you used to sign up on this site and we will
         assist you in recovering your password.</p>
+        <!-- display error message -->
           <?php if (count($errors) > 0): ?>
           <div class="alert alert-danger">
             <?php foreach ($errors as $error): ?>
@@ -46,7 +47,7 @@ error_reporting(0);
           </div>
         </form>
 
-            <!-- Display messages -->
+            <!-- Display success messages -->
             <?php if (isset($_SESSION['message'])): ?>
         <div class="alert <?php echo $_SESSION['type'] ?>">
           <?php

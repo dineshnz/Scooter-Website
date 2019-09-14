@@ -1,6 +1,10 @@
+<!-- this page displays the scootes which are currently rented by a user. i.e if user A has rented any scooters
+this page will display all the vehicle he/she has rented from the owner. -->
+
 <?php 
 session_start();
 error_reporting(0);
+//if the user is not logged in then redirect to log in page
 if (!isset($_SESSION['passport'])) {
   $_SESSION['msg'] = "You must log in first";
   $_SESSION['type'] = 'alert-danger';
@@ -10,6 +14,13 @@ if (isset($_GET['logout'])) {
   session_destroy();
   unset($_SESSION['passport']);
   header("location: login.php");
+}
+
+//if the user level is less than 2 then user will not be able to visit this page
+if (($_SESSION['userLevel']) !=2) {
+	$_SESSION['msg'] = "You are not allowed to visit url you entered";
+	$_SESSION['type'] = 'alert-danger';
+	header('location: userProfile.php');
 }
 ?>
 
@@ -80,7 +91,7 @@ if (isset($_GET['logout'])) {
               $passportNo = $_SESSION['passport'];
 
               
-            //this will search the scooters related to the owner which 
+            //this will search the scooters currently rented by the user. 
               $sql = "SELECT * FROM tblscooters s join transactions t on s.vid = t.vehicleId join users u on u.id = t.paidById
               WHERE u.id = ? AND t.returnStatus ='0'";
               
@@ -121,20 +132,7 @@ if (isset($_GET['logout'])) {
             </div>
           </section>
           
-          
-          
-
-          
-          
-          
-          
-          
-          
-          
-          
-
-          
-
+   
         </div>
       </div>
       

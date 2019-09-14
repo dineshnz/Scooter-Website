@@ -1,3 +1,7 @@
+<!-- controller to handle the request for the profile
+this will select the database and if there any request approved then displays the detail otherwise it will
+display the status of the request. -->
+
 <?php
 require 'config/db.php';
 session_start();

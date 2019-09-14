@@ -1,6 +1,10 @@
+<!-- this page gives an option for user to enter passport number or full name of the owner
+ to search the vehicle listed by the owner, if the vehicle is listed by the given owner
+then user is able to send request to owner to view the vehicle -->
 <?php
 session_start();
 error_reporting(0);
+//if user is not logged in then redirect to login page 
 if (!isset($_SESSION['passport'])) {
 	$_SESSION['msg'] = "You must log in first";
 	$_SESSION['type'] = 'alert-danger';

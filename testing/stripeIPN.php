@@ -1,3 +1,4 @@
+<!-- controller to handle the payment of the scooter selected by user to owner. -->
 <?php
 session_start();
 error_reporting(0);
