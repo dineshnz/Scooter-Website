@@ -369,7 +369,7 @@ $numComments = $sqlNumComments->num_rows;
                       <div class="widget_heading">
                         <h5><i class="fa fa-comment" aria-hidden="true"></i>Add Review For <?php echo $firstName?></h5>
                       </div>
-                      <form>
+                      <form id="myForm">
                         <div class="form-group">
                           <textarea rows="4" class="form-control" id="message" name="message" placeholder="Message" required></textarea>
                         </div>
@@ -550,6 +550,7 @@ var xhr= createRequest();
         xhr.onreadystatechange = function(){
          if(xhr.readyState == 4 && xhr.status == 200){
           obj.innerHTML = xhr.responseText;
+          document.getElementById("myForm").reset();
         }
       }
       xhr.send(requestbody);
