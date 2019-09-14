@@ -30,7 +30,7 @@ $passportNoOwner= $_SESSION['passport'];
         $stmt = $conn->prepare($acceptQuery);
         $stmt->bind_param('ii', $requesteeId, $requesterId);
         if($stmt->execute()){
-         echo "Request approved";
+         echo "Request Rejected";
          $sql = "INSERT INTO `notifications`( `requesterId`, `type`, `message`, `status`, `notifierPassport`, `notifierName`, `date`) 
          VALUES ($requesterId,'acceptedProfile','$message', 'unread', '$passportNoOwner','$username',CURRENT_TIMESTAMP)";
          
