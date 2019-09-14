@@ -96,7 +96,7 @@
 			<li class="ts-account">
 				<a href="#"><img src="Images/favicon.png" class="ts-avatar hidden-side" alt=""> <?php echo $firstName ?> <i class="fa fa-angle-down hidden-side"></i></a>
 				<ul>
-					<li><a href="change-password.php">Change Password</a></li>
+					<li><a href="myPassword.php">Change Password</a></li>
 					<li><a href="logout.php?logout='1'" >logout</a> </li>
 				</ul>
 			</li>
