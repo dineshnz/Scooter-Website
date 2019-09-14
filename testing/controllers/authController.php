@@ -268,14 +268,6 @@
             $update_query = "UPDATE users SET verified=1 WHERE token ='$token'";
 
             if (mysqli_query($conn, $update_query)){
-                //log user in
-                // $_SESSION['id'] = $user['id'];
-                //     $_SESSION['username'] = $user['fullname'];
-                //     $_SESSION['email'] = $user['email'];
-                //     $_SESSION['passport'] = $user['passport'];
-                //     $_SESSION['address'] = $user['address'];
-                //     $_SESSION['license'] = $user['license'];
-
                     $_SESSION['verified'] = 1;
                     $_SESSION['message'] = 'Your Email was successfully verified! Please login and enjoy the website';
                     $_SESSION['type'] = 'alert-success';

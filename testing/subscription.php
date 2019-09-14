@@ -1,3 +1,5 @@
+<!-- controller to handle newly registered users to the website
+this page will provide user with option to selece basic user membership plan and super membership plan -->
 <?php 
 session_start();
 error_reporting(0);

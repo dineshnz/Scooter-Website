@@ -1,4 +1,5 @@
-<!-- <script src="js/showScooters.js"></script> -->
+<!-- controller to display the pending request to view the vehicle 
+this will display related pending requests to the owner and owner will have chance to decide to either accept or reject -->
 
 <?php
 require 'config/db.php';

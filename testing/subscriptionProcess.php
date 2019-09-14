@@ -1,3 +1,4 @@
+<!-- this controller handles the stripe payment when user selects the membership plans. -->
 <?php
 
 session_start();

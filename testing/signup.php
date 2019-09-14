@@ -1,4 +1,5 @@
 <?php include 'controllers/authController.php';
+//redirect user to login page if not logged in
 if (isset($_SESSION['passport'])) {
   $_SESSION['msg'] = "You must log in first";
   header('location: userProfile.php');
@@ -21,7 +22,7 @@ if (isset($_GET['logout'])) {
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="main1.css">
+  <link rel="stylesheet" href="css/style2.css">
   <title>User verification system PHP</title>
 </head>
 <body>
@@ -31,6 +32,7 @@ if (isset($_GET['logout'])) {
       <div class="col-md-4 offset-md-4 form-wrapper auth">
         <h3 class="text-center form-title">Register</h3>
         <form action="signup.php" method="post">
+          <!-- displaying error messages -->
           <?php if (count($errors) > 0): ?>
           <div class="alert alert-danger">
             <?php foreach ($errors as $error): ?>
@@ -42,7 +44,7 @@ if (isset($_GET['logout'])) {
           <?php endif;?>
 
           
-          <!-- Display messages -->
+          <!-- Display success messages -->
         <?php if (isset($_SESSION['message'])): ?>
         <div class="alert <?php echo $_SESSION['type'] ?>">
           <?php

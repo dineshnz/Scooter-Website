@@ -1,3 +1,4 @@
+<!-- page to display any pending profile request from owner to the user. -->
 <?php 
 session_start();
 error_reporting(0);

@@ -24,7 +24,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="main1.css">
+  <link rel="stylesheet" href="css/style2.css">
 
   <title>Login Page</title>
 </head>
@@ -35,6 +35,7 @@
       <div class="col-md-4 offset-md-4 form-wrapper auth login">
         <h3 class="text-center form-title header">Login</h3>
         <form action="login.php" method="post">
+          <!-- display error messages -->
           <?php if (count($errors) > 0): ?>
           <div class="alert alert-danger">
             <?php foreach ($errors as $error): ?>
@@ -44,7 +45,7 @@
             <?php endforeach;?>
           </div>
           <?php endif;?>
-
+            <!-- display success messages -->
           <?php if (isset($_SESSION['msg'])): ?>
         <div class="alert <?php echo $_SESSION['type'] ?>">
           <?php

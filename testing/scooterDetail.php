@@ -1,6 +1,10 @@
+<!-- this page displays the detailed description of the selected vehicle
+Also, user and owner can comment and reply on this page regarding the selected scooter -->
+
 <?php 
 session_start();
 error_reporting(0);
+//if user is not logged in then redirect user to login page
 if (!isset($_SESSION['passport'])) {
   $_SESSION['msg'] = "You must log in first";
   $_SESSION['type'] = 'alert-danger';
@@ -15,10 +19,6 @@ require 'config/db.php';
 require_once 'config/stripeConfig.php';
 
 
-  // <div class="comment">
-  //   <div class="user">Senaid B<span class="time">2019-07-15</span></div>
-  //   <div class="userComment">this is my comment</div>
-  // </div>
   //FUNCTION to createCommentRow
 function createCommentRow($data) {
   global $conn;

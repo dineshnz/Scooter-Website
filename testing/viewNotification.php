@@ -1,3 +1,4 @@
+<!-- page to display the detailed information of the selected notification.  -->
 <?php
 
 session_start();

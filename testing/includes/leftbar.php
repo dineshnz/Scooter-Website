@@ -21,6 +21,7 @@ $userLevel = $_SESSION['userLevel'];
 
         </li>
         <?php 
+        //if user level is 1 then display these menus
         if($userLevel >= 1){ ?>
 
         <li><a href="searchScooter.php"><i class="fa fa-motorcycle"></i> Search Scooters</a></li>
@@ -29,6 +30,7 @@ $userLevel = $_SESSION['userLevel'];
         <?php }?>
 
         <?php 
+        //if user level is 2 then display these menus
         if($userLevel ==2){ ?>
 
         <li><a href="addScooter.php"><i class="fa fa-motorcycle"></i> List a Scooter</a></li>
