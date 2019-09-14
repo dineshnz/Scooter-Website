@@ -63,11 +63,17 @@ if (isset($_GET['logout'])) {
 
   //Receive all the data based on what user has entered to login instead of searching in the database
   $id=$_SESSION['id'];
-  $fullname=$_SESSION['username'];
-  $email=$_SESSION['email'];
-  $address=$_SESSION['address'];
-  $passport=$_SESSION['passport'];
-  $driverLicense=$_SESSION['license'];
+  $sql = "SELECT * FROM users where id = ? LIMIT 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->num_rows;
+        $stmt->close();
+
+        
+        if($row > 0){
+          $user = mysqli_fetch_assoc($result);
   ?>
  
   <div class="row"  style="margin-left:100px; margin-right:20px; margin-top:10px;">
@@ -76,34 +82,34 @@ if (isset($_GET['logout'])) {
     <h1>General Information</h1>
     <form >
       <div class="form-group">
-         <input type="hidden" id="id" name="id" required="required" readonly value="<?php echo $id?>">
+         <input type="hidden" id="id" name="id" required="required" readonly value="<?php echo $user['id']?>">
       </div>
       <div class="form-group" id="length">
           <label class="control-label">Full Name:</label><br>
           <input type="text" id="full_name" name="full_name" class="form-control"
-           required="required" value="<?php echo $fullname?>">
+           required="required" value="<?php echo $user['fullname']?>">
       </div>
 
       <div class="form-group" id="length">
           <label class="control-label">Email Address: </label>
           <input type="text" id="email_address" name="email_address" class="form-control"
-          required="required" value="<?php echo $email?>">
+          required="required" value="<?php echo $user['email']?>">
       </div>
       <div class="form-group" id="length">
           <label class="control-label">Address: </label>
           <input type="text" id="address" name="address" class="form-control"
-          required="required" value="<?php echo $address?>" >
+          required="required" value="<?php echo $user['address']?>" >
       </div>
       <div class="form-group" id="length">
           <label class="control-label">Passport Number: </label>
           <input type="text" id="passport_number" name="passport_number" class="form-control"
-          required="required" value="<?php echo $passport?>" disabled 
+          required="required" value="<?php echo $user['passport']?>" disabled 
           title="Please send request to admin to update your passport number">
       </div>
       <div class="form-group" id="length">
           <label class="form-group">Driver License: </label>
           <input type="text" id="driver_license" name="driver_license" class="form-control"
-           required="required" value="<?php echo $driverLicense?>" disabled
+           required="required" value="<?php echo $user['driverLicense']?>" disabled
            title="Please send request to admin to update your Driver License number">
       </div>
       <div class="form-group" id="length">
@@ -114,6 +120,8 @@ if (isset($_GET['logout'])) {
       <p id="response"></p>
     </div>
     </div>
+
+        <?php }?>
     
 
     <!-- keeping menus on right -->
@@ -160,3 +168,5 @@ if (isset($_GET['logout'])) {
  
   </body>
   </html>
+
+  
