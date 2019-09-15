@@ -385,8 +385,8 @@ if(isset($_POST['submit'])){
                 <i class="fa fa-star" style="color:black"></i>
               </div>
               <!-- COMMENT SECTION -->
-              <br><h1 style="margin-left: 20px;">Add Comment</h1>
-              <div class="container">
+<!--               <br><h1 style="margin-left: 20px;">Add Comment</h1>
+ -->              <div class="container">
                 <div class="row">
                   <div class="col-md-12">
                     <!-- ADD COMMENT -->
