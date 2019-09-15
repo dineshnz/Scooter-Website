@@ -1,6 +1,5 @@
 <!-- this page displays the detailed description of the selected vehicle
 Also, user and owner can comment and reply on this page regarding the selected scooter -->
-
 <?php 
 session_start();
 error_reporting(0);
@@ -18,8 +17,7 @@ if (isset($_GET['logout'])) {
 require 'config/db.php';
 require_once 'config/stripeConfig.php';
 
-
-  //FUNCTION to createCommentRow
+//FUNCTION to createCommentRow
 function createCommentRow($data) {
   global $conn;
 
@@ -40,8 +38,6 @@ function createCommentRow($data) {
 
   return $response;
 }
-
-
   //COMMENTING - GET ALL THE COMMENTS
 if(isset($_POST['getAllComments'])){
   $start = $conn->real_escape_string($_POST['start']);
@@ -79,7 +75,6 @@ if(isset($_POST['addComment'])){
 $sqlNumComments = $conn->query("SELECT id FROM comments");
 $numComments = $sqlNumComments->num_rows;
 
-
   //on submit button clicked, get all the message (havent implemented yet)
 if(isset($_POST['submit'])){
   $fromdate=$_POST['fromdate'];
@@ -112,6 +107,8 @@ if(isset($_POST['submit'])){
   <meta name="keywords" content="">
   <meta name="description" content="">
   <title>Scooter Detail</title>
+  <!-- Plug in for rating star - font awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css" integrity="sha384-rtJEYb85SiYWgfpCr0jn174XgJTn4rptSOQsMroFBPQSGLdOC5IbubP6lJ35qoM9" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- Sandstone Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
@@ -122,12 +119,8 @@ if(isset($_POST['submit'])){
   <!--OWL Carousel slider-->
   <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
   <link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
-  
   <link href="css/bootstrap-slider.min.css" rel="stylesheet">
-
-
   <link href="css/owl.carousel.min.css" rel="stylesheet">
-
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
   <style>
     .comment{
@@ -267,9 +260,6 @@ if(isset($_POST['submit'])){
 
                       </ul>
                     </div>
-
-
-
                     <div class="listing_more_info">
                       <div class="listing_detail_wrap"> 
                         <!-- Nav tabs -->
@@ -388,6 +378,11 @@ if(isset($_POST['submit'])){
                   </aside>
                   <!--/Side-Bar--> 
                 </div>
+              </div>
+              <!-- RATING SECTION -->
+              <div align="center" style="background: #000; padding: 50px;">
+              <h1>Rating</h1>
+                <i class="fa fa-star" style="color:black"></i>
               </div>
               <!-- COMMENT SECTION -->
               <br><h1 style="margin-left: 20px;">Add Comment</h1>
