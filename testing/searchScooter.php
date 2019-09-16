@@ -15,6 +15,13 @@ if (isset($_GET['logout'])) {
 	unset($_SESSION['passport']);
 	header("location: login.php");
 }
+
+//if the user level is less than 2 then user will not be able to visit this page
+if (!($_SESSION['userLevel']) >=2) {
+	$_SESSION['msg'] = "You are not allowed to visit url you entered";
+	$_SESSION['type'] = 'alert-danger';
+	header('location: userProfile.php');
+}
 ?>
 <!doctype html>
 <html lang="en" class="no-js">

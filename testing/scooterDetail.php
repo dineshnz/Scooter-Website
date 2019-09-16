@@ -74,28 +74,6 @@ if(isset($_POST['addComment'])){
   //GET COMMENTS FROM THE DATABASE TO DISPLAY
 $sqlNumComments = $conn->query("SELECT id FROM comments");
 $numComments = $sqlNumComments->num_rows;
-
-  //on submit button clicked, get all the message (havent implemented yet)
-if(isset($_POST['submit'])){
-  $fromdate=$_POST['fromdate'];
-  $todate=$_POST['todate']; 
-  $message=$_POST['message'];
-  $useremail=$_SESSION['email'];
-  $status=0;
-  $vhid=$_GET['vhid'];
-  $sql="INSERT INTO  tblbooking(userEmail,VehicleId,FromDate,ToDate,message,Status) 
-  VALUES(?, ?, ?, ?, ?, ?)";
-  $query = $conn->prepare($sql);
-
-  $query-> bind_param('sisssis',$useremail, $vhid, $fromdate, $todate, $message, $status);
-  $query->execute();
-  $lastInsertId = $dbh->lastInsertId();
-  if($lastInsertId){
-    echo "<script>alert('Booking successfull.');</script>";
-  }else{
-    echo "<script>alert('Something went wrong. Please try again');</script>";
-  }
-}
 ?>
 
 <!DOCTYPE HTML>
@@ -357,22 +335,18 @@ if(isset($_POST['submit'])){
                       </div>
                       <form method="post">
                         <div class="form-group">
-                          <input type="text" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
+                          <input type="date" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
                         </div>
                         <div class="form-group">
-                          <input type="text" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
+                          <input type="date" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
                         </div>
                         <div class="form-group">
                           <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
                         </div>
-                        <?php if($_SESSION['passport']) {?>
+                       
                           <div class="form-group">
-                            <input type="submit" class="btn"  name="submit" value="Book Now">
+                            <input type="submit" class="btn btn-primary"  name="submit" value="Book Now">
                           </div>
-                        <?php } else { ?>
-
-                          <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
-                        <?php } ?>
                       </form>
                     </div>
                   </aside>
