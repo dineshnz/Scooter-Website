@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script type="text/javascript" src="js/contactUs.js"></script>
 <style>
 body
 {
-  background-image: url("background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -20,9 +20,9 @@ body
 
 input[type=text]
 {
-  width: 50%;
+  width: 40%;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #84bae0;
   border-radius: 5px;
   box-sizing: border-box;
   margin-top: 6px;
@@ -31,9 +31,9 @@ input[type=text]
 
 input[type=email] 
 {
-  width: 50%;
+  width: 40%;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #84bae0;
   border-radius: 5px;
   box-sizing: border-box;
   margin-top: 6px;
@@ -41,9 +41,9 @@ input[type=email]
   margin-left: 37px;
 }
 
-input[type=submit]
+input[type=button]
 {
-  background-color: #4CAF50;
+  background-color: #007EA7;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -51,29 +51,30 @@ input[type=submit]
   cursor: pointer;
 }
 
-input[type=submit]:hover
+input[type=button]:hover
 {
-  background-color: #45a049;
+  background-color: #84bae0;
 }
 
 textarea
 {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #84bae0;
   border-radius: 5px;
   box-sizing: border-box;
   margin-top: 6px;
   margin-bottom: 16px;
-  height: 200px;
+  height: 150px;
 }
 
 form
 {
+  border-color: #84bae0;
   border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 100px;
-  height: 800px;
+  background-color: #FFFFFF;
+  padding: 80px;
+  height: 950px;
   width: 800px;
   margin: auto;
 }
@@ -81,33 +82,39 @@ form
 h1
 {
   text-align: center;
+  color: #007EA7;
 }
 </style>
 
 </head>
 <body>
 <br><br><br>
-<h1>Contact Us Form</h1>
 <?php include 'header.php' ?>
-	
-<div class="form">  
-  <form action="hello.php" method="post">
-    <label>First Name: <input type="text" name="fname" required="required" placeholder="First Name"></label>
+	  
+  <form action="contactProcess.php" method="post">
+  <h1>Contact Us</h1>
+    <label>Username: </label><br>
+    <input type="text" id="uname" name="uname" required="required" placeholder="Username">
     <br>
-    <label>Last Name: <input type="text" name="lname" required="required" placeholder="Last Name"></label>
+    <label>Email: </label><br>
+    <input type="text" id="email" name="email" required="required" placeholder="Email">
     <br>
-    <label>Email: <input type="email" name="email" required="required" placeholder="Email"></label>
+    <label>Subject: </label><br>
+    <input type="text" id="subject" name="subject" required="required" placeholder="Subject">
     <br>
-    <label>Subject: <input type="text" name="subject" required="required" placeholder="Subject"></label>
+    <label>Driver License: </label><br>
+    <input type="text" id="driverLicense" name="subject" required="required" placeholder="Subject">
+    <br>
+    <label>Passport: </label><br>
+    <input type="text" id="passport" name="subject" required="required" placeholder="Subject">
     <br>
     <label>Message: </label>
     <textarea name="message" id="message" placeholder="Message"></textarea>
     
-    <input type="submit" value="Submit">
+    <input type="button" value="Submit" onclick="sendContact()">
     <input type="reset" value="Reset">
+    <p id="response"></p>
   </form>
-
-</div>
 
 </body>
 </html>

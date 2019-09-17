@@ -520,31 +520,29 @@ $numComments = $sqlNumComments->num_rows;
               $(".replyRow").insertAfter($(caller));
               $('.replyRow').show();
             }
-            //FUNCTION to dynamically get all the comments from DB: start and maximum number of comments
-            function getAllComments(start, max){
-              //IF start is bigger than max we will exit and stop getting the comments
-              if(start > max){
-                return;
-              }
-              $.ajax({
-                url: 'scooterDetail.php',
-                method: 'POST',
-                dateType: 'text',
-                data: {
-                      //flag
-                      getAllComments: 1,
-                      //start
-                      start: start
-                    }, success: function (response){
-                      //grab the UserComments and append
-                      $(".userComments").append(response);
-                      //increase starting point by 20 for the number of comments returned during each iteration              
-                      getAllComments((start+20), max);
-                    }
-                  });
+    //FUNCTION to dynamically get all the comments from DB: start and maximum number of comments
+    function getAllComments(start, max){
+      //IF start is bigger than max we will exit and stop getting the comments
+      if(start > max){
+        return;
+      }
+      $.ajax({
+        url: 'scooterDetail.php',
+        method: 'POST',
+        dateType: 'text',
+        data: {
+              //flag
+              getAllComments: 1,
+              //start
+              start: start
+            }, success: function (response){
+              //grab the UserComments and append
+              $(".userComments").append(response);
+              //increase starting point by 20 for the number of comments returned during each iteration              
+              getAllComments((start+20), max);
             }
-
-        //RATING - functions
+          });
+            //RATING - functions
         function saveToTheDB() {
             $.ajax({
                url: "scooterDetail.php",
