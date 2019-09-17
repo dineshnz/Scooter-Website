@@ -61,8 +61,6 @@ if(isset($_POST['addComment'])){
   $isReply = $conn->real_escape_string($_POST['isReply']);
   $commentID = $conn->real_escape_string($_POST['commentID']);
 
-  echo "<p>ID: </p>"+$id+"<p>Comment: </p>"+$comment+"<p>isReply: </p>"+$isReply;
-
   if ($isReply != 'false') {
       $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn) VALUES ('$comment', '$commentID', '$id', NOW())");
       $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
@@ -384,7 +382,7 @@ $numComments = $sqlNumComments->num_rows;
                 </div>
               </div>
               <!-- RATING SECTION -->
-                  <div align="center" style="padding: 50px;color:#000;">
+                                  <div align="center" style="padding: 50px;color:#000;">
                       <i class="fa fa-star fa-2x" data-index="0"></i>
                       <i class="fa fa-star fa-2x" data-index="1"></i>
                       <i class="fa fa-star fa-2x" data-index="2"></i>
@@ -520,29 +518,31 @@ $numComments = $sqlNumComments->num_rows;
               $(".replyRow").insertAfter($(caller));
               $('.replyRow').show();
             }
-    //FUNCTION to dynamically get all the comments from DB: start and maximum number of comments
-    function getAllComments(start, max){
-      //IF start is bigger than max we will exit and stop getting the comments
-      if(start > max){
-        return;
-      }
-      $.ajax({
-        url: 'scooterDetail.php',
-        method: 'POST',
-        dateType: 'text',
-        data: {
-              //flag
-              getAllComments: 1,
-              //start
-              start: start
-            }, success: function (response){
-              //grab the UserComments and append
-              $(".userComments").append(response);
-              //increase starting point by 20 for the number of comments returned during each iteration              
-              getAllComments((start+20), max);
+            //FUNCTION to dynamically get all the comments from DB: start and maximum number of comments
+            function getAllComments(start, max){
+              //IF start is bigger than max we will exit and stop getting the comments
+              if(start > max){
+                return;
+              }
+              $.ajax({
+                url: 'scooterDetail.php',
+                method: 'POST',
+                dateType: 'text',
+                data: {
+                      //flag
+                      getAllComments: 1,
+                      //start
+                      start: start
+                    }, success: function (response){
+                      //grab the UserComments and append
+                      $(".userComments").append(response);
+                      //increase starting point by 20 for the number of comments returned during each iteration              
+                      getAllComments((start+20), max);
+                    }
+                  });
             }
-          });
-            //RATING - functions
+
+        //RATING - functions
         function saveToTheDB() {
             $.ajax({
                url: "scooterDetail.php",
