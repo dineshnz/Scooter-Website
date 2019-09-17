@@ -17,26 +17,30 @@ if (isset($_GET['logout'])) {
 require 'config/db.php';
 require_once 'config/stripeConfig.php';
 
+  //COMMENTING - variable for userID
+$id = $_SESSION['id'];
+
 //FUNCTION to createCommentRow
 function createCommentRow($data) {
-  global $conn;
+    global $conn;
 
-  $response = '
-  <div class="comment">
-  <div class="user">'.$data['name'].' <span class="time">'.$data['createdOn'].'</span></div>
-  <div class="userComment">'.$data['comment'].'</div>
-  <div class="reply"><a href="javascript:void(0)" data-commentID="'.$data['id'].'" onclick="reply(this)">REPLY</a></div>
-  <div class="replies">';
-  $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
-  while($dataR = $sql->fetch_assoc())
-    $response .= createCommentRow($dataR);
+    $response = '
+            <div class="comment">
+                <div class="user">'.$data['name'].' <span class="time">'.$data['createdOn'].'</span></div>
+                <div class="userComment">'.$data['comment'].'</div>
+                <div class="reply"><a href="javascript:void(0)" data-commentID="'.$data['id'].'" onclick="reply(this)">REPLY</a></div>
+                <div class="replies">';
 
-  $response .= '
-  </div>
-  </div>
-  ';
+    $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
+    while($dataR = $sql->fetch_assoc())
+        $response .= createCommentRow($dataR);
 
-  return $response;
+    $response .= '
+                        </div>
+            </div>
+        ';
+
+    return $response;
 }
   //COMMENTING - GET ALL THE COMMENTS
 if(isset($_POST['getAllComments'])){
@@ -51,17 +55,17 @@ if(isset($_POST['getAllComments'])){
     $response .= createCommentRow($data);
   exit($response);
 }
-  //COMMENTING - variable for userID
-$id = $_SESSION['id'];
   //COMMENTING - addComment TO DB
 if(isset($_POST['addComment'])){
   $comment = $conn->real_escape_string($_POST['comment']);
   $isReply = $conn->real_escape_string($_POST['isReply']);
   $commentID = $conn->real_escape_string($_POST['commentID']);
 
-  if($isReply){
-    $conn->query("INSERT INTO replies(comment, commentID, createdOn, userID) VALUES('$comment', '$commentID', NOW(), '$id') ");
-    $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
+  echo "<p>ID: </p>"+$id+"<p>Comment: </p>"+$comment+"<p>isReply: </p>"+$isReply;
+
+  if ($isReply != 'false') {
+      $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn) VALUES ('$comment', '$commentID', '$id', NOW())");
+      $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
   }else{
     $conn->query("INSERT INTO comments(userID, comment, createdOn) VALUES('$id', '$comment', NOW()) ");
       //SET LIMIT to 1 so we get only the latest comment
@@ -88,11 +92,11 @@ $numComments = $sqlNumComments->num_rows;
   <!-- Plug in for rating star - font awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css" integrity="sha384-rtJEYb85SiYWgfpCr0jn174XgJTn4rptSOQsMroFBPQSGLdOC5IbubP6lJ35qoM9" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<!-- Sandstone Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	
-	<link rel="stylesheet" href="css/style.css">
+  <!-- Sandstone Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/purple.css" type="text/css">
   <!--OWL Carousel slider-->
   <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
@@ -449,7 +453,7 @@ $numComments = $sqlNumComments->num_rows;
         }else
         alert('Please enter a comment');
       });
-      //call FUNCTION geALLComments: to get the comments.
+      //call FUNCTION getALLComments: to get the comments.
       //Start at 0 and pass in the maximum as well from the beginning php script, $numComments
       getAllComments(0, max);
     });
