@@ -384,7 +384,7 @@ $numComments = $sqlNumComments->num_rows;
                 </div>
               </div>
               <!-- RATING SECTION -->
-                  <div align="center" style="background: #000; padding: 50px;color:white;">
+                  <div align="center" style="padding: 50px;color:#000;">
                       <i class="fa fa-star fa-2x" data-index="0"></i>
                       <i class="fa fa-star fa-2x" data-index="1"></i>
                       <i class="fa fa-star fa-2x" data-index="2"></i>
@@ -563,11 +563,11 @@ $numComments = $sqlNumComments->num_rows;
 
         function setStars(max) {
             for (var i=0; i <= max; i++)
-                $('.fa-star:eq('+i+')').css('color', 'green');
+                $('.fa-star:eq('+i+')').css('color', 'yellow');
         }
 
         function resetStarColors() {
-            $('.fa-star').css('color', 'white');
+            $('.fa-star').css('color', 'black');
         }
   </script>
 </body>
