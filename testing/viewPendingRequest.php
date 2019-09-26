@@ -34,7 +34,7 @@ if(!($ownerRowCount >0)){
 }
 else{
 //  display teh request result with renter information such as passport number and name
-  $sql = "SELECT * FROM requests r join users u on r.ownerId = u.id
+  $sql = "SELECT * FROM requests r join users u on r.requesterId = u.id
   WHERE r.result= 'pending' AND r.ownerId = '$ownerId'";
   
   $result = $conn->query($sql);

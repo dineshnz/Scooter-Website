@@ -101,13 +101,13 @@ if (isset($_GET['logout'])) {
       <div class="form-group" id="length">
           <label class="control-label">Passport Number: </label>
           <input type="text" id="passport_number" name="passport_number" class="form-control"
-          required="required" value="<?php echo $user['passport']?>" disabled 
+          required="required" readonly value="<?php echo $user['passport']?>" disabled 
           title="Please send request to admin to update your passport number">
       </div>
       <div class="form-group" id="length">
           <label class="form-group">Driver License: </label>
           <input type="text" id="driver_license" name="driver_license" class="form-control"
-           required="required" value="<?php echo $user['driverLicense']?>" disabled
+           required="required" readonly value="<?php echo $user['driverLicense']?>" disabled
            title="Please send request to admin to update your Driver License number">
       </div>
       <div class="form-group" id="length">
@@ -129,8 +129,8 @@ if (isset($_GET['logout'])) {
         <strong><p>Send Request to admin to update passport and license</p></strong>
         <form >
           <div class="form-group">
-              <label class="control-label">First Name: </label>
-              <input type="text" name="fname" class="form-control" required="required" placeholder="First Name">
+              <label class="control-label">Full Name: </label>
+              <input type="text" name="username" class="form-control" required="required" placeholder="First Name">
           </div>
            <div class="form-group">
              <label class="control-label">Email:</label>
@@ -145,7 +145,7 @@ if (isset($_GET['logout'])) {
               <textarea name="message" id="message" class="form-control" rows="3" placeholder="Message"></textarea>
            </div>
           <div class="form-group">
-              <input type="submit" class="btb btn-primary" value="Submit">
+              <input type="button" class="btb btn-primary" value="Submit" onClick="contactAdmin()">
               <input type="reset" class="btb btn-danger" value="Reset">
           </div> 
            
