@@ -323,6 +323,17 @@
         if (empty($_POST['password'])) {
             $errors['password'] = 'Password required';
         }
+        if (preg_match ("((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})", stripslashes(trim($_POST['password'])))) {
+
+            $password = takeInput($_POST['password']);
+            
+            } else {
+            
+            $password = FALSE;
+            $errors['password'] = 'Valid password required';
+            
+            }
+
         if (empty($_POST['passwordConf'])) {
             $errors['passwordConf'] = 'Confirm password required';
         }
