@@ -242,7 +242,7 @@
     if(isset($_GET['logout'])){
         session_destroy();
         unset($_SESSION['id']);
-        unset($_SESSION['fullname']);
+        unset($_SESSION['username']);
         unset($_SESSION['passport']);
         unset($_SESSION['address']);
         unset($_SESSION['driverLicense']);
