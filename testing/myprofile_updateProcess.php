@@ -51,6 +51,21 @@ else
     $updateQuery="UPDATE users SET fullname='$fullname' , email='$email', address='$address', passport='$passport', driverLicense='$driverLicense' WHERE id='$id'";
     $result=@mysqli_query($conn,$updateQuery) Or die("<p>Data insertion failure</p>, Error: ".mysqli_errno($conn)." ".mysqli_error($conn));
     echo"Personal Profile Update Successfully!";
+
+    //after the update, select the data from the database to update the session variables to new value
+    $sql = "SELECT * FROM users WHERE id=? LIMIT 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+       
+        $stmt->close();
+        $_SESSION['username'] = $user['fullname'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['address'] = $user['address'];
+        
+
 }
 
 ?>
