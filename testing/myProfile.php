@@ -22,7 +22,7 @@ if (isset($_GET['logout'])) {
 	
 	<link rel="stylesheet" href="css/style.css">
 	
-
+  <script type="text/javascript" src="js/contactUs.js"></script>
   <script type="text/javascript" src="js/myProfileUpdate.js"></script>
   <style>
     #length{
@@ -111,7 +111,7 @@ if (isset($_GET['logout'])) {
            title="Please send request to admin to update your Driver License number">
       </div>
       <div class="form-group" id="length">
-         <input type="button" class="btn btn-primary form-control" value="Update" onClick="updateData()">
+         <input type="button" class="btn btn-primary form-control" value="Update" onClick="sendContact()">
       </div>
        
       </form>
@@ -129,23 +129,31 @@ if (isset($_GET['logout'])) {
         <strong><p>Send Request to admin to update passport and license</p></strong>
         <form >
           <div class="form-group">
-              <label class="control-label">Full Name: </label>
-              <input type="text" name="username" class="form-control" required="required" placeholder="First Name">
+              <label class="control-label">Username: </label>
+              <input type="text" id="uname" name="uname" class="form-control" required="required" placeholder="First Name">
           </div>
            <div class="form-group">
              <label class="control-label">Email:</label>
-             <input type="email" name="email" class="form-control" required="required" placeholder="Email">
+             <input type="email" id="email" name="email" class="form-control" required="required" placeholder="Email">
            </div>
            <div class="form-group">
              <label class="control-label">Subject:</label>
-             <input type="text" name="subject" class="form-control" required="required" placeholder="Subject">
+             <input type="text" id="subject" name="subject" class="form-control" required="required" placeholder="Subject">
+           </div>
+           <div class="form-group">
+             <label class="control-label">Driver License:</label>
+             <input type="text" id="driverLicense" name="driverLicense" class="form-control" required="required" placeholder="Subject">
+           </div>
+           <div class="form-group">
+             <label class="control-label">Passport:</label>
+             <input type="text" id="passport" name="passport" class="form-control" required="required" placeholder="Subject">
            </div>
            <div class="form-group">
               <label class="control-label">Message: </label>
               <textarea name="message" id="message" class="form-control" rows="3" placeholder="Message"></textarea>
            </div>
           <div class="form-group">
-              <input type="button" class="btb btn-primary" value="Submit" onClick="contactAdmin()">
+              <input type="button" class="btb btn-primary" value="Submit" onclick="sendContact()">
               <input type="reset" class="btb btn-danger" value="Reset">
           </div> 
            
