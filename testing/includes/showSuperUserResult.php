@@ -1,6 +1,7 @@
 <?php
 
-$sql = "SELECT * FROM tblscooters t join users u where t.userId = u.id AND u.passport =? or u.fullname=?";
+$sql = "SELECT * FROM tblscooters t join users u on u.id = t.userId
+WHERE u.passport=? OR u.fullname=?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('ss', $searchInput, $searchInput);
 $stmt->execute();
@@ -8,6 +9,7 @@ $result = $stmt->get_result();
 $row = $result->num_rows;
 $stmt->close();
 if($row > 0)
+
         {
 	    while($row = $result->fetch_assoc())
 	    {  ?>

@@ -125,6 +125,7 @@ $numComments = $sqlNumComments->num_rows;
   <!--OWL Carousel slider-->
   <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
   <link rel="stylesheet" href="css/owl.transitions.css" type="text/css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css" type="text/css">
   <link href="css/bootstrap-slider.min.css" rel="stylesheet">
   <link href="css/owl.carousel.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
@@ -424,15 +425,8 @@ $numComments = $sqlNumComments->num_rows;
           </div>
         </div>
         <!-- Loading Scripts -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap-select.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.dataTables.min.js"></script>
-        <script src="js/dataTables.bootstrap.min.js"></script>
-        <script src="js/Chart.min.js"></script>
-        <script src="js/fileinput.js"></script>
-        <script src="js/chartData.js"></script>
-        <script src="js/main.js"></script> 
+       
+       
         <script src="js/owl.carousel.min.js"></script>
         <script src="http://code.jquery.com/jquery-3.4.1.min.js"integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>
         <script src="js/scooterDetail.js"></script>

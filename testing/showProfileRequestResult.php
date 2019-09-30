@@ -43,7 +43,7 @@ $userRow = $userResult->num_rows;
 
 if($userRow>0){
   while($re= $userResult->fetch_assoc()){
- echo $userToLookFor = $re['id'];
+  $userToLookFor = $re['id'];
    $fullNameOfUser= $re['fullname'];
  }
 }
