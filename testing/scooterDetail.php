@@ -3,6 +3,8 @@ Also, user and owner can comment and reply on this page regarding the selected s
 <?php 
 session_start();
 error_reporting(0);
+$_SESSION['vID'] = filter_input(INPUT_GET, 'vhid', FILTER_SANITIZE_URL);
+
 //if user is not logged in then redirect user to login page
 if (!isset($_SESSION['passport'])) {
   $_SESSION['msg'] = "You must log in first";
@@ -17,8 +19,11 @@ if (isset($_GET['logout'])) {
 require 'config/db.php';
 require_once 'config/stripeConfig.php';
 
-  //COMMENTING - variable for userID
+//COMMENTING - variable for userID
 $id = $_SESSION['id'];
+//GET VEHICLE ID FOR ADDING A COMMENT
+// $_SESSION['vID'] = filter_input(INPUT_GET, 'vhid', FILTER_SANITIZE_URL);
+echo $_SESSION['vID'];
 
 //FUNCTION to createCommentRow
 function createCommentRow($data) {
@@ -26,7 +31,7 @@ function createCommentRow($data) {
 
     $response = '
             <div class="comment">
-                <div class="user">'.$data['name'].' <span class="time">'.$data['createdOn'].'</span></div>
+                <div class="user">'.$data['fullname'].' <span class="time">'.$data['createdOn'].'</span></div>
                 <div class="userComment">'.$data['comment'].'</div>
                 <div class="reply"><a href="javascript:void(0)" data-commentID="'.$data['id'].'" onclick="reply(this)">REPLY</a></div>
                 <div class="replies">';
@@ -42,7 +47,7 @@ function createCommentRow($data) {
 
     return $response;
 }
-  //COMMENTING - GET ALL THE COMMENTS
+//COMMENTING - GET ALL THE COMMENTS
 if(isset($_POST['getAllComments'])){
   $start = $conn->real_escape_string($_POST['start']);
   $response = "";
@@ -51,23 +56,23 @@ if(isset($_POST['getAllComments'])){
     //LIMIT $start to 20 for each iteration
   $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT $start, 20");
   while($data = $sql->fetch_assoc())
-      //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
+    //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
     $response .= createCommentRow($data);
   exit($response);
 }
-  //COMMENTING - addComment TO DB
+//COMMENTING - addComment TO DB
 if(isset($_POST['addComment'])){
   $comment = $conn->real_escape_string($_POST['comment']);
   $isReply = $conn->real_escape_string($_POST['isReply']);
   $commentID = $conn->real_escape_string($_POST['commentID']);
-
-  echo "<p>ID: </p>"+$id+"<p>Comment: </p>"+$comment+"<p>isReply: </p>"+$isReply;
+  echo "VID: ",$_SESSION['vID'];
+  $_SESSION['vID'] = filter_input(INPUT_GET, 'vhid', FILTER_SANITIZE_URL);
 
   if ($isReply != 'false') {
       $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn) VALUES ('$comment', '$commentID', '$id', NOW())");
       $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
   }else{
-    $conn->query("INSERT INTO comments(userID, comment, createdOn) VALUES('$id', '$comment', NOW()) ");
+    $conn->query("INSERT INTO comments(userID, comment, createdOn, vid) VALUES('$id', '$comment', NOW(), '".$_SESSION['vID']."') ");
       //SET LIMIT to 1 so we get only the latest comment
     $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
   }
@@ -75,7 +80,7 @@ if(isset($_POST['addComment'])){
   $data = $sql->fetch_assoc();
   exit(createCommentRow($data));
 }
-  //GET COMMENTS FROM THE DATABASE TO DISPLAY
+//GET COMMENTS FROM THE DATABASE TO DISPLAY
 $sqlNumComments = $conn->query("SELECT id FROM comments");
 $numComments = $sqlNumComments->num_rows;
 ?>
@@ -104,40 +109,6 @@ $numComments = $sqlNumComments->num_rows;
   <link href="css/bootstrap-slider.min.css" rel="stylesheet">
   <link href="css/owl.carousel.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-  <style>
-    .comment{
-      margin-bottom: 20px;
-    }
-    .page-wrapper{
-      margin-left: 20px;
-      max-width: 95%;
-    }
-    .content{
-      width:  75%;
-      margin-top: 100px;
-      margin-left: 260px;
-    }
-    .user{
-      font-weight: bold;
-      color: black;
-      font-size: 15px;
-    }
-    .time, .reply{
-      font-size: 15px;
-      color: gray;
-      font-weight: bold;
-    }
-    .userComment{
-      color: black;
-      font-size: 18px;
-    }
-    .replies .comment{
-      margin-top: 20px;
-    }
-    .replies {
-      margin-left: 20px;
-    }
-  </style>
 </head>
 <body>
   <?php include('includes/profileHeader.php'); ?>
@@ -328,35 +299,8 @@ $numComments = $sqlNumComments->num_rows;
                           data-currency="nzd">
                         </script>
                       </form>
-                    <?php }}} ?>
-
-                  </div>
-                  <!--Side-Bar-->
-                  <aside class="col-md-3">
-                    <div class="sidebar_widget">
-                      <div class="widget_heading">
-                        <h5><i class="fa fa-envelope" aria-hidden="true"></i>Book Now</h5>
-                      </div>
-                      <form method="post">
-                        <div class="form-group">
-                          <input type="date" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
-                        </div>
-                        <div class="form-group">
-                          <input type="date" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
-                        </div>
-                        <div class="form-group">
-                          <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
-                        </div>
-                       
-                          <div class="form-group">
-                            <input type="submit" class="btn btn-primary"  name="submit" value="Book Now">
-                          </div>
-                      </form>
-                    </div>
-                  </aside>
-                  <!--/Side-Bar--> 
-                </div>
-              </div>
+              
+              
               <!-- RATING SECTION -->
               <div align="center" style="background: #000; padding: 50px;">
               <h1>Rating</h1>
@@ -391,6 +335,35 @@ $numComments = $sqlNumComments->num_rows;
                 </div>
               </div>
 
+                    <?php }}} ?>
+
+                  </div>
+                  <!--Side-Bar-->
+                  <aside class="col-md-3">
+                    <div class="sidebar_widget">
+                      <div class="widget_heading">
+                        <h5><i class="fa fa-envelope" aria-hidden="true"></i>Book Now</h5>
+                      </div>
+                      <form method="post">
+                        <div class="form-group">
+                          <input type="date" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
+                        </div>
+                        <div class="form-group">
+                          <input type="date" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
+                        </div>
+                        <div class="form-group">
+                          <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
+                        </div>
+                       
+                          <div class="form-group">
+                            <input type="submit" class="btn btn-primary"  name="submit" value="Book Now">
+                          </div>
+                      </form>
+                    </div>
+                  </aside>
+                  <!--/Side-Bar--> 
+                </div>
+              </div>
             </section>
           </div>
         </div>

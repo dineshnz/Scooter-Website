@@ -46,6 +46,41 @@ a:hover {
   color: #5db9d1;
 }
 /****************************
+*      Comments        *
+****************************/
+.comment{
+  margin-bottom: 20px;
+}
+.page-wrapper{
+  margin-left: 20px;
+  max-width: 95%;
+}
+.content{
+  width:  75%;
+  margin-top: 100px;
+  margin-left: 260px;
+}
+.user{
+  font-weight: bold;
+  color: black;
+  font-size: 15px;
+}
+.time, .reply{
+  font-size: 15px;
+  color: gray;
+  font-weight: bold;
+}
+.userComment{
+  color: black;
+  font-size: 18px;
+}
+.replies .comment{
+  margin-top: 20px;
+}
+.replies {
+  margin-left: 20px;
+}
+/****************************
 *      Buttons        *
 ****************************/
 .btn {
@@ -748,7 +783,7 @@ li {
 
 
 
-*=======================
+/*=======================
 	9. Listing-Detail
 ===============================*/
 .listing-detail {
