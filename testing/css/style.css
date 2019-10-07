@@ -45,6 +45,44 @@ a:hover {
   text-decoration: none;
   color: #5db9d1;
 }
+
+
+.page-wrapper {
+  margin-left: 20px;
+  max-width: 95%;
+}
+.content {
+  width: 75%;
+  margin-top: 100px;
+  margin-left: 260px;
+}
+/****************************
+*      COMMENT DEFAULTS        *
+****************************/
+.comment {
+  margin-bottom: 20px;
+}
+.user {
+  font-weight: bold;
+  color: black;
+  font-size: 15px;
+}
+.time,
+.reply {
+  font-size: 15px;
+  color: gray;
+  font-weight: bold;
+}
+.userComment {
+  color: black;
+  font-size: 18px;
+}
+.replies .comment {
+  margin-top: 20px;
+}
+.replies {
+  margin-left: 20px;
+}
 /****************************
 *      Buttons        *
 ****************************/
