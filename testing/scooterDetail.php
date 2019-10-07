@@ -50,7 +50,8 @@ if(isset($_POST['getAllComments'])){
     //QUERY to get basic info - userName, date and comment. 
     //NEED to use a JOIN to get the UserID
     //LIMIT $start to 20 for each iteration
-  $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN tblscooters ON comments.vID = tblscooters.vid ORDER BY comments.id DESC LIMIT $start, 20");
+  //$sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.id = users.id ORDER BY comments.id DESC LIMIT $start, 20");
+  $sql = $conn->query("SELECT * FROM comments ORDER BY comments.id DESC LIMIT $start, 20");
   while($data = $sql->fetch_assoc())
       //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
     $response .= createCommentRow($data);
@@ -62,8 +63,6 @@ if(isset($_POST['addComment'])){
   $isReply = $conn->real_escape_string($_POST['isReply']);
   $commentID = $conn->real_escape_string($_POST['commentID']);
   $vehicleID = $conn->real_escape_string($_POST['vehicleID']);
-
-  echo "Vehicle ID: ", $vehicleID;
 
   if ($isReply != 'false') {
       $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn, vID) VALUES ('$comment', '$commentID', '$id', NOW(),  '$vehicleID' )");
@@ -443,7 +442,8 @@ $numComments = $sqlNumComments->num_rows;
         
         
         <script type="text/javascript">
-          var isReply = false, vehicleID = <?php echo $_GET['vhid'] ?>, commentID = 0, max = <?php echo $numComments ?>, ratedIndex = -1, uID = 0;;
+          var isReply = false, commentID = 0, max = <?php echo $numComments ?>, ratedIndex = -1, uID = 0;;
+          var vehicleID = <?php echo $_GET['vhid'] ?>;
           $(document).ready(function(){
             $("#addComment, #addReply").on('click', function(){
               var comment;
