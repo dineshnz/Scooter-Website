@@ -19,7 +19,11 @@ require_once 'config/stripeConfig.php';
 
 //COMMENTING - variable for userID
 $id = $_SESSION['id'];
-$vid = $_GET['vhid'];
+// $vid = $_GET['vhid'];
+// echo "VID: ". $vid;
+//echo "FILTER VID: ". filter_input(INPUT_GET, 'vhid', FILTER_SANITIZE_URL);
+// $Query_String = explode("&", explode("?", $_SERVER['REQUEST_URI'])[1] );
+//     var_dump($Query_String);
 
 //FUNCTION to createCommentRow
 function createCommentRow($data)
@@ -42,17 +46,15 @@ function createCommentRow($data)
 }
 //COMMENTING - GET ALL THE COMMENTS
 if (isset($_POST['getAllComments'])) {
-  echo "Vehicle ID: " . $_GET['vhid'];
   $start = $conn->real_escape_string($_POST['start']);
   $response = "";
-  //QUERY to get basic info - userName, date and comment. 
-  //NEED to use a JOIN to get the UserID
-  //LIMIT $start to 20 for each iteration
-  //$sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.id = users.id ORDER BY comments.id DESC LIMIT $start, 20");
-  $sql = $conn->query("SELECT * FROM comments ORDER BY comments.id DESC LIMIT $start, 20");
+  $vehicleID = $conn->real_escape_string($_POST['vehicleID']);
+  //var_dump($vehicleID);
+
+  $sql = $conn->query("SELECT comments.* FROM comments WHERE comments.vid = '$vehicleID' ORDER BY comments.id DESC LIMIT $start, 20");
   while ($data = $sql->fetch_assoc())
-    //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
-    $response .= createCommentRow($data);
+  //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
+  $response .= createCommentRow($data);
   exit($response);
 }
 //COMMENTING - addComment TO DB
@@ -64,11 +66,11 @@ if (isset($_POST['addComment'])) {
 
   if ($isReply != 'false') {
     $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn, vID) VALUES ('$comment', '$commentID', '$id', NOW(),  '$vehicleID' )");
-    $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
+    $sql = $conn->query("SELECT replies.id, users.fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
   } else {
     $conn->query("INSERT INTO comments(userID, comment, createdOn, vID) VALUES('$id', '$comment', NOW(), '$vehicleID') ");
     //SET LIMIT to 1 so we get only the latest comment
-    $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
+    $sql = $conn->query("SELECT comments.id, users.fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
   }
 
   $data = $sql->fetch_assoc();
@@ -120,7 +122,6 @@ $avg = $total / $numR;
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Sandstone Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/purple.css" type="text/css">
   <!--OWL Carousel slider-->
@@ -363,7 +364,7 @@ $avg = $total / $numR;
               <div class="row">
                 <div class="col-md-12">
                   <!-- DISPLAY the number of comments -->
-                  <h2><b id="numComments"><?php echo $numComments ?> Comments</b></h2>
+                  <!-- <h2><b id="numComments"><?php echo $numComments ?> Comments</b></h2> -->
                   <div class="userComments">
 
                   </div>
@@ -396,7 +397,9 @@ $avg = $total / $numR;
       ratedIndex = -1,
       uID = 0;;
     var vehicleID = <?php echo $_GET['vhid'] ?>;
+
     $(document).ready(function() {
+      console.log(vehicleID);
       $("#addComment, #addReply").on('click', function() {
         var comment;
         //onclick for add reply button is set to true when clicked
@@ -441,7 +444,6 @@ $avg = $total / $numR;
       //call FUNCTION getALLComments: to get the comments.
       //Start at 0 and pass in the maximum as well from the beginning php script, $numComments
       getAllComments(0, max);
-
 
       //RATING - document ready
       resetStarColors();
@@ -489,7 +491,9 @@ $avg = $total / $numR;
           //flag
           getAllComments: 1,
           //start
-          start: start
+          start: start,
+          vehicleID: vehicleID
+
         },
         success: function(response) {
           //grab the UserComments and append
