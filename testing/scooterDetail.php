@@ -17,8 +17,9 @@ if (isset($_GET['logout'])) {
 require 'config/db.php';
 require_once 'config/stripeConfig.php';
 
-  //COMMENTING - variable for userID
+//COMMENTING - variable for userID
 $id = $_SESSION['id'];
+$vid = $_GET['vhid'];
 
 //FUNCTION to createCommentRow
 function createCommentRow($data) {
@@ -26,12 +27,12 @@ function createCommentRow($data) {
 
     $response = '
             <div class="comment">
-                <div class="user">'.$data['name'].' <span class="time">'.$data['createdOn'].'</span></div>
+                <div class="user">'.$data['fullname'].' <span class="time">'.$data['createdOn'].'</span></div>
                 <div class="userComment">'.$data['comment'].'</div>
                 <div class="reply"><a href="javascript:void(0)" data-commentID="'.$data['id'].'" onclick="reply(this)">REPLY</a></div>
                 <div class="replies">';
 
-    $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
+    $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.id = users.id WHERE replies.commentID = '".$data['id']."' ORDER BY replies.id DESC LIMIT 1");
     while($dataR = $sql->fetch_assoc())
         $response .= createCommentRow($dataR);
 
@@ -49,7 +50,7 @@ if(isset($_POST['getAllComments'])){
     //QUERY to get basic info - userName, date and comment. 
     //NEED to use a JOIN to get the UserID
     //LIMIT $start to 20 for each iteration
-  $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT $start, 20");
+  $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.id = users.id ORDER BY comments.id DESC LIMIT $start, 20");
   while($data = $sql->fetch_assoc())
       //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
     $response .= createCommentRow($data);
@@ -60,14 +61,19 @@ if(isset($_POST['addComment'])){
   $comment = $conn->real_escape_string($_POST['comment']);
   $isReply = $conn->real_escape_string($_POST['isReply']);
   $commentID = $conn->real_escape_string($_POST['commentID']);
+  $vehicleID = $conn->real_escape_string($_POST['vehicleID']);
+
+  echo "Vehicle ID: ", $vehicleID;
 
   if ($isReply != 'false') {
-      $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn) VALUES ('$comment', '$commentID', '$id', NOW())");
-      $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
+//      $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn, vID) VALUES ('$comment', '$commentID', '$id', NOW(),  '$vehicleID' )");
+$conn->query("INSERT INTO replies (comment, commentID, userID, createdOn) VALUES ('$comment', '$commentID', '$id', NOW())");
+      $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.id = users.id ORDER BY replies.id DESC LIMIT 1");
   }else{
+   //$conn->query("INSERT INTO comments(userID, comment, createdOn, vID) VALUES('$id', '$comment', NOW(), '$vehicleID') ");
     $conn->query("INSERT INTO comments(userID, comment, createdOn) VALUES('$id', '$comment', NOW()) ");
       //SET LIMIT to 1 so we get only the latest comment
-    $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
+    $sql = $conn->query("SELECT comments.id, fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.vid = users.id ORDER BY comments.id DESC LIMIT 1");
   }
 
   $data = $sql->fetch_assoc();
@@ -76,6 +82,7 @@ if(isset($_POST['addComment'])){
   //GET COMMENTS FROM THE DATABASE TO DISPLAY
 $sqlNumComments = $conn->query("SELECT id FROM comments");
 $numComments = $sqlNumComments->num_rows;
+
 
 //RATING
     if (isset($_POST['save'])) {
@@ -399,6 +406,9 @@ $numComments = $sqlNumComments->num_rows;
                   <div class="col-md-12">
                     <!-- ADD COMMENT -->
                     <textarea class="form-control" id="mainComment" placeholder="Add Comment" cols="30" rows="2"></textarea><br>
+                    <!-- <?php $vid = $_GET['vhid']; 
+                        echo "VID", $vid;
+                    ?> -->
                     <button style="float: right;" class="btn-primary btn" onclick="isReply = false;" id="addComment">Add Comment</button>
                   </div>
                 </div>
@@ -436,7 +446,7 @@ $numComments = $sqlNumComments->num_rows;
         
         
         <script type="text/javascript">
-          var isReply = false, commentID = 0, max = <?php echo $numComments ?>, ratedIndex = -1, uID = 0;;
+          var isReply = false, vehicleID = <?php echo $_GET['vhid'] ?>, commentID = 0, max = <?php echo $numComments ?>, ratedIndex = -1, uID = 0;
           $(document).ready(function(){
             $("#addComment, #addReply").on('click', function(){
               var comment;
@@ -455,7 +465,8 @@ $numComments = $sqlNumComments->num_rows;
                       addComment: 1,
                       comment: comment,
                       isReply: isReply,
-                      commentID: commentID
+                      commentID: commentID,
+                      vehicleID: vehicleID
                     }, success: function (response){
                       max++;
                       $("#numComments").text(max + " Comments");
@@ -475,7 +486,7 @@ $numComments = $sqlNumComments->num_rows;
                     }
                   });
                 }else
-                alert('Please enter a comment');
+                  alert('Please enter a comment');
               });
               //call FUNCTION getALLComments: to get the comments.
               //Start at 0 and pass in the maximum as well from the beginning php script, $numComments

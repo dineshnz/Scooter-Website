@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2019 at 08:12 AM
+-- Generation Time: Oct 07, 2019 at 02:34 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -31,14 +31,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `comment` TEXT NOT NULL,
-  `createdOn` DATETIME NOT NULL
+  `comment` text NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `vID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `comments`
---
-
 
 --
 -- Indexes for dumped tables
@@ -48,22 +44,30 @@ CREATE TABLE `comments` (
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`),
+  ADD KEY `vID` (`vID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
-ALTER TABLE `comments`
-  ADD FOREIGN KEY (`userID`)
-  REFERENCES `users`(`id`)
-  ON DELETE CASCADE 
-  ON UPDATE CASCADE;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`vID`) REFERENCES `tblscooters` (`vid`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
