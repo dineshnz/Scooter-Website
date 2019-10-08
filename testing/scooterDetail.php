@@ -19,92 +19,87 @@ require_once 'config/stripeConfig.php';
 
 //COMMENTING - variable for userID
 $id = $_SESSION['id'];
-// $vid = $_GET['vhid'];
-// echo "VID: ". $vid;
-//echo "FILTER VID: ". filter_input(INPUT_GET, 'vhid', FILTER_SANITIZE_URL);
-// $Query_String = explode("&", explode("?", $_SERVER['REQUEST_URI'])[1] );
-//     var_dump($Query_String);
 
 //FUNCTION to createCommentRow
 function createCommentRow($data)
 {
-  global $conn;
-  $response = '
-            <div class="comment">
-                <div class="user">' . $data['fullname'] . ' <span class="time">' . $data['createdOn'] . '</span></div>
-                <div class="userComment">' . $data['comment'] . '</div>
-                <div class="reply"><a href="javascript:void(0)" data-commentID="' . $data['id'] . '" onclick="reply(this)">REPLY</a></div>
-                <div class="replies">';
-  $sql = $conn->query("SELECT replies.id, fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id WHERE replies.commentID = '" . $data['id'] . "' ORDER BY replies.id DESC LIMIT 1");
-  while ($dataR = $sql->fetch_assoc())
-    $response .= createCommentRow($dataR);
-  $response .= '
-                        </div>
-            </div>
-        ';
-  return $response;
+   global $conn;
+   $response = '
+             <div class="comment">
+                 <div class="user">' . $data['fullname'] . ' <span class="time">' . $data['createdOn'] . '</span></div>
+                 <div class="userComment">' . $data['comment'] . '</div>
+                 <div class="reply"><a href="javascript:void(0)" data-commentID="' . $data['id'] . '" onclick="reply(this)">REPLY</a></div>
+                 <div class="replies">';
+    $sql = $conn->query("SELECT replies.id, users.fullname, replies.comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id INNER JOIN comments ON replies.commentID = comments.id WHERE replies.commentID = '" . $data['id'] . "' AND replies.commentID = comments.id ORDER BY replies.id DESC LIMIT 1");
+    while ($dataR = $sql->fetch_assoc())
+      $response .= createCommentRow($dataR);
+   $response .= '
+                         </div>
+             </div>
+         ';
+   return $response;
 }
 //COMMENTING - GET ALL THE COMMENTS
 if (isset($_POST['getAllComments'])) {
-  $start = $conn->real_escape_string($_POST['start']);
-  $response = "";
-  $vehicleID = $conn->real_escape_string($_POST['vehicleID']);
-  //var_dump($vehicleID);
+   $start = $conn->real_escape_string($_POST['start']);
+   $response = "";
+   $vehicleID = $conn->real_escape_string($_POST['vehicleID']);
+   //var_dump($vehicleID);
 
-  $sql = $conn->query("SELECT comments.* FROM comments WHERE comments.vid = '$vehicleID' ORDER BY comments.id DESC LIMIT $start, 20");
-  while ($data = $sql->fetch_assoc())
-  //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
-  $response .= createCommentRow($data);
-  exit($response);
+   $sql = $conn->query("SELECT comments.*, users.fullname FROM comments INNER JOIN users ON comments.userID = users.id WHERE comments.vid = '$vehicleID' ORDER BY comments.id DESC LIMIT $start, 20");
+   while ($data = $sql->fetch_assoc())
+   //CREATE a FUNCTION to create a row: createCommentRow(), because the function will be used multiple times
+   $response .= createCommentRow($data);
+   exit($response);
 }
-//COMMENTING - addComment TO DB
-if (isset($_POST['addComment'])) {
-  $comment = $conn->real_escape_string($_POST['comment']);
-  $isReply = $conn->real_escape_string($_POST['isReply']);
-  $commentID = $conn->real_escape_string($_POST['commentID']);
-  $vehicleID = $conn->real_escape_string($_POST['vehicleID']);
+// //COMMENTING - addComment TO DB
+ if (isset($_POST['addComment'])) {
+   $comment = $conn->real_escape_string($_POST['comment']);
+   $isReply = $conn->real_escape_string($_POST['isReply']);
+   $commentID = $conn->real_escape_string($_POST['commentID']);
+   $vehicleID = $conn->real_escape_string($_POST['vehicleID']);
 
-  if ($isReply != 'false') {
-    $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn, vID) VALUES ('$comment', '$commentID', '$id', NOW(),  '$vehicleID' )");
-    $sql = $conn->query("SELECT replies.id, users.fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
-  } else {
-    $conn->query("INSERT INTO comments(userID, comment, createdOn, vID) VALUES('$id', '$comment', NOW(), '$vehicleID') ");
-    //SET LIMIT to 1 so we get only the latest comment
-    $sql = $conn->query("SELECT comments.id, users.fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
-  }
+   if ($isReply != 'false') {
+     $conn->query("INSERT INTO replies (comment, commentID, userID, createdOn, vID) VALUES ('$comment', '$commentID', '$id', NOW(),  '$vehicleID' )");
+     $sql = $conn->query("SELECT replies.id, users.fullname, comment, DATE_FORMAT(replies.createdOn, '%Y-%m-%d') AS createdOn FROM replies INNER JOIN users ON replies.userID = users.id ORDER BY replies.id DESC LIMIT 1");
+   } else {
+     $conn->query("INSERT INTO comments(userID, comment, createdOn, vID) VALUES('$id', '$comment', NOW(), '$vehicleID') ");
+     //SET LIMIT to 1 so we get only the latest comment
+     $sql = $conn->query("SELECT comments.id, users.fullname, comment, DATE_FORMAT(comments.createdOn, '%Y-%m-%d') AS createdOn FROM comments INNER JOIN users ON comments.userID = users.id ORDER BY comments.id DESC LIMIT 1");
+   }
 
-  $data = $sql->fetch_assoc();
-  exit(createCommentRow($data));
+   $data = $sql->fetch_assoc();
+   exit(createCommentRow($data));
 }
-//GET COMMENTS FROM THE DATABASE TO DISPLAY
-$sqlNumComments = $conn->query("SELECT id FROM comments");
-$numComments = $sqlNumComments->num_rows;
+// //GET COMMENTS FROM THE DATABASE TO DISPLAY
+ $sqlNumComments = $conn->query("SELECT id FROM comments");
+ $numComments = $sqlNumComments->num_rows;
 
-//RATING
-if (isset($_POST['save'])) {
-  $uID = $conn->real_escape_string($_POST['uID']);
-  $ratedIndex = $conn->real_escape_string($_POST['ratedIndex']);
-  $ratedIndex++;
+ //RATING
+//  if (isset($_POST['save'])) {
+//    $uID = $conn->real_escape_string($_POST['uID']);
+//    $ratedIndex = $conn->real_escape_string($_POST['ratedIndex']);
+//    $ratedIndex++;
 
-  if (!$uID) {
-    $conn->query("INSERT INTO stars (rateIndex) VALUES ('$ratedIndex')");
-    $sql = $conn->query("SELECT id FROM stars ORDER BY id DESC LIMIT 1");
-    $uData = $sql->fetch_assoc();
-    $uID = $uData['id'];
-  } else
-    $conn->query("UPDATE stars SET rateIndex='$ratedIndex' WHERE id='$uID'");
+//    if (!$uID) {
+//      $conn->query("INSERT INTO stars (rateIndex) VALUES ('$ratedIndex')");
+//      $sql = $conn->query("SELECT id FROM stars ORDER BY id DESC LIMIT 1");
+//      $uData = $sql->fetch_assoc();
+//      $uID = $uData['id'];
+//    } else
+//      $conn->query("UPDATE stars SET rateIndex='$ratedIndex' WHERE id='$uID'");
 
-  exit(json_encode(array('id' => $uID)));
-}
+//    exit(json_encode(array('id' => $uID)));
+//  }
 
-$sql = $conn->query("SELECT id FROM stars");
-$numR = $sql->num_rows;
+//  $sql = $conn->query("SELECT id FROM stars");
+//  $numR = $sql->num_rows;
 
-$sql = $conn->query("SELECT SUM(rateIndex) AS total FROM stars");
-$rData = $sql->fetch_array();
-$total = $rData['total'];
+//  $sql = $conn->query("SELECT SUM(rateIndex) AS total FROM stars");
+//  $rData = $sql->fetch_array()();
+ //$total = $rData['total'];
 
-$avg = $total / $numR;
+// $avg = $total / $numR;
 ?>
 
 <!DOCTYPE HTML>
@@ -532,5 +527,4 @@ $avg = $total / $numR;
     }
   </script>
 </body>
-
 </html>
